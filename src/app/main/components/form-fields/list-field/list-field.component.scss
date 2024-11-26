@@ -1,0 +1,15 @@
+mat-selection-list .mat-pseudo-checkbox {
+  display: none !important;
+}
+.mat-list-base[dense] .mat-list-option {
+  height: 24px !important;
+}
+
+mat-selection-list {
+  height: 200px;
+  min-width: 150px;
+  overflow: auto;
+}
+mat-list-option[aria-selected="true"] {
+  background: rgba(200, 200, 200, 0.7) !important;
+}

@@ -1,0 +1,32 @@
+.message-recipient-header {
+  font: 500 12px/18px Roboto, "Helvetica Neue", sans-serif !important;
+  background-color: #fff;
+  .breadcrumb {
+    display: flex;
+    gap: 8px;
+    li {
+      text-decoration: none;
+      list-style-type: none;
+    }
+    li :active {
+      color: inherit;
+    }
+  }
+  ul.breadcrumb li + li:before {
+    content: "/\00a0";
+    color: black;
+  }
+  .recipients-filter-dropdown {
+    display: flex;
+    gap: 8px;
+  }
+  .o-dropdown-message-recipient {
+    height: 80px;
+  }
+  .mat-form-field {
+    font-size: 12px !important;
+  }
+}
+.mat-dialog-container .mat-dialog-title {
+  font: 500 12px/18px Roboto, "Helvetica Neue", sans-serif !important;
+}

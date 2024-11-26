@@ -1,0 +1,19 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <mat-tab-group [dynamicHeight]="true">
+    <mat-tab [label]="tab.listText" *ngFor="let tab of recordSections | async">
+      <o-form-fields
+        [fields]="getFormFields(tab.listCode)"
+        [formGroup]="getFormGroup(tab.listCode)"
+      ></o-form-fields>
+    </mat-tab>
+  </mat-tab-group>
+  <button
+    type="button"
+    mat-raised-button
+    class="btn-sm"
+    (click)="saveAccountProfile()"
+  >
+    <mat-icon>update</mat-icon>
+    {{ saveButtonLabel }}
+  </button>
+</o-content-widget>

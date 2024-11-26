@@ -1,0 +1,33 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <button
+      mat-raised-button
+      class="btn-sm"
+      routerLink="/setup/customization/campus-record-template"
+    >
+      <mat-icon>edit</mat-icon>
+      {{"Edit Form" | asyncTranslate | async }}
+    </button>
+  </ng-container>
+  <ng-container>
+    <form>
+      <mat-tab-group [dynamicHeight]="true">
+        <mat-tab
+          [label]="tab.listText"
+          *ngFor="let tab of campusRecordSections | async"
+        >
+          <o-form-fields
+            [fields]="getFormFields(tab.listCode)"
+            [formGroup]="getFormGroup(tab.listCode)"
+          ></o-form-fields>
+        </mat-tab>
+      </mat-tab-group>
+      <o-action-bar
+        (save)="saveCampus()"
+        (delete)="deleteCampus()"
+        (back)="backToDirectory()"
+        [type]="campusId > 0 ? 'edit' : 'add'"
+      ></o-action-bar>
+    </form>
+  </ng-container>
+</o-content-widget>

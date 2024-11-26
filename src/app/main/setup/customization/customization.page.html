@@ -1,0 +1,70 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <div class="o-form-field">
+      <mat-form-field class="filter">
+        <mat-label>Filter</mat-label>
+        <input
+          matInput
+          type="text"
+          [formControl]="search"
+          (keyup)="onSearch()"
+        />
+        <mat-icon matSuffix>filter_list</mat-icon>
+      </mat-form-field>
+    </div>
+  </ng-container>
+  <div fxFlex="100" fxLayout="column" fxLayoutGap="16px">
+    <mat-card
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayout.sm="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start start"
+      class="recent-view"
+      *ngIf="recentView"
+    >
+      <mat-card-title fxFlex="100" style="width: 100%">
+        {{"Recently Viewed" | asyncTranslate | async}}
+      </mat-card-title>
+      <div
+        fxFlex="45"
+        fxFlex.lt-md="95"
+        *ngFor="let item of recentlyViewedItems"
+      >
+        <h4>
+          <a
+            [routerLink]="getLinkUrl(item)"
+            [innerHTML]="(item.title | htmlDecoder)"
+          >
+          </a>
+        </h4>
+        <div [innerHtml]="(item.description | htmlDecoder)"></div>
+      </div>
+    </mat-card>
+    <div
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayout.sm="column"
+      fxLayoutGap="16px"
+      fxLayoutAlign="start start"
+    >
+      <div
+        fxFlex="45"
+        fxFlex.lt-md="95"
+        *ngFor="let item of setupItems | setupItemFilter : search.value"
+      >
+        <h4>
+          <a
+            [routerLink]="getLinkUrl(item)"
+            [innerHTML]="(item.title | htmlDecoder) | highlight: search.value"
+            (click)="onViewItem(item)"
+          >
+          </a>
+        </h4>
+        <div
+          [innerHtml]="(item.description | htmlDecoder) | highlight: search.value"
+        ></div>
+      </div>
+    </div>
+  </div>
+</o-content-widget>

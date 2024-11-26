@@ -1,0 +1,84 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <div fxFlex="100" fxLayout="column">
+    <div
+      fxFlex="100"
+      fxLayout.gt-xs="row wrap"
+      fxLayout.xs="column"
+      fxLayoutGap="20px"
+      fxLayoutAlign="start center"
+    >
+      <div>Options</div>
+      <div class="o-list-field-wrapper">
+        <mat-selection-list
+          role="listbox"
+          dense
+          class="glass"
+          #listCodes1
+          [multiple]="false"
+        >
+          <mat-list-option
+            role="option"
+            *ngFor="let paymentPlanInfo of paymentPlans; let i = index"
+            [value]="paymentPlanInfo"
+            (click)="onSelectionChange(i)"
+          >
+            {{paymentPlanInfo.planName}} ({{paymentPlanInfo.payments}})
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+      <div fxLayout="column" fxLayoutGap="5px">
+        <button mat-raised-button class="btn-sm" (click)="addOption()">
+          <mat-icon>add</mat-icon>Add
+        </button>
+        <button
+          mat-raised-button
+          class="btn-sm"
+          (click)="editOption(listCodes1.selectedOptions.selected)"
+        >
+          <mat-icon>edit</mat-icon>Edit
+        </button>
+        <button
+          mat-raised-button
+          class="btn-sm"
+          (click)="removeOption(listCodes1.selectedOptions.selected)"
+        >
+          <mat-icon>remove</mat-icon>Remove
+        </button>
+      </div>
+    </div>
+    <o-action-bar
+      (save)="savePaymentPlans()"
+      (back)="back()"
+      [type]="'add'"
+      [fullWidth]="true"
+    ></o-action-bar>
+  </div>
+</o-content-widget>
+<ng-template #addEditTemplate>
+  <form [formGroup]="addEditFormGroup" class="add-edit-payment-plan">
+    <input type="hidden" formControlName="paymentPlanId" />
+    <mat-form-field appearance="outline">
+      <mat-label>Plan Name</mat-label>
+      <input matInput formControlName="planName" [maxLength]="251" />
+      <mat-error
+        *ngIf="isInvalid('planName')"
+        [innerHtml]="getErrorMessage('planName')"
+      >
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Number of Payments</mat-label>
+      <input
+        matInput
+        oNumber
+        formControlName="payments"
+        [maxValue]="maxValue"
+      />
+      <mat-error
+        *ngIf="isInvalid('payments')"
+        [innerHtml]="getErrorMessage('payments')"
+      >
+      </mat-error>
+    </mat-form-field>
+  </form>
+</ng-template>

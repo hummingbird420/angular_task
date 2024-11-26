@@ -1,0 +1,51 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <a routerLink="/messages"><mat-icon>arrow_back</mat-icon></a>
+        <span class="new-message-spacer"></span>
+        <span>New Message</span>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div style="height: 8px"></div>
+<table class="message-header">
+    <tr>
+        <td><b>TO</b></td>
+        <td class="recipent-bar">
+            <div>
+                <span>
+                    <button mat-button *ngFor="let recipient of selectedRecipient$|async">{{recipient.name}}
+                        <mat-icon>close</mat-icon></button>
+                </span>
+            </div>
+            <div>
+                <button mat-button [matMenuTriggerFor]="menu"><mat-icon>add</mat-icon>Add recipient</button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="addStudents('Select Student')">Add student</button>
+                    <button mat-menu-item (click)="addStudents('Select Instructor')">Add Instructor</button>
+                    <button mat-menu-item (click)="addStudents('Select Stuff')">Add Stuff</button>
+                    <button mat-menu-item (click)="addStudents('Select Administrator')">Add Administrator</button>
+                </mat-menu>
+            </div>
+
+
+        </td>
+    </tr>
+    <mat-divider></mat-divider>
+    <tr>
+        <td><b>Subject</b></td>
+        <td><input></td>
+    </tr>
+    <mat-divider></mat-divider>
+</table>
+<div style="height: 24px"></div>
+<o-rich-editor></o-rich-editor>
+<div style="height: 24px"></div>
+<div class="message-footer">
+    <div>
+        <mat-icon>add</mat-icon>Attach file
+    </div>
+    <div>
+        <button mat-stroked-button>Cancel</button>
+        <button mat-stroked-button>Send message</button>
+    </div>
+
+</div>

@@ -1,0 +1,8 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <o-table
+    [columns]="columns"
+    [dataSource]="dataSource"
+    [addButtonTooltip]="'New Phrase'"
+    (clickAdd)="createNew()"
+  ></o-table>
+</o-content-widget>

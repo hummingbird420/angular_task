@@ -1,0 +1,97 @@
+$width: 80px;
+$height: 80px;
+$color: #009933;
+
+.text-success {
+  text-align: center;
+  color: $color;
+  font-size: 15px;
+}
+
+.icon {
+  width: $width;
+  height: $height;
+  border: 4px solid gray;
+  border-radius: 50%;
+  margin: 10px auto;
+  position: relative;
+  box-sizing: content-box;
+}
+
+.icon.success {
+  border-color: $color;
+}
+
+.icon.success::before,
+.icon.success::after {
+  content: "";
+  border-radius: 50%;
+  position: absolute;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.icon.success::before {
+  border-radius: 120px 0 0 120px;
+  top: -7px;
+  left: -33px;
+  -webkit-transform-origin: 60px 60px;
+  transform-origin: 60px 60px;
+}
+
+.icon.success::after {
+  border-radius: 0 120px 120px 0;
+  top: -11px;
+  left: 30px;
+  -webkit-transform-origin: 0px 60px;
+  transform-origin: 0px 60px;
+}
+
+.icon.success .placeholder {
+  width: $width;
+  height: $height;
+  border: 4px solid rgba($color, 1);
+  border-radius: 50%;
+  box-sizing: content-box;
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  z-index: 2;
+  transform: border;
+}
+
+.icon.success .fix {
+  width: 5px;
+  height: 90px;
+  background-color: transparent;
+  position: absolute;
+  left: 28px;
+  top: 8px;
+  z-index: 1;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+.icon.success .line {
+  height: 5px;
+  background-color: $color;
+  display: block;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 2;
+}
+
+.icon.success .line.tip {
+  width: 25px;
+  left: 14px;
+  top: 46px;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.icon.success .line.long {
+  width: 47px;
+  right: 8px;
+  top: 38px;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}

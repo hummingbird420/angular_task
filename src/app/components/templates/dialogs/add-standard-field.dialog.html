@@ -1,0 +1,35 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  {{dialogTitle}}
+</h3>
+<div mat-dialog-content>
+  <form [formGroup]="formGroup">
+    <table
+      class="dialog-table"
+      mat-table
+      [dataSource]="fields"
+      class="bordered"
+    >
+      <ng-container matColumnDef="standardField">
+        <td mat-cell *matCellDef="let field">
+          <mat-checkbox [formControlName]="field.fieldName">
+            {{field.fieldTitle}}
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+  <button mat-raised-button class="btn-sm" (click)="addFields()">
+    {{addButtonLabel}}
+  </button>
+  <button mat-raised-button (click)="closeDialog()" class="btn-sm">
+    {{closeButtonLabel}}
+  </button>
+</div>

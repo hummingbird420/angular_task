@@ -1,0 +1,19 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  {{dialogTitle | asyncTranslate | async }}
+</h3>
+<div mat-dialog-content>{{message | asyncTranslate | async }}</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+  <button mat-raised-button class="btn-sm" (click)="confirmYes()">
+    <mat-icon>check_circle</mat-icon>
+    {{yesButtonLabel | asyncTranslate | async }}
+  </button>
+  <button mat-raised-button (click)="closeDialog()" class="btn-sm">
+    <mat-icon>cancel</mat-icon>
+    {{closeButtonLabel | asyncTranslate | async }}
+  </button>
+</div>

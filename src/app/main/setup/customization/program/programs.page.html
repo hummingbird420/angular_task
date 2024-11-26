@@ -1,0 +1,28 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <div fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <div fxLayoutGap="10px">
+        <mat-form-field *ngFor="let field of filterFields" appearance="outline">
+          <mat-label>{{field.fieldTitle}}</mat-label>
+          <mat-select
+            [formControl]="getFormControl(field.fieldName)"
+            (selectionChange)="getPrograms()"
+          >
+            <mat-option
+              *ngFor="let option of field.options"
+              [value]="option.value"
+            >
+              {{option.title}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </ng-container>
+  <o-table
+    [columns]="columns"
+    [dataSource]="dataSource"
+    [addButtonTooltip]="addButtonTooltip"
+    (clickAdd)="createProgram()"
+  ></o-table>
+</o-content-widget>

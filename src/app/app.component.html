@@ -1,0 +1,9 @@
+<div *ngIf="isLoading$ | async" class="overlay">
+  <div class="loader">
+    <div class="la-timer la-dark">
+      <div></div>
+    </div>
+    <div>Loading...</div>
+  </div>
+</div>
+<router-outlet></router-outlet>

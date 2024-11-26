@@ -1,0 +1,42 @@
+.header .mat-card {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.name,
+.role,
+.label {
+  transition: opacity 0.25s;
+}
+.role {
+  font-size: 13px !important;
+}
+
+.side-nav-content {
+  width: 204px;
+}
+
+.side-nav-content.closed {
+  width: 40px;
+}
+::ng-deep .mat-list-base.start-page .mat-list-item .mat-list-item-content {
+  padding: 0px 8px !important;
+}
+.iconized .profile-photo {
+  width: 32px;
+  height: 32px;
+}
+.iconized .profile-photo img {
+  width: 32px;
+  height: 32px;
+}
+.profile {
+  background: transparent;
+}
+.profile.sticky {
+  top: -4px !important;
+  padding-bottom: 2px;
+}
+
+.mat-expansion-panel-header.isSticky {
+  box-shadow: 0px 4px 8px rgba(13, 45, 60, 0.3);
+}

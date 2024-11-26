@@ -1,0 +1,16 @@
+<div class="recipient-dialog">
+    <div mat-dialog-title>
+        <h2>{{data}}</h2>
+        <o-message-recipient-header [NavigationSource]="navigationSource"></o-message-recipient-header>
+    </div>
+    <div mat-dialog-content>
+        <o-message-recipient-body [tableColumns]="recipientTableColumns" [dataSource]="recipientTableContents"
+            [pageSize]="10"></o-message-recipient-body>
+        <!-- <o-table [columns]="recipientTableColumns$" [dataSource]="dataSource" [pageSize]="10"></o-table> -->
+    </div>
+
+    <div mat-dialog-actions>
+        <button mat-flat-button (click)="addRecipient()">Add Recipient</button>
+    </div>
+</div>
+<!-- [TableDataColumns]=" recipientTableColumns" [TableDataRows]="recipientTableContents" [columns]="" -->

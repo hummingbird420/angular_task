@@ -1,0 +1,71 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  <b>{{"Share Course" | translate}}</b>
+</h3>
+<div mat-dialog-content>
+  <form *ngIf="formFields.length" [formGroup]="formGroup" class="form">
+    <div fxLayout="column" fxLayoutGap="16px" class="cart-form-wrapper">
+      <div fxLayout="column" fxLayoutGap="4px" *ngFor="let field of formFields">
+        <label [class]="field.required ? 'required': ''">
+          <b>{{field.fieldTitle}}</b>
+        </label>
+        <div class="o-form-field" [ngSwitch]="field.fieldType.toUpperCase()">
+          <mat-form-field *ngSwitchCase="'TEXT'">
+            <input
+              type="TEXT"
+              matInput
+              maxlength="250"
+              [placeholder]="field.fieldTitle"
+              [formControlName]="field.fieldName"
+            />
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'EMAIL'">
+            <input
+              type="TEXT"
+              matInput
+              maxlength="250"
+              [placeholder]="field.fieldTitle"
+              [formControlName]="field.fieldName"
+            />
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'MEMO'">
+            <textarea
+              matInput
+              type="text"
+              [formControlName]="field.fieldName"
+              maxlength="2500"
+              rows="5"
+            ></textarea>
+          </mat-form-field>
+          <mat-error
+            *ngIf="isInvalid(field.fieldName)"
+            [innerHtml]="getErrorMessage(field.fieldName)"
+          >
+          </mat-error>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div
+  mat-dialog-actions
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="8px"
+>
+  <div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
+  <div fxLayoutAlign="center center">
+    <button mat-stroked-button class="fill" (click)="shareCourse()">
+      <mat-icon>share</mat-icon>
+      {{"Share" | translate}}
+    </button>
+    <button mat-stroked-button mat-dialog-close class="bg-white">
+      <mat-icon>close</mat-icon>
+      {{"Cancel" | translate }}
+    </button>
+  </div>
+</div>

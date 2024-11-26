@@ -1,0 +1,50 @@
+.mat-toolbar {
+  background-color: inherit !important;
+}
+.new-message-spacer {
+  flex: 0.01 1 auto;
+}
+.section-header {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  max-width: 600px;
+  margin-top: 16px;
+  .button-spacer {
+    flex: 0.08 1 auto;
+  }
+}
+.message-header {
+  width: 100%;
+}
+table.message-header tr td {
+  padding: 4px;
+}
+
+input {
+  width: 100%;
+  padding: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+input:focus-visible {
+  border: 1px solid #c2c0c0;
+  outline: none;
+}
+.message-footer {
+  display: flex;
+  gap: 75%;
+}
+.message-footer div {
+  display: flex;
+  gap: 8px;
+}
+@media screen and (max-width: 480px) {
+  .message-footer {
+    gap: 15%;
+  }
+}
+.recipent-bar {
+  display: flex;
+  gap: 16px;
+}

@@ -1,0 +1,58 @@
+.mat-toolbar {
+  background-color: inherit !important;
+}
+.massage-spacer {
+  flex: 1 1 auto;
+}
+.search-spacer {
+  flex: 0.1 1 auto;
+}
+.mat-button {
+  border-radius: 8px;
+}
+.mat-input-search {
+  display: flex;
+  font-size: 18px;
+  padding: 0;
+  border-radius: 8px;
+  border: 2px solid #e0e0dd;
+  max-height: 42px;
+  min-width: 350px;
+  input {
+    border: none;
+    background: inherit;
+    width: calc(100% - 60px);
+    margin-left: 8px;
+    padding: 8px 0;
+    outline: none;
+  }
+
+  span {
+    padding: 4px;
+  }
+}
+
+.mat-tab-label {
+  padding: 0 !important;
+  min-width: 84px !important;
+  width: auto;
+}
+
+table.mat-table {
+  width: 100%;
+}
+table.mat-table.message-table {
+  border-top: 1px solid #e0e0e0 !important;
+}
+.mat-column-id {
+  width: 40px;
+}
+.mat-column-from {
+  width: 20%;
+}
+.mat-column-title {
+  width: calc(80% - 100px);
+}
+.mat-column-date {
+  width: 60px;
+}

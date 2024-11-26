@@ -1,0 +1,48 @@
+<div
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="0px"
+  id="mother-container"
+>
+  <table style="width: 100%" *ngIf="hasCustomHeader" class="custom-header">
+    <tr>
+      <td>
+        <div *ngIf="hasCustomHeader" [innerHTML]="customHeader | safeHtml">          
+        </div>
+      </td>
+    </tr>
+  </table>
+  <div *ngIf="!hasCustomHeader" class="sticky header-bg"></div>
+  <div id="main-container" class="desktop">
+    <div
+      class="sticky cart-header-wrapper"
+      fxLayout="column"
+      fxLayoutAlign="space-between"
+      *ngIf="!hasCustomHeader"
+    >
+      <cart-header
+        id="default-cart-header"
+        *ngIf="!hasCustomHeader"
+      ></cart-header>
+    </div>
+    <div class="top-cart" *ngIf="hasCustomHeader" [cartTopSticky]="0">
+      <div class="item" oDisplayCart>
+        <div class="icon-cart-selected">
+          <div class="cart-count" [class]="cartCount ? 'theme-color' : ''">
+            {{ cartCount }}
+          </div>
+          <mat-icon svgIcon="cart"></mat-icon>
+        </div>
+        <div>{{"Your Cart" | translate}}</div>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+  <table style="width: 100%">
+    <tr>
+      <td>
+        <div *ngIf="hasCustomFooter" [innerHTML]="customFooter | safeHtml"></div>
+      </td>
+    </tr>
+  </table>
+</div>

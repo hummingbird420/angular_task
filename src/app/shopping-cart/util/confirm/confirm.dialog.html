@@ -1,0 +1,19 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  <b>{{"Confirm" | translate}}</b>
+</h3>
+<div mat-dialog-content>{{message | translate}}</div>
+<div mat-dialog-actions fxLayoutAlign="center center" fxLayoutGap="8px">
+  <button mat-stroked-button class="fill" (click)="confirm()">
+    <mat-icon>check</mat-icon>
+    {{"Ok" | translate }}
+  </button>
+  <button mat-stroked-button mat-dialog-close style="background-color: white">
+    <mat-icon>close</mat-icon>
+    {{"Cancel" | translate }}
+  </button>
+</div>

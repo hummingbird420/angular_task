@@ -1,0 +1,22 @@
+.rta {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.cta {
+  text-align: center;
+  justify-content: center;
+}
+::ng-deep .o-form-field .filter .mat-form-field-flex {
+  align-items: center !important;
+}
+::ng-deep .o-form-field .filter .mat-icon {
+  color: rgba(0, 0, 0, 0.54);
+}
+.action-col .mat-icon-button {
+  width: 32px;
+  height: 32px;
+}
+::ng-deep .mat-paginator-range-label {
+  display: none !important;
+}

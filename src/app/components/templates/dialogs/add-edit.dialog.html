@@ -1,0 +1,21 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  {{title | asyncTranslate | async }}
+</h3>
+<div mat-dialog-content>
+  <ng-template [cdkPortalOutlet]="dialogInfo.portal"></ng-template>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+  <button mat-raised-button class="btn-sm" (click)="emitAddEditEvent()">
+    <mat-icon>{{addIcon}}</mat-icon>
+    {{addButtonLabel | asyncTranslate | async }}
+  </button>
+  <button mat-raised-button mat-dialog-close class="btn-sm">
+    <mat-icon>close</mat-icon>
+    {{closeButtonLabel | asyncTranslate | async }}
+  </button>
+</div>

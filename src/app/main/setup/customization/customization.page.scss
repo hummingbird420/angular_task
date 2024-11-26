@@ -1,0 +1,28 @@
+h3 {
+  margin-bottom: 0px;
+}
+hr {
+  margin-top: 0px;
+}
+h4 {
+  margin: 12px 0px 0px;
+}
+.recent-view {
+  border: 1px solid rgba(05, 05, 05, 0.15);
+  border-radius: 8px !important;
+  padding-top: 2px !important;
+  box-shadow: none;
+}
+.recent-view mat-card-title {
+  border-bottom: 1px solid rgba(05, 05, 05, 0.15);
+  font-size: 14px;
+  padding: 4px 0px;
+  margin: 0px !important;
+}
+
+::ng-deep .o-form-field .filter .mat-form-field-flex {
+  align-items: center !important;
+}
+::ng-deep .o-form-field .filter .mat-icon {
+  color: rgba(0, 0, 0, 0.54);
+}

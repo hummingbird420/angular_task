@@ -1,0 +1,46 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  {{title | translate }}
+</h3>
+<div mat-dialog-content>
+  <form [formGroup]="formGroup">
+    <div fxLayout="column" fxLayoutGap="16px" class="cart-login-wrapper">
+      <div fxLayout="column" fxLayoutGap="4px">
+        <div class="o-form-field">
+          <mat-form-field>
+            <input
+              type="text"
+              matInput
+              maxlength="50"
+              placeholder='{{"Passcode" | translate}}'
+              autocomplete="off"
+              formControlName="passCode"
+            />
+          </mat-form-field>
+          <mat-error *ngIf="isInvalid('passCode')">
+            {{(getErrorMessage('passCode') || '') | translate}}
+          </mat-error>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="center center" fxLayoutGap="8px">
+  <button mat-stroked-button class="fill" (click)="submit()">
+    <mat-icon>{{addIcon}}</mat-icon>
+    {{addButtonLabel | translate }}
+  </button>
+  <button
+    mat-stroked-button
+    mat-dialog-close
+    style="background-color: white"
+    (click)="onClose()"
+  >
+    <mat-icon>close</mat-icon>
+    {{closeButtonLabel | translate }}
+  </button>
+</div>

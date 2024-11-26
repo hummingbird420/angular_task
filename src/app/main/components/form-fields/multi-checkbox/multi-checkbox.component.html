@@ -1,0 +1,14 @@
+<div
+  [formGroup]="formGroup"
+  class="multi-checkbox"
+  [fxLayout]="layout + ' wrap'"
+>
+  <mat-checkbox
+    *ngFor="let checkbox of checkboxes"
+    [formControlName]="checkbox.name"
+    (change)="onCheckboxChange($event)"
+    [name]="checkbox.name"
+  >
+    {{ checkbox.title }}
+  </mat-checkbox>
+</div>

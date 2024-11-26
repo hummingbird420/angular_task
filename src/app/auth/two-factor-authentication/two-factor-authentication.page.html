@@ -1,0 +1,20 @@
+<form class="brown-text" [formGroup]="twoFactorAuthenticationForm" (submit)="checkOTP()">
+  <mat-card-content>
+    <mat-form-field appearance="outline">
+      <mat-label>One-Time Passcode (OTP)</mat-label>
+      <input matInput placeholder="" id="otp" formControlName="otp" />
+      <mat-error *ngIf="isInvalid('otp')"> OTP is empty! </mat-error>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button type="submit">Submit</button>
+    <div style="height: 24px"></div>
+    <mat-divider></mat-divider>
+    <div class="footer-content">
+      <p>Request New OTP</p>
+    </div>
+    <button type="button" mat-stroked-button *ngIf="email" (click)="resendEmail()">{{email}}</button>
+    <div style="height: 16px"></div>
+    <button type="button" mat-stroked-button *ngIf="phone" (click)="resendMessage()">{{phone}}</button>
+  </mat-card-actions>
+</form>

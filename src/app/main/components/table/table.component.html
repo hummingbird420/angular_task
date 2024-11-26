@@ -1,0 +1,58 @@
+<div fxLayout="column">
+  <div fxFlex="100" fxLayout="row" fxLayoutAlign="space-between end">
+    <div class="o-form-field" fxLayoutAlign="start end">
+      <mat-form-field class="filter">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input />
+        <mat-icon matSuffix>filter_list</mat-icon>
+      </mat-form-field>
+    </div>
+    <button *ngIf="!hideAddButton" mat-raised-button (click)="emitAddEvent()" class="btn-sm"
+      style="padding: 0 2px; min-width: 0px !important" [oTooltip]="addButtonTooltip" placement="left">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <div id="no-more-table">
+    <table #table mat-table [dataSource]="dataSource" matSort matSortStart="asc" matSortDisableClear
+      class="full-width-table">
+      <ng-container *ngFor="let column of updatedColumns" [matColumnDef]="column.name">
+        <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header [class]="getAlignment(column.alignment)">
+          {{ column.title }}
+        </th>
+        <td mat-cell *matCellDef="let row" [class]="getAlignment(column.alignment)">
+          <a *ngIf="column.link(row)" [routerLink]="column.link(row)" [innerHTML]="
+              column.cell(row) | tableDataDecoder: column.type:dateFormat
+            ">
+          </a>
+          <div *ngIf="!column.link(row)" [innerHTML]="
+              column.cell(row) | tableDataDecoder: column.type:dateFormat
+            "></div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row" nowrap class="action-col">
+          <button mat-icon-button class="btn-sm" style="margin-right: 8px"
+            (click)="actionColumn.performAction('EDIT', row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button class="btn-sm btn-delete" (click)="actionColumn.performAction('DELETE', row)">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [colSpan]="displayedColumns.length">
+          No record found.
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div [hidden]="hidePaginator | async">
+    <mat-paginator oPaginatorButton showFirstLastButtons hidePageSize="true" [showTotalPages]="showTotalPages"
+      [length]="totalRows" [pageSize]="pageSize" aria-label="datatable pagination" class="o-paginator">
+    </mat-paginator>
+  </div>
+</div>

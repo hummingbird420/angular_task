@@ -1,0 +1,142 @@
+<div class="course-description">
+  <div class="button-wrapper no-print" [cartTopSticky]="1">
+    <div>
+      <a *ngIf="websiteLink" [href]="websiteLink">
+        <button class="back-button" mat-flat-button>
+          <mat-icon svgIcon="back"></mat-icon>
+          {{"Website" | translate}}
+        </button>
+      </a>
+      <button class="back-button" mat-flat-button backToClassList>
+        <mat-icon svgIcon="back"></mat-icon> {{"Class List" | translate}}
+      </button>
+    </div>
+    <div>
+      <button
+        mat-icon-button
+        oTooltip="{{'Share This Page' | translate}}"
+        theme="dark"
+        (click)="shareCourse()"
+      >
+        <mat-icon>share</mat-icon>
+      </button>
+      <button mat-icon-button oTooltip="{{'Print This Page' | translate}}" theme="dark" cartPrint>
+        <mat-icon>print</mat-icon>
+      </button>
+    </div>
+  </div>
+  <h2 *ngIf="course" class="course-name">
+    {{(course.courseNumber || '') + ' ' + (course.courseName || '')}}
+  </h2>
+  <table class="course-desc-table">
+    <tr>
+      <td [innerHTML]="course.courseDescription"></td>
+    </tr>
+    <tr *ngIf="course.refundPolicyDescription">
+      <td>
+        <h2
+          style="text-align: center"
+          [innerHTML]="course.refundPolicyTitle"
+        ></h2>
+        <div [innerHTML]="course.refundPolicyDescription"></div>
+      </td>
+    </tr>
+    <tr *ngIf="course.coRequisiteCourses && course.coRequisiteCourses.length">
+      <td>
+        <h3>
+          <b
+            >{{"Recommended course(s) to take with this course" | translate}}</b
+          >
+        </h3>
+        <ul>
+          <li
+            *ngFor="let preCourse of course.coRequisiteCourses"
+            class="list-circle"
+          >
+            <a [routerLink]="getCourseDetailsPageUrl(preCourse.courseId)">
+              {{preCourse.courseNumber + ' ' + preCourse.courseName}}
+            </a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr *ngIf="course.preRequisiteCourses && course.preRequisiteCourses.length">
+      <td>
+        <h3><b>{{"Prerequisite course(s)" | translate}}</b></h3>
+        <ul>
+          <li
+            *ngFor="let preCourse of course.preRequisiteCourses"
+            class="list-circle"
+          >
+            <a [routerLink]="getCourseDetailsPageUrl(preCourse.courseId)">
+              {{preCourse.courseNumber + ' ' + preCourse.courseName}}
+            </a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr
+      *ngIf="course.preRequisiteForCourses && course.preRequisiteForCourses.length"
+    >
+      <td>
+        <h3><b>{{"This course is a prerequisite for" | translate}}</b></h3>
+        <ul>
+          <li
+            *ngFor="let preCourse of course.preRequisiteForCourses"
+            class="list-circle"
+          >
+            <a [routerLink]="getCourseDetailsPageUrl(preCourse.courseId)">
+              {{preCourse.courseNumber + ' ' + preCourse.courseName}}
+            </a>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div *ngIf="course.coordinatorNameTitle && course.coordinatorName">
+          <b>{{course.coordinatorNameTitle}}:</b> {{course.coordinatorName}}
+        </div>
+        <div *ngIf="course.coordinatorEmailTitle && course.coordinatorEmail">
+          <b>{{course.coordinatorEmailTitle}}:</b> {{course.coordinatorEmail}}
+        </div>
+      </td>
+    </tr>
+  </table>
+  <div
+    class="course-class-table"
+    *ngFor="let clazz of course.classes; let i = index"
+  >
+    <div class="row" *ngFor="let column of columns">
+      <div class="col-left" [innerHTML]="column.title"></div>
+      <div
+        class="col-right"
+        [innerHTML]="clazz | formatClassInfo : column.name"
+      ></div>
+    </div>
+    <div class="row" *ngIf="clazz.statusMessage">
+      <div></div>
+      <div
+        class="col-right status-message"
+        [innerHTML]="clazz.statusMessage"
+      ></div>
+    </div>
+    <div class="button-row no-print" *ngIf="clazz.allowToSelectClass">
+      <button
+        mat-stroked-button
+        [class]="i % 2 == 0 ? 'fill':''"
+        [addCartItem]="clazz.classId"
+        [hasPassCode]="clazz.hasPassCode"
+        [minimumAge]="clazz.minimumAge"
+        [enrollAsWaiting]="clazz.enrollAsWaiting"
+      >
+        <mat-icon
+          [svgIcon]="getCartIcon(clazz.classId)"
+          [class]="getCartIcon(clazz.classId)"
+          class="svg left"
+        ></mat-icon>
+        {{"Select Class" | translate}}
+      </button>
+    </div>
+  </div>
+</div>

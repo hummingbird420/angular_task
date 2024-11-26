@@ -1,0 +1,39 @@
+<mat-card class="widget-content" fxFlex="calc(100% - 364px)">
+  <div class="sticky">
+    <mat-card-header
+      class="widget-header"
+      fxLayout="row"
+      fxLayout.lt-md="column"
+    >
+      <mat-card-title-group>
+        <mat-card-title>{{ title | asyncTranslate | async }} </mat-card-title>
+        <mat-card-subtitle>
+          <span
+            *ngFor="let subTitle of subTitles; let i = index"
+            style="display: inline-block"
+          >
+            <b>{{ i > 0 ? "&nbsp;&nbsp;/&nbsp;" : "" }}</b>
+            <ng-container *ngIf="subTitle.active">
+              {{ subTitle.title | asyncTranslate | async }}
+            </ng-container>
+            <a
+              *ngIf="!subTitle.active"
+              [routerLink]="subTitle.url"
+              style="display: inline-block"
+            >
+              {{ subTitle.title | asyncTranslate | async }}
+            </a>
+          </span>
+        </mat-card-subtitle>
+      </mat-card-title-group>
+      <div fxFlex></div>
+      <div id="right-head" fxLayoutAlign="end center">
+        <ng-content select="[slot='head']"> </ng-content>
+      </div>
+    </mat-card-header>
+    <hr class="sep-left" style="clear: both" />
+  </div>
+  <mat-card-content style="padding-bottom: 4px">
+    <ng-content></ng-content>
+  </mat-card-content>
+</mat-card>

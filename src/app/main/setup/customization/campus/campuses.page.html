@@ -1,0 +1,16 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <o-dropdown
+      [field]="campusStatusDropdown"
+      (change)="onStatusChange($event)"
+    ></o-dropdown>
+  </ng-container>
+  <ng-container>
+    <o-table
+      [addButtonTooltip]="addButtonTooltip"
+      [columns]="columns"
+      [dataSource]="dataSource"
+      (clickAdd)="createCampus()"
+    ></o-table>
+  </ng-container>
+</o-content-widget>

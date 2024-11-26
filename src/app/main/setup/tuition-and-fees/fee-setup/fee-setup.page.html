@@ -1,0 +1,57 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <mat-form-field appearance="outline">
+      <mat-label>{{semesterDropdown.fieldTitle}}</mat-label>
+      <mat-select
+        (selectionChange)="onSemesterChange()"
+        [formControl]="semesterFormControl"
+        #semester
+      >
+        <mat-option
+          *ngFor="let option of semesterDropdown.options"
+          [value]="option.value"
+        >
+          {{option.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
+  <mat-tab-group [dynamicHeight]="true">
+    <mat-tab [label]="tab.listText" *ngFor="let tab of recordSections | async">
+      <ng-template matTabContent [ngSwitch]="tab.listCode">
+        <o-course-fee
+          *ngSwitchCase="'courseFee'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-course-fee>
+        <o-department-course-fee
+          *ngSwitchCase="'departmentCourseFee'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-department-course-fee>
+        <o-department-fee
+          *ngSwitchCase="'departmentFee'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-department-fee>
+        <o-individual-fee
+          *ngSwitchCase="'individualFee'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-individual-fee>
+        <o-installment-fee
+          *ngSwitchCase="'installmentFee'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-installment-fee>
+        <o-onetime-fee
+          *ngSwitchCase="'oneTimeFee'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-onetime-fee>
+        <o-program-fee
+          *ngSwitchCase="'programFee'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-program-fee>
+        <o-universal-fee
+          *ngSwitchCase="'universalFee'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-universal-fee>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</o-content-widget>

@@ -1,0 +1,171 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  <strong>{{"Add Student" | translate}}</strong>
+</h3>
+<div mat-dialog-content #dialogContent>
+  <form *ngIf="formGroup" [formGroup]="formGroup">
+    <div fxLayout="column" fxLayoutGap="16px" class="cart-form-wrapper">
+      <div
+        class="section"
+        fxLayout="column"
+        fxLayoutGap="16px"
+        *ngFor="let section of fieldSections"
+      >
+        <div class="section-title">{{section.tabTitle}}</div>
+        <div
+          fxLayout="column"
+          fxLayoutGap="4px"
+          *ngFor="let field of section.fields"
+        >
+          <label [class]="field.required ? 'required': ''">
+            {{field.fieldTitle}}
+          </label>
+          <div class="o-form-field" [ngSwitch]="field.fieldType.toUpperCase()">
+            <mat-form-field *ngSwitchCase="'TEXT'">
+              <input
+                type="TEXT"
+                matInput
+                maxlength="250"
+                [placeholder]="field.fieldTitle"
+                [formControlName]="field.fieldName"
+              />
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'PASSWORD'">
+              <input
+                type="PASSWORD"
+                matInput
+                maxlength="50"
+                [placeholder]="field.fieldTitle"
+                [formControlName]="field.fieldName"
+              />
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'NUMBER'">
+              <input
+                type="TEXT"
+                matInput
+                maxlength="50"
+                [placeholder]="field.fieldTitle"
+                [formControlName]="field.fieldName"
+              />
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'DECIMAL'">
+              <input
+                type="TEXT"
+                matInput
+                maxlength="50"
+                [placeholder]="field.fieldTitle"
+                [formControlName]="field.fieldName"
+              />
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'EMAIL'">
+              <input
+                type="TEXT"
+                matInput
+                maxlength="250"
+                [placeholder]="field.fieldTitle"
+                [formControlName]="field.fieldName"
+              />
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'MEMO'">
+              <textarea
+                matInput
+                type="text"
+                [formControlName]="field.fieldName"
+                maxlength="2500"
+              ></textarea>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'DROPDOWN'">
+              <mat-select
+                disableOptionCentering
+                panelClass="o-dropdown-billing"
+                [formControlName]="field.fieldName"
+                [placeholder]="field.fieldTitle"
+                [value]="field.fieldValue"
+              >
+                <mat-option
+                  *ngFor="let option of field.options"
+                  [value]="option.value"
+                >
+                  {{option.title}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field *ngSwitchCase="'DATE'">
+              <input
+                matInput
+                type="TEXT"
+                [min]="getMinDate(field.fieldName)"
+                [max]="getMaxDate(field.fieldName)"
+                [matDatepicker]="dp"
+                [formControlName]="field.fieldName"
+                [value]="field.fieldValue"
+                [placeholder]="dateFormat"
+              />
+              <mat-datepicker-toggle matSuffix [for]="dp">
+                <mat-icon matDatepickerToggleIcon> calendar_month </mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #dp disabled="false"></mat-datepicker>
+            </mat-form-field>
+            <div *ngSwitchCase="'CHECKBOX'">
+              <mat-checkbox [formControlName]="field.fieldName"> </mat-checkbox>
+            </div>
+            <div *ngSwitchCase="'MULTI_CHECKBOX'">
+              <cart-multi-checkbox
+                [formControlName]="field.fieldName"
+                [checkboxes]="field.options"
+              >
+              </cart-multi-checkbox>
+            </div>
+            <div *ngSwitchCase="'RADIO'">
+              <mat-radio-group
+                [formControlName]="field.fieldName"
+                aria-label="Select an option"
+                fxLayout="column"
+                fxLayoutGap="4px"
+              >
+                <mat-radio-button
+                  [value]="option.value"
+                  *ngFor="let option of field.options"
+                >
+                  {{ option.title }}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div *ngSwitchCase="'FILE'">
+              <cart-file-uploader [formControlName]="field.fieldName">
+              </cart-file-uploader>
+            </div>
+            <mat-error
+              *ngIf="isInvalid(field.fieldName)"
+              [innerHtml]="getErrorMessage(field.fieldName)"
+            >
+            </mat-error>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="errorMessage"
+        class="section"
+        fxLayout="column"
+        fxLayoutGap="16px"
+      >
+        <mat-error [innerHTML]="errorMessage"></mat-error>
+      </div>
+      <div fxLayoutAlign="center center"></div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="center center">
+  <button mat-stroked-button class="fill" (click)="createStudent()">
+    <mat-icon>check</mat-icon>
+    {{"Add" | translate}}
+  </button>
+  <button mat-stroked-button mat-dialog-close class="bg-white">
+    <mat-icon>close</mat-icon>
+    {{"Cancel" | translate }}
+  </button>
+</div>

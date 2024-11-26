@@ -1,0 +1,26 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  {{ title }}
+</h3>
+<div mat-dialog-content>
+  <o-dialog-form-fields
+    [fields]="formFields$"
+    [formFields]="formFields"
+    [formGroup]="formGroup"
+    [requiredFields]="requiredFields"
+  ></o-dialog-form-fields>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+  <button mat-raised-button class="btn-sm" (click)="saveTuition()">
+    <mat-icon>{{ addIcon }}</mat-icon>
+    {{ addButtonLabel }}
+  </button>
+  <button mat-raised-button mat-dialog-close class="btn-sm">
+    <mat-icon>close</mat-icon>
+    {{ closeButtonLabel }}
+  </button>
+</div>

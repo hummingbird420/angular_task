@@ -1,0 +1,124 @@
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+  <form *ngIf="formGroup" [formGroup]="formGroup">
+    <div fxLayout="column" fxLayoutGap="16px" class="cart-login-wrapper">
+      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+        <h2>{{"We found your record" | translate}}</h2>
+        <p>{{"Now, please update your contact information." | translate}}</p>
+      </div>
+      <div fxLayout="column" fxLayoutGap="4px" *ngFor="let field of fields">
+        <label [ngClass]="field.required ? 'required' : ''"
+          >{{field.fieldTitle}}</label
+        >
+        <div class="o-form-field" [ngSwitch]="field.fieldType.toUpperCase()">
+          <mat-form-field *ngSwitchCase="'TEXT'">
+            <input
+              [type]="field.fieldType"
+              matInput
+              maxlength="50"
+              [placeholder]="field.fieldTitle"
+              autocomplete="off"
+              [formControlName]="field.fieldName"
+            />
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'PASSWORD'">
+            <input
+              type="PASSWORD"
+              matInput
+              maxlength="50"
+              [placeholder]="field.fieldTitle"
+              [formControlName]="field.fieldName"
+            />
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'NUMBER'">
+            <input
+              type="TEXT"
+              matInput
+              maxlength="50"
+              [placeholder]="field.fieldTitle"
+              [formControlName]="field.fieldName"
+            />
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'DECIMAL'">
+            <input
+              type="TEXT"
+              matInput
+              maxlength="50"
+              [placeholder]="field.fieldTitle"
+              [formControlName]="field.fieldName"
+            />
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'EMAIL'">
+            <input
+              type="TEXT"
+              matInput
+              maxlength="250"
+              [placeholder]="field.fieldTitle"
+              [formControlName]="field.fieldName"
+            />
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'MEMO'">
+            <textarea
+              matInput
+              type="text"
+              [formControlName]="field.fieldName"
+              maxlength="2500"
+            ></textarea>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'DROPDOWN'">
+            <mat-select
+              disableOptionCentering
+              panelClass="o-dropdown-billing"
+              [formControlName]="field.fieldName"
+              [placeholder]="field.fieldTitle"
+              [value]="field.fieldValue"
+            >
+              <mat-option
+                *ngFor="let option of field.options"
+                [value]="option.value"
+              >
+                {{option.title}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngSwitchCase="'DATE'">
+            <input
+              matInput
+              [matDatepicker]="dp"
+              [formControlName]="field.fieldName"
+              [value]="field.fieldValue"
+            />
+            <mat-datepicker-toggle matSuffix [for]="dp">
+              <mat-icon matDatepickerToggleIcon> calendar_month </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #dp disabled="false"></mat-datepicker>
+          </mat-form-field>
+          <mat-error
+            *ngIf="isInvalid(field.fieldName)"
+            [innerHtml]="getErrorMessage(field.fieldName)"
+          >
+          </mat-error>
+        </div>
+      </div>
+      <div *ngIf="errorMessage" class="error" [innerHTML]="errorMessage"></div>
+      <div>
+        <button
+          *ngIf="showBackToClassButton"
+          mat-stroked-button
+          backToClassList
+          type="button"
+        >
+          {{"Select Another Class" | translate}}
+        </button>
+        <button
+          *ngIf="!showBackToClassButton"
+          mat-stroked-button
+          class="fill"
+          type="button"
+          (click)="updateStudent()"
+        >
+          {{"Submit" | translate}}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

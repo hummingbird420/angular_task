@@ -1,0 +1,25 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="registration-page">
+  <div>&nbsp;</div>
+  <div class="almost-done">
+    <h3 class="title">
+      <mat-icon> check </mat-icon>
+      {{"You are almost done! We just need to know who you are." | translate}}
+    </h3>
+  </div>
+
+  <h1>{{"Sign in or Register" | translate}}</h1>
+  <div fxLayoutAlign="center center" fxLayout="row wrap">
+    <div *ngIf="allowStudentRegistration" class="card-button">
+      <img src="/assets/svg/cart_reg_student.svg" />
+      <button mat-stroked-button class="fill" (click)="goToLoginPage(1)">
+        {{"As a Student" | translate}}
+      </button>
+    </div>
+    <div *ngIf="allowContactRegistration" class="card-button">
+      <img src="/assets/svg/cart_reg_group.svg" />
+      <button mat-stroked-button class="fill" (click)="goToLoginPage(99)">
+        {{"As a Group" | translate}}
+      </button>
+    </div>
+  </div>
+</div>

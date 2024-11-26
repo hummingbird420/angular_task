@@ -1,0 +1,63 @@
+<div fxFlex="100" fxLayoutAlign="start center" fxLayoutGap="16px">
+  <div fxFlex="25" [fxHide]="fxFlex === 100" fxHide.xs="true">
+    <button
+      *ngIf="type === 'edit'"
+      type="button"
+      mat-raised-button
+      class="btn-sm"
+      (click)="onCancel()"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      {{ backButtonLabel | translate }}
+    </button>
+  </div>
+  <div [fxFlex]="fxFlex" fxFlex.xs="100" fxLayoutAlign="space-between center">
+    <button type="button" mat-raised-button class="btn-sm" (click)="onSave()">
+      <mat-icon>{{ saveIcon }}</mat-icon>
+      {{ saveButtonLabel | translate }}
+    </button>
+    <div fxHide.gt-xs="true">
+      <button
+        *ngIf="type === 'edit'"
+        type="button"
+        mat-raised-button
+        class="btn-sm"
+        (click)="onCancel()"
+      >
+        <mat-icon>arrow_back</mat-icon>
+        {{ backButtonLabel | translate }}
+      </button>
+      <button
+        *ngIf="type === 'add'"
+        type="button"
+        mat-raised-button
+        class="btn-sm"
+        (click)="onCancel()"
+      >
+        <mat-icon>cancel</mat-icon>
+        {{ cancelButtonLabel | translate }}
+      </button>
+    </div>
+    <button
+      fxHide.xs="true"
+      *ngIf="type === 'add'"
+      type="button"
+      mat-raised-button
+      class="btn-sm"
+      (click)="onCancel()"
+    >
+      <mat-icon>cancel</mat-icon>
+      {{ cancelButtonLabel | translate }}
+    </button>
+    <button
+      *ngIf="type === 'edit'"
+      type="button"
+      mat-raised-button
+      class="btn-sm btn-delete"
+      (click)="onDelete()"
+    >
+      <mat-icon>delete_forever</mat-icon>
+      {{ deleteButtonLabel | translate }}
+    </button>
+  </div>
+</div>

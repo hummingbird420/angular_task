@@ -1,0 +1,44 @@
+:host {
+  width: 800px;
+}
+.page-header {
+  text-align: center;
+}
+.page-body {
+  overflow: auto;
+  max-height: calc(100vh - 400px);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 8px 16px;
+  text-align: justify;
+}
+
+.border-bottom-dashed {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.87);
+  margin-bottom: 16px;
+}
+.page-body pre {
+  white-space: pre-wrap;
+}
+.page-footer {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  padding: 16px;
+  align-items: center;
+  justify-content: center;
+}
+
+.p-child {
+  margin-left: 16px;
+}
+.p-child-content {
+  margin-left: 24px;
+}
+.card-auth {
+  width: 800px !important;
+}
+@media screen and (max-height: 500px) {
+  .page-body {
+    max-height: calc(100vh - 200px);
+  }
+}

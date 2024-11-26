@@ -1,0 +1,121 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <button mat-stroked-button class="btn-header">
+      <mat-icon matBadge="3" matBadgeOverlap="true" matBadgePosition="before">
+        assignment</mat-icon><span class="label">Issues</span>
+    </button>
+    <button mat-stroked-button class="btn-header">
+      <mat-icon matBadge="5" matBadgeOverlap="true" matBadgePosition="before">
+        mail</mat-icon><span class="label">Messages</span>
+    </button>
+    <button mat-stroked-button class="btn-header">
+      <mat-icon>settings</mat-icon><span class="label">Widgets</span>
+    </button>
+  </ng-container>
+  <mat-grid-list [cols]="cols" rowHeight="55px" cdkDropList cdkDropListOrientation="horizontal"
+    (cdkDropListDropped)="drop($event)" class="example-list widget-container">
+    <mat-grid-tile *ngFor="let widget of widgets" [colspan]="widget.cols"
+      [rowspan]="collapseWidget(widget.rows, widget.collapse)" cdkDrag>
+      <div class="custom-placeholder" *cdkDragPlaceholder></div>
+      <mat-card class="dashboard-card">
+        <mat-card-header class="dashboard-head" cdkDragHandle>
+          <mat-card-title>
+            <span>{{widget.title}}</span>
+            <div style="float: right">
+              <button matRipple aria-label="Toggle menu" (click)="widget.collapse = !widget.collapse">
+                <mat-icon>expand_more</mat-icon>
+              </button>
+              <button matRipple aria-label="Toggle menu" (click)="refreshWidget(widget)">
+                <mat-icon>refresh</mat-icon>
+              </button>
+              <button matRipple aria-label="Toggle menu" [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" xPosition="before">
+                <button mat-menu-item [matMenuTriggerFor]="cols" [disabled]="disableColumnMenu">
+                  <mat-icon>view_week</mat-icon>
+                  <span>Columns</span>
+                </button>
+                <button mat-menu-item [matMenuTriggerFor]="rows">
+                  <mat-icon>table_rows</mat-icon>
+                  <span>Rows</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item [matMenuTriggerFor]="refresh">
+                  <mat-icon>autorenew</mat-icon>
+                  <span>Refresh After</span>
+                </button>
+                <mat-divider></mat-divider>
+                <button mat-menu-item (click)="removeWidget(widget.widgetId)">
+                  <mat-icon>close</mat-icon>
+                  <span>Remove</span>
+                </button>
+              </mat-menu>
+              <mat-menu #cols="matMenu">
+                <button mat-menu-item (click)="widget.cols = changeCols(1)">
+                  <mat-icon>{{getCheckedIcon(widget.cols, 1)}}</mat-icon>
+                  <span>1</span>
+                </button>
+                <button mat-menu-item (click)="widget.cols = changeCols(2)">
+                  <mat-icon>{{getCheckedIcon(widget.cols, 2)}}</mat-icon>
+                  <span>2</span>
+                </button>
+              </mat-menu>
+              <mat-menu #rows="matMenu">
+                <button mat-menu-item *ngFor="let rows of widgetRows" (click)="widget.rows = changeRows(rows)">
+                  <mat-icon>{{getCheckedIcon(widget.rows, rows)}}</mat-icon>
+                  <span>{{rows}}</span>
+                </button>
+              </mat-menu>
+              <mat-menu #refresh="matMenu">
+                <ng-container *ngFor="let refreshAfterValue of refreshAfterValues">
+                  <button mat-menu-item (click)="changeRefreshAfter(widget, refreshAfterValue)">
+                    <mat-icon>
+                      {{getCheckedIcon(widget.refreshAfter, refreshAfterValue)}}
+                    </mat-icon>
+                    <span>{{getRefreshAfterTitle(refreshAfterValue)}}</span>
+                  </button>
+                  <mat-divider *ngIf="refreshAfterValue === 0"></mat-divider>
+                </ng-container>
+              </mat-menu>
+            </div>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <ng-template [cdkPortalOutlet]="getWidgetContent(widget)"></ng-template>
+        </mat-card-content>
+      </mat-card>
+
+    </mat-grid-tile>
+  </mat-grid-list>
+  <!-- fake backend data -->
+  <mat-card>
+    <mat-card-content class="dashboard-card-content">
+      <table>
+        <thead>
+          <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Role</td>
+            <td>...</td>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of fakeStudents; let index = index">
+            <td>{{student.id}}</td>
+            <td>{{student.name}}</td>
+            <td>{{student.email}}</td>
+            <td>{{student.role}}</td>
+            <td>
+              <button>Edit</button>
+              <button (click)="deleteStudent(student.id)">Del</button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</o-content-widget>

@@ -1,0 +1,50 @@
+<mat-toolbar>
+    <mat-toolbar-row>
+        <span>Message</span>
+        <span class="search-spacer"></span>
+        <div class="mat-input-search">
+            <span matPrefix><mat-icon>search</mat-icon></span>
+            <input matInput placeholder="Search">
+        </div>
+        <span class="massage-spacer"></span>
+        <button mat-stroked-button class="mat-button" aria-label="" routerLink="/new-messages">
+            <mat-icon>add</mat-icon>New message
+        </button>
+    </mat-toolbar-row>
+    <mat-toolbar-row>
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="mat-tab-message">
+            <mat-tab *ngFor="let option of messageOptions.options" label="{{option.title}}"
+                (click)="getOptionsContents(option.id)"></mat-tab>
+            <mat-tab label="+" (click)="goMessageFolderPage()"></mat-tab>
+        </mat-tab-group>
+    </mat-toolbar-row>
+</mat-toolbar>
+<div>
+    <table mat-table [dataSource]="dataSource" class="message-table">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> <mat-checkbox></mat-checkbox></th>
+            <td mat-cell *matCellDef="let element"> <mat-checkbox></mat-checkbox> </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="from">
+            <th mat-header-cell *matHeaderCellDef> FROM </th>
+            <td mat-cell *matCellDef="let element"> {{element.from}} </td>
+        </ng-container>
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef> Title </th>
+            <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
+
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+<o-message-body [listTypes]="messageContentTypes"></o-message-body>

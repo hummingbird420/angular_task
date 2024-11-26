@@ -1,0 +1,13 @@
+<div style="height: 100px"></div>
+<mat-card class="glass card-auth">
+  <mat-card-header class="glass white">
+    <mat-card-title>
+      <img [src]="logo" alt="Orbund" class="logo" (error)="loadDefault()" />
+    </mat-card-title>
+    <mat-card-subtitle>{{ schoolName }}</mat-card-subtitle>
+  </mat-card-header>
+  <router-outlet></router-outlet>
+</mat-card>
+<div style="height: 50px; position: relative; margin-left: 9%">
+  <div class="brand">Powered by Orbund LLC</div>
+</div>

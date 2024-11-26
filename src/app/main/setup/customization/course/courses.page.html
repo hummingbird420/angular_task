@@ -1,0 +1,31 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <mat-form-field appearance="outline" style="margin-right: 8px">
+      <mat-label>{{curriculumField.fieldTitle}}</mat-label>
+      <mat-select [(value)]="curriculumId" (selectionChange)="getCourses()">
+        <mat-option
+          *ngFor="let option of curriculumField.options"
+          [value]="option.value"
+        >
+          {{option.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{departmentField.fieldTitle}}</mat-label>
+      <mat-select [(value)]="levelId" (selectionChange)="getCourses()">
+        <mat-option
+          *ngFor="let option of departmentField.options"
+          [value]="option.value"
+        >
+          {{option.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
+  <o-table
+    [columns]="columns"
+    [dataSource]="dataSource"
+    (clickAdd)="createNew()"
+  ></o-table>
+</o-content-widget>

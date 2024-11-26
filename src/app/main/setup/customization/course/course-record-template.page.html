@@ -1,0 +1,48 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <div fxLayout="row wrap" fxLayoutGap="8px">
+      <button mat-raised-button class="btn-sm" (click)="saveChanges()">
+        <mat-icon>done</mat-icon>{{"Done" | asyncTranslate | async}}
+      </button>
+
+      <button
+        mat-raised-button
+        class="btn-sm"
+        (click)="openAddStandardFieldsDialog()"
+      >
+        <mat-icon>done</mat-icon>
+        {{"Add Standard Field" | asyncTranslate | async}}
+      </button>
+      <button mat-raised-button class="btn-sm">Add Custom Field</button>
+    </div>
+  </ng-container>
+  <ng-container>
+    <form>
+      <mat-tab-group
+        [dynamicHeight]="true"
+        [selectedIndex]="selectedSection"
+        (selectedIndexChange)="setSelectedSection($event)"
+      >
+        <mat-tab *ngFor="let tab of recordSections, let tabIndex = index">
+          <ng-template mat-tab-label> {{tab.listText}} </ng-template>
+          <div
+            cdkDropList
+            (cdkDropListDropped)="drop($event, tab.listCode)"
+            class="dnd-container"
+          >
+            <o-dnd-field
+              *ngFor="let field of getFormFields(tab.listCode); let index = index"
+              cdkDrag
+              class="dnd-item"
+              [field]="field"
+              [index]="index"
+              [hideEditIcon]="true"
+              (remove)="removeField($event)"
+            >
+            </o-dnd-field>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </form>
+  </ng-container>
+</o-content-widget>

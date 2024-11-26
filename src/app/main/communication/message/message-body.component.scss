@@ -1,0 +1,18 @@
+table.mat-table {
+  width: 100%;
+}
+table.mat-table.message-table {
+  border-top: 1px solid #e0e0e0 !important;
+}
+.mat-column-id {
+  width: 40px;
+}
+.mat-column-from {
+  width: 20%;
+}
+.mat-column-title {
+  width: calc(80% - 100px);
+}
+.mat-column-date {
+  width: 60px;
+}

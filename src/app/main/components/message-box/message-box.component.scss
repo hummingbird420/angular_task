@@ -1,0 +1,27 @@
+.message-box {
+  padding: 8px 12px;
+  margin: 8px 0px;
+  border: 1px solid rgba(105, 105, 105, 0.5);
+  border-radius: 8px;
+  border-left: 4px solid rgba(105, 105, 105, 0.5);
+  display: flex;
+  align-items: flex-start;
+}
+.message-box.info {
+  color: #0c5460;
+  background-color: rgba($color: #d1ecf1, $alpha: 0.55);
+  border-color: #bee5eb;
+  .mat-icon {
+    transform: rotate(180deg) translate(25%);
+  }
+}
+.message-box.warning {
+  color: #856404;
+  background-color: rgba($color: #faf174, $alpha: 0.35);
+  border-color: #fce4a3;
+}
+.message-box.danger {
+  color: #881d28;
+  background-color: rgba($color: #f8ded7, $alpha: 0.75);
+  border-color: #f5c9c6;
+}

@@ -1,0 +1,12 @@
+.mat-expansion-panel-header.mat-expanded.checkout {
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.87);
+}
+.payment-screen-message {
+  padding: 16px 4px;
+}
+@media screen and (max-width: 800px) {
+  .section-header {
+    padding: 0 8px;
+  }
+}

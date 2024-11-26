@@ -1,0 +1,103 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <button class="btn-sm" mat-raised-button (click)="saveOptions()">
+      <mat-icon>save</mat-icon>{{'Save' | asyncTranslate | async}}
+    </button>
+  </ng-container>
+  <mat-tab-group [dynamicHeight]="true">
+    <mat-tab
+      [label]="userFeature.title"
+      *ngFor="let userFeature of (userFeatures | async); let i = index"
+      [formGroup]="formGroups[i]"
+    >
+      <br />
+      <mat-accordion [multi]="true">
+        <mat-expansion-panel [expanded]="'true'" *ngIf="userFeature.menus">
+          <mat-expansion-panel-header>
+            {{"Main Menu" | asyncTranslate | async}}
+          </mat-expansion-panel-header>
+          <ul formGroupName="menuGroup">
+            <li
+              *ngFor="let menu of userFeature.menus"
+              class="menu"
+              [formGroupName]="menu.menuId"
+            >
+              <o-menu-checkboxes
+                [formGroup]="getFormGroup(i, menu.menuId)"
+                [menu]="menu"
+              ></o-menu-checkboxes>
+            </li>
+          </ul>
+        </mat-expansion-panel>
+        <div
+          *ngIf="userFeature.sectionInfo && userFeature.sectionInfo.subSections"
+          formGroupName="permissionGroup"
+        >
+          <mat-expansion-panel
+            [expanded]="'true'"
+            *ngFor="let subSection of userFeature.sectionInfo.subSections"
+          >
+            <mat-expansion-panel-header>
+              {{subSection.subTitle}}
+            </mat-expansion-panel-header>
+            <div
+              *ngIf="subSection.sortedFields"
+              fxFlex.xs="100"
+              fxLayout="column"
+            >
+              <div *ngFor="let field of subSection.sortedFields">
+                <div
+                  fxFlex="100"
+                  fxLayout="row"
+                  [ngSwitch]="field.fieldType.toUpperCase()"
+                >
+                  <div
+                    class="o-form-field"
+                    fxFlex="100"
+                    fxLayout="row wrap"
+                    fxLayoutAlign="start start"
+                    fxLayoutGap="16px"
+                    *ngSwitchCase="'DROPDOWN'"
+                  >
+                    <mat-label fxFlex="40" fxFlex.xs="100" fxLayoutAlign="end">
+                      {{ field.fieldTitle | htmlDecoder }}
+                    </mat-label>
+                    <div fxFlex="40" fxFlex.xs="100" fxLayout="column">
+                      <div fxFlex="100" fxLayout="row">
+                        <mat-form-field
+                          fxFlex="50"
+                          fxFlex.xs="100"
+                          fxFlex.sm="75"
+                        >
+                          <mat-select [formControlName]="field.fieldName">
+                            <mat-option
+                              [value]="option.value"
+                              *ngFor="let option of field.options"
+                            >
+                              {{ option.title | htmlDecoder }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <mat-hint *ngIf="field.hints">
+                        {{ field.hints | htmlDecoder }}
+                      </mat-hint>
+                    </div>
+                  </div>
+                  <dd *ngSwitchCase="'CHECKBOX'">
+                    <mat-checkbox [formControlName]="field.fieldName"
+                      >{{ field.fieldTitle | htmlDecoder }}</mat-checkbox
+                    >
+                  </dd>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </div>
+      </mat-accordion>
+    </mat-tab>
+  </mat-tab-group>
+  <button class="btn-sm" mat-raised-button (click)="saveOptions()">
+    <mat-icon>save</mat-icon>{{'Save' | asyncTranslate | async}}
+  </button>
+</o-content-widget>

@@ -1,0 +1,69 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "./themes/glassmorphism.scss";
+@import "./themes/loader.scss";
+@import "./themes/shopping-cart.scss";
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: rgba(0, 0, 0, 0.87);
+}
+a {
+  display: inline-block;
+}
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+/***** edit-delete-icon ****/
+/*** This style is not related to theme but show edit delete icon on hover elements */
+
+.edit-del-option {
+  /**/
+}
+
+.edit-del-element {
+  display: inline-block;
+}
+.edit-del-icon {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease 0s, transform 0.2s ease 0s;
+  transform: translate(-8px, 0px);
+}
+
+.edit-del-element:hover .edit-del-icon {
+  visibility: visible;
+  cursor: pointer;
+  transition: opacity 0.2s ease 0s, transform 0.2s ease 0s;
+  opacity: 1;
+  transform: translate(0px, 0px);
+}
+mat-form-field {
+  transition: margin 350ms;
+}
+
+mat-form-field.ng-touched.ng-invalid,
+mat-form-field.mat-form-field-invalid {
+  margin-bottom: 8px !important;
+}
+
+.mat-icon {
+  path {
+    stroke: attr(color);
+  }
+}
+
+.mat-select-panel {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+@include theme-color(blue1, rgb(0, 102, 204));
+@include theme-color(chocolate1, #8b4950);
+@include theme-color(green1, #009933);
+@include theme-color(orange1, #ff6600);
+@include theme-color(purple1, #501b73);
+@include theme-color(redorange1, #ec4213);
+@include theme-color(red1, #990000);
+@include theme-color(teal1, #00aeae);

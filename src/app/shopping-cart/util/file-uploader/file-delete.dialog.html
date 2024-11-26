@@ -1,0 +1,21 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  <b>{{"Delete File" | translate}}</b>
+</h3>
+<div mat-dialog-content>
+  {{"Are you sure you wish to delete this attachment file?" | translate}}
+</div>
+<div mat-dialog-actions fxLayoutAlign="center center" fxLayoutGap="8px">
+  <button mat-stroked-button class="fill" (click)="delete()">
+    <mat-icon>delete</mat-icon>
+    {{"Delete" | translate }}
+  </button>
+  <button mat-stroked-button mat-dialog-close style="background-color: white">
+    <mat-icon>close</mat-icon>
+    {{"Cancel" | translate }}
+  </button>
+</div>

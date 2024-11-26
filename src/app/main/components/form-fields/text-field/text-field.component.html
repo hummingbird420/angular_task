@@ -1,0 +1,13 @@
+<div fxFlex="100" fxLayoutAlign="start center" fxLayoutGap="4px">
+  <mat-form-field class="o-text-field">
+    <input
+      matInput
+      type="text"
+      [formControl]="control"
+      [maxLength]="maxLength"
+      (change)="onValueChange()"
+      (focus)="onFocus()"
+    />
+  </mat-form-field>
+  <span>{{ value?.length || 0 }}/{{ maxLength }}</span>
+</div>

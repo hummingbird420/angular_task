@@ -1,0 +1,17 @@
+<div>
+  <mat-radio-group
+    aria-label="Select an option"
+    (change)="colorChange($event)"
+    class="theme-color-chooser"
+    fxLayout="column"
+  >
+    <mat-radio-button
+      *ngFor="let color of colors | async"
+      [value]="color.value"
+      [checked]="color.value === value"
+      [class]="color.value"
+    >
+      {{color.title}}
+    </mat-radio-button>
+  </mat-radio-group>
+</div>

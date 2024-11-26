@@ -1,0 +1,26 @@
+.readonly .mat-input-element:disabled {
+  color: rgba($color: #000000, $alpha: 0.87);
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+.o-form-field mat-form-field {
+  transition: margin 250ms;
+}
+
+.o-form-field mat-form-field.ng-touched.ng-invalid,
+.o-form-field mat-form-field.mat-form-field-invalid {
+  margin-bottom: 4px !important;
+}
+
+.mr {
+  margin-bottom: 20px;
+}
+
+.required-mark::after {
+  content: "*";
+  color: red;
+}
+.select-search {
+  width: 95%;
+}

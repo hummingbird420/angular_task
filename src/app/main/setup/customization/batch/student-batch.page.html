@@ -1,0 +1,70 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <div fxFlex="100" fxLayout="column">
+    <div
+      fxFlex="100"
+      fxLayout.gt-xs="row wrap"
+      fxLayout.xs="column"
+      fxLayoutGap="20px"
+      fxLayoutAlign="start center"
+    >
+      <div>{{label}}</div>
+      <div class="o-list-field-wrapper">
+        <mat-selection-list
+          role="listbox"
+          dense
+          class="glass"
+          #listCodes1
+          [multiple]="false"
+        >
+          <mat-list-option
+            role="option"
+            *ngFor="let batchInfo of batches; let i = index"
+            [value]="batchInfo"
+            (click)="onSelectionChange(i)"
+          >
+            {{batchInfo.batchNumber}}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+      <div fxLayout="column" fxLayoutGap="5px">
+        <button mat-raised-button class="btn-sm" (click)="addOption()">
+          <mat-icon>add</mat-icon>{{"Add" | asyncTranslate | async }}
+        </button>
+        <button
+          mat-raised-button
+          class="btn-sm"
+          (click)="editOption(listCodes1.selectedOptions.selected)"
+        >
+          <mat-icon>edit</mat-icon>{{"Edit" | asyncTranslate | async }}
+        </button>
+        <button
+          mat-raised-button
+          class="btn-sm"
+          (click)="removeOption(listCodes1.selectedOptions.selected)"
+        >
+          <mat-icon>remove</mat-icon>{{"Remove" | asyncTranslate | async }}
+        </button>
+      </div>
+    </div>
+    <o-action-bar
+      (save)="saveBatches()"
+      (back)="back()"
+      [type]="'add'"
+      [fullWidth]="true"
+    ></o-action-bar>
+  </div>
+</o-content-widget>
+<ng-template #addEditTemplate>
+  <form [formGroup]="addEditFormGroup" class="add-edit-dialog-form">
+    <input type="hidden" formControlName="studentBatchId" />
+    <mat-form-field appearance="outline" *ngFor="let field of fields">
+      <mat-label>{{field.fieldTitle}}</mat-label>
+      <input matInput [formControlName]="field.fieldName" [maxLength]="251" />
+      <mat-error
+        *ngIf="isInvalid(field.fieldName)"
+        [innerHtml]="getErrorMessage(field.fieldName)"
+      >
+      </mat-error>
+    </mat-form-field>
+  </form>
+</ng-template>

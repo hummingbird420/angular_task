@@ -1,0 +1,14 @@
+:host {
+  min-width: 620px;
+}
+.message-recipient-body {
+  min-width: 850px;
+}
+table th,
+table td {
+  padding: 0 8px;
+}
+.checkbox-field {
+  display: flex;
+  gap: 4px;
+}

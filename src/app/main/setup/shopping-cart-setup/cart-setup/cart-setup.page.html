@@ -1,0 +1,80 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <div fxLayout="column">
+    <div><h3 class="mb-0">Shoppping Cart Links</h3></div>
+    <div fxLayoutAlign="start center" fxLayoutGap="8px">
+      <b>Course Link:</b>
+      <a [routerLink]="getLink('course')" target="_">
+        {{getHost() + getLink("course")}}
+      </a>
+      <o-clipboard-copy
+        [copyText]="getHost() + getLink('course')"
+      ></o-clipboard-copy>
+    </div>
+    <div fxLayoutAlign="start center" fxLayoutGap="8px">
+      <b>Program Link:</b>
+      <a [routerLink]="getLink('program')" target="_">
+        {{getHost() + getLink("program")}}
+      </a>
+      <o-clipboard-copy
+        [copyText]="getHost() + getLink('program')"
+      ></o-clipboard-copy>
+    </div>
+    <div fxLayoutAlign="start center" fxLayoutGap="8px">
+      <b>Search Course Link:</b>
+      <a [routerLink]="getLink('search-course')" target="_">
+        {{getHost() + getLink("search-course")}}
+      </a>
+      <o-clipboard-copy
+        [copyText]="getHost() + getLink('search-course')"
+      ></o-clipboard-copy>
+    </div>
+
+    <div fxLayoutAlign="start center" fxLayoutGap="8px">
+      <b>Search Program Link:</b>
+      <a [routerLink]="getLink('search-program')" target="_">
+        {{getHost() + getLink("search-program")}}
+      </a>
+      <o-clipboard-copy
+        [copyText]="getHost() + getLink('search-program')"
+      ></o-clipboard-copy>
+    </div>
+    <div><h3>Multiple Attendees</h3></div>
+    <div fxLayoutAlign="start center" fxLayoutGap="8px">
+      <b>Course Link:</b>
+      <a [routerLink]="getLink('course', true)" target="_">
+        {{getHost() + getLink("course", true)}}
+      </a>
+      <o-clipboard-copy
+        [copyText]="getHost() + getLink('course', true)"
+      ></o-clipboard-copy>
+    </div>
+    <div fxLayoutAlign="start center" fxLayoutGap="8px">
+      <b>Program Link:</b>
+      <a [routerLink]="getLink('program', true)" target="_">
+        {{getHost() + getLink("program", true)}}
+      </a>
+      <o-clipboard-copy
+        [copyText]="getHost() + getLink('program', true)"
+      ></o-clipboard-copy>
+    </div>
+    <div fxLayoutAlign="start center" fxLayoutGap="8px">
+      <b>Search Course Link:</b>
+      <a [routerLink]="getLink('search-course', true)" target="_">
+        {{getHost() + getLink("search-course", true)}}
+      </a>
+      <o-clipboard-copy
+        [copyText]="getHost() + getLink('search-course', true)"
+      ></o-clipboard-copy>
+    </div>
+
+    <div fxLayoutAlign="start center" fxLayoutGap="8px">
+      <b>Search Program Link:</b>
+      <a [routerLink]="getLink('search-program', true)" target="_">
+        {{getHost() + getLink("search-program", true)}}
+      </a>
+      <o-clipboard-copy
+        [copyText]="getHost() + getLink('search-program', true)"
+      ></o-clipboard-copy>
+    </div>
+  </div>
+</o-content-widget>

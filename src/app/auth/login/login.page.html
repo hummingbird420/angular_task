@@ -1,0 +1,38 @@
+<form class="brown-text" [formGroup]="loginForm" (submit)="login()">
+  <!-- <mat-card-header>
+    <mat-card-title> Galactic System Login </mat-card-title>
+  </mat-card-header> -->
+  <mat-card-content>
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="" id="username" formControlName="username" />
+      <mat-error *ngIf="isInvalid('username')">
+        Please enter username.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" placeholder="" formControlName="password" />
+      <mat-error *ngIf="isInvalid('password')">
+        Please enter password.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="roleId" disableOptionCentering>
+        <mat-option *ngFor="let role of roles" [value]="role.roleId">{{role.roleName}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="isInvalid('password')"> Please select role. </mat-error>
+    </mat-form-field>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button type="submit" class="login-button">Login</button>
+    <!-- <div style="height: 24px" *ngIf="microfoftLoginEnable"></div>
+    <mat-divider *ngIf="microfoftLoginEnable"></mat-divider>
+    <button *ngIf="microfoftLoginEnable" type="button" class="microsoft-button" (click)="microsoftLogin()">
+      <img src="/assets/images/ms-symbollockup_signin_light.png">
+    </button> -->
+    <div style="height: 8px"></div>
+    <a href="/auth/forgot-password" class="forgot-password-link">Forgot Password?</a>
+  </mat-card-actions>
+</form>

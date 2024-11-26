@@ -1,0 +1,51 @@
+::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  background-color: white !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: white !important; /*inner circle color change*/
+}
+
+::ng-deep
+  .mat-radio-button.mat-accent.mat-radio-checked
+  .mat-radio-outer-circle {
+  border-color: white !important; /*outer ring color change*/
+}
+::ng-deep .mat-radio-button.mat-accent .mat-radio-outer-circle {
+  border-color: white !important; /*outer ring color change*/
+}
+::ng-deep .mat-radio-button.mat-accent .mat-radio-label {
+  color: white !important;
+}
+::ng-deep .mat-radio-button {
+  background: #009933;
+  padding: 4px 8px 4px 4px;
+  border-radius: 16px;
+  margin-right: 8px;
+  margin-bottom: 4px;
+  margin-top: 4px;
+}
+::ng-deep .mat-radio-button.blue {
+  background: rgb(0, 102, 204);
+}
+::ng-deep .mat-radio-button.redorange {
+  background: #ec4213;
+}
+::ng-deep .mat-radio-button.purple {
+  background: #501b73;
+}
+::ng-deep .mat-radio-button.red {
+  background: #990000;
+}
+::ng-deep .mat-radio-button.orange {
+  background: #ff6600;
+}
+::ng-deep .mat-radio-button.pink {
+  background: #e600e6;
+}
+::ng-deep .mat-radio-button.chocolate {
+  background: #8b4950;
+}
+.theme-color-chooser {
+  width: 150px;
+}

@@ -1,0 +1,6 @@
+<div class="pagination">
+    <a matRipple *ngFor="let letter of letters" (click)="showPage(letter)" [className]="active(letter)"
+        href="javascript:void(0)">
+        {{letter}}
+    </a>
+</div>

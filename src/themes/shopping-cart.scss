@@ -1,0 +1,1814 @@
+$orange: #fbbd19;
+$orange-light: #fff9ea;
+$white: #ffffff;
+$grey-light: #f8f8f9;
+$grey: #e5e5e5;
+$grey-medium: #c0c0c0;
+$grey-dark: #5a5a5a;
+
+$green: #a1d551;
+$green-dark: #8dbd42;
+$black: #000000;
+$red: #ff6666;
+
+$body-bg: darken($grey-light, 0%);
+$tr-border: $grey;
+
+$td-font-color: $black;
+$th-font-color: rgba($td-font-color, 0.5);
+$th-td-bg: $white;
+$border-radius: 8px;
+$m-width: calc(100% - 16px);
+
+.shopping-cart-root {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 20px;
+  background-color: $body-bg;
+  * {
+    box-sizing: border-box;
+  }
+
+  hr {
+    height: 1px;
+    width: 100%;
+    background-color: #e5e5e5;
+    border: none;
+    margin: 16px 0px;
+  }
+
+  form {
+    width: 100%;
+  }
+  b {
+    font-weight: 500;
+  }
+  a {
+    cursor: pointer;
+  }
+  h1 {
+    font-weight: 600;
+    font-family: "Inter", sans-serif;
+  }
+  .error,
+  .mat-icon.del,
+  .mat-icon.remove {
+    color: red;
+  }
+  .text-center {
+    text-align: center;
+  }
+  .text-right {
+    text-align: right;
+  }
+  .bg-white {
+    background: white !important;
+  }
+  .sticky {
+    backdrop-filter: blur(0px);
+  }
+  .hidden {
+    visibility: hidden;
+  }
+  .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: #f4433694;
+  }
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+  }
+
+  #main-container {
+    padding: 0px;
+  }
+
+  @media screen and (min-width: 800px) {
+    #main-container {
+      min-width: 792px;
+    }
+  }
+
+  @media screen and (min-width: 600px) and (max-width: 799px) {
+    #main-container {
+      min-width: 400px;
+    }
+  }
+
+  @media screen and (max-width: 599px) {
+    #main-container {
+      min-width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    img.logo {
+      height: 32px !important;
+    }
+    .header-bg {
+      height: 66px !important;
+    }
+  }
+
+  img.logo {
+    height: 48px;
+    border: none;
+  }
+  .header-bg {
+    height: 92px;
+    width: 100%;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+  .top-cart {
+    color: $th-font-color;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 16px;
+    padding: 4px 8px;
+
+    .item {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 8px;
+      cursor: pointer;
+      height: 30px;
+    }
+
+    .icon-cart-selected {
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      * {
+        position: absolute;
+        height: inherit;
+        width: inherit;
+        left: 0;
+        top: 0;
+      }
+
+      .cart-count {
+        font-size: 14px;
+        text-align: center;
+        padding-top: 12px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .button-wrapper {
+    display: flex;
+  }
+  .button-wrapper.center {
+    justify-content: center;
+    width: auto;
+  }
+  .button-wrapper.right {
+    width: auto;
+  }
+
+  .display-cart-head {
+    display: flex;
+    justify-content: space-between;
+    margin-top: -8px;
+  }
+  .msg-empty-cart {
+    display: inline-flex;
+    align-items: center;
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 500;
+  }
+  .course-card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0px;
+    gap: 8px;
+    hr {
+      margin: 0px 0 16px 0;
+    }
+  }
+
+  .course-card-title {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 22px;
+  }
+  .about-course {
+    display: flex;
+    color: $green;
+    width: min-content;
+    a {
+      text-decoration: underline;
+      color: $green;
+      white-space: nowrap;
+    }
+  }
+
+  .cart-summary {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 16px;
+    margin-left: 8px;
+  }
+  .coupon-field-group {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .apply-button-wrapper {
+    padding-top: 4px;
+  }
+  .cart-coupon mat-label {
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .cart-amount-summary {
+    font-weight: bold;
+    width: auto;
+    padding-right: 8px;
+    .row {
+      text-align: right;
+
+      &:first-child {
+        color: rgba($td-font-color, 0.5);
+      }
+      .label {
+        padding-right: 32px;
+      }
+      td {
+        vertical-align: top;
+      }
+      .coupon {
+        text-align: right;
+      }
+    }
+  }
+  .continue-button {
+    text-align: center;
+  }
+  @media screen and (max-width: 799px) {
+    .course-card-header {
+      flex-direction: column;
+      gap: 8px;
+    }
+    .display-cart-head {
+      flex-direction: column;
+      gap: 16px;
+      justify-content: center;
+      .msg-empty-cart {
+        display: flex;
+        justify-content: center;
+      }
+      .button-wrapper {
+        width: $m-width;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        button {
+          width: 100%;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+    }
+
+    .cart-summary {
+      flex-direction: column;
+      width: $m-width;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cart-coupon {
+      flex-direction: column;
+      width: 100%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .coupon-field-group {
+      justify-content: space-between;
+      .o-form-field {
+        width: calc(100% - 105px);
+      }
+      mat-form-field {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+    .apply-button-wrapper button {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+    .continue-button {
+      width: $m-width;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 16px;
+      button {
+        width: 100%;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+  .mobile {
+    .course-card-header {
+      flex-direction: column;
+      gap: 8px;
+    }
+    .display-cart-head {
+      flex-direction: column;
+      gap: 16px;
+      justify-content: center;
+      .msg-empty-cart {
+        display: flex;
+        justify-content: center;
+      }
+      .button-wrapper {
+        width: $m-width;
+        //  max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        button {
+          width: 100%;
+          // max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+    }
+
+    .cart-summary {
+      flex-direction: column;
+      width: $m-width;
+      // max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cart-coupon {
+      flex-direction: column;
+      width: 100%;
+      //  max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .coupon-field-group {
+      justify-content: space-between;
+      .o-form-field {
+        width: calc(100% - 105px);
+      }
+      mat-form-field {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+    .apply-button-wrapper button {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+    .continue-button {
+      width: $m-width;
+      // max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 16px;
+      button {
+        width: 100%;
+        // max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+
+  button,
+  mat-form-field {
+    border-radius: 8px;
+  }
+  .mat-button-wrapper {
+    margin: 0px 16px;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  .mat-form-field-appearance-legacy .mat-form-field-underline {
+    height: 0px;
+  }
+  .o-form-field .mat-form-field-underline {
+    bottom: 2px;
+  }
+  .mat-form-field-label,
+  .mat-form-field-label-wrapper {
+    overflow: visible;
+  }
+  .add-student-multiple {
+    .col .mat-form-field-appearance-legacy .mat-form-field-label {
+      padding-left: 4px !important;
+    }
+  }
+  /*********************class-table*********************/
+  .filter-card {
+    display: flex;
+    place-content: center flex-start;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+    margin-top: 16px;
+
+    .clear-all {
+      display: none;
+      color: $th-font-color;
+      padding-left: 0;
+      padding-right: 0;
+      .mat-button-wrapper {
+        margin-left: 8px;
+        margin-right: 8px;
+      }
+      background: transparent;
+    }
+  }
+  .filter-header {
+    display: none;
+    place-content: stretch space-between;
+    align-items: stretch;
+    flex-direction: row;
+  }
+
+  .filter-counter-button {
+    padding-left: 0 !important;
+    padding-right: 0;
+    color: $th-font-color !important;
+    border-radius: $border-radius;
+    .mat-icon svg path {
+      stroke: $th-font-color !important;
+    }
+    .mat-button-wrapper {
+      margin-left: 8px;
+      margin-right: 8px;
+    }
+  }
+  .filter-counter {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  .filter-card-body {
+    display: flex;
+    place-content: center start;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 12px;
+    overflow: visible;
+    width: 100%;
+  }
+
+  @media screen and (max-width: 799px) {
+    .filter-card-body {
+      flex-direction: column;
+      min-width: 100%;
+    }
+  }
+  .mobile {
+    .filter-card-body {
+      flex-direction: column;
+      min-width: 100%;
+    }
+  }
+
+  .filter-card-row .mat-form-field-infix {
+    width: auto;
+    min-width: 110px;
+  }
+  .filter-items {
+    display: flex;
+    place-content: center start;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .filter-inline {
+    width: 400px;
+  }
+
+  @media screen and (max-width: 799px) {
+    .filter-card {
+      flex-direction: column;
+      padding-left: 0;
+      width: 100%;
+      max-width: 600px;
+
+      .filter-items,
+      .filter-card-body {
+        place-content: center center;
+        width: 100%;
+      }
+
+      .filter-card-row {
+        width: 99%;
+        margin: 0 8px;
+      }
+      .clear-all {
+        display: block;
+      }
+      .filter-header {
+        display: flex;
+        width: 99%;
+        margin: 0 8px;
+        h1,
+        h2 {
+          margin-bottom: 0px;
+        }
+      }
+    }
+    .filter-inline {
+      width: 100%;
+    }
+  }
+
+  .mobile {
+    .filter-card {
+      flex-direction: column;
+      padding-left: 0;
+      width: 100%;
+
+      .filter-items,
+      .filter-card-body {
+        place-content: center center;
+        width: 100%;
+      }
+
+      .filter-card-row {
+        width: 99%;
+        max-width: 100%;
+        margin: 0 8px;
+      }
+      .clear-all {
+        display: block;
+      }
+      .filter-header {
+        display: flex;
+        width: 99%;
+        margin: 0 8px;
+        h1,
+        h2 {
+          margin-bottom: 0px;
+        }
+      }
+    }
+    .filter-inline {
+      width: 100%;
+    }
+  }
+
+  .class-table {
+    width: 100%;
+    max-width: 100%;
+    border: none;
+    border-collapse: separate;
+    border-spacing: 0px;
+    margin: 0 auto !important;
+    .row-space {
+      padding: 8px 0px;
+      background-color: $body-bg;
+    }
+    .header-row {
+      color: $th-font-color;
+      font-size: 14px;
+      background-color: white;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      td {
+        padding: 24px 12px 0px 12px;
+        vertical-align: top;
+        border: 1px solid white;
+        border-bottom: none;
+      }
+      td:first-child {
+        border-top-left-radius: 8px;
+      }
+      td:last-child {
+        border-top-right-radius: 8px;
+      }
+    }
+    .content-row {
+      color: $td-font-color;
+      background-color: white;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      td {
+        padding: 8px 12px 24px 12px;
+        vertical-align: top;
+        border: 1px solid white;
+        border-top: None;
+      }
+      td:first-child {
+        border-bottom-left-radius: 8px;
+      }
+      td:last-child {
+        border-bottom-right-radius: 8px;
+      }
+    }
+
+    @media screen and (min-width: 800px) {
+      max-width: 100%;
+
+      .header-row:hover td,
+      .header-row.hover td {
+        border-top-color: $tr-border;
+      }
+      .header-row:hover td:first-child,
+      .header-row.hover td:first-child {
+        border-left-color: $tr-border;
+      }
+      .header-row:hover td:last-child,
+      .header-row.hover td:last-child {
+        border-right-color: $tr-border;
+      }
+
+      .header-row:hover + .content-row td,
+      .content-row:hover td {
+        border-bottom-color: $tr-border;
+      }
+      .header-row:hover + .content-row td:first-child,
+      .content-row:hover td:first-child {
+        border-left-color: $tr-border;
+      }
+      .header-row:hover + .content-row td:last-child,
+      .content-row:hover td:last-child {
+        border-right-color: $tr-border;
+      }
+    }
+    @media screen and (max-width: 799px) {
+      width: $m-width;
+      max-width: 600px;
+
+      .header-row {
+        display: none;
+      }
+      .content-row:not(.plan) td {
+        display: block;
+        padding-bottom: 16px;
+      }
+      .content-row {
+        td.session,
+        td.location,
+        td.classDuration {
+          max-width: 100%;
+        }
+        td.tuition,
+        td.fees,
+        td.price {
+          width: 30%;
+          display: inline-block;
+          margin: 0 auto;
+        }
+      }
+
+      .content-row td:not(.add-cart-cell)::before {
+        content: attr(data-title);
+        display: block;
+        width: 100%;
+        color: $th-font-color;
+        font-size: 14px;
+        background-color: white;
+        margin-bottom: 8px;
+        text-align: left;
+      }
+      td.add-cart-cell {
+        display: flex;
+        text-align: center;
+        width: 100%;
+        margin: 0 auto;
+      }
+    }
+    td {
+      max-width: fit-content;
+    }
+    td.session {
+      max-width: 250px;
+    }
+    td.location,
+    td.classDuration {
+      max-width: 200px;
+    }
+    td.price {
+      padding-right: 4px;
+    }
+    td.tuition,
+    td.fees,
+    td.price {
+      min-width: 100px;
+    }
+    td.add-cart-cell {
+      position: relative;
+      padding-left: 0px;
+      padding-top: 0px;
+      padding-right: 16px;
+      min-width: 48px;
+      text-align: right;
+      @media screen and (min-width: 800px) {
+        .mat-icon:hover {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .class-comment {
+      background-color: $orange-light;
+      padding: 14px 4px;
+      margin-bottom: 4px;
+      border-radius: 8px;
+      text-align: center;
+      justify-content: center;
+      display: flex;
+      font-size: 16px;
+      .mat-icon {
+        color: $orange;
+      }
+    }
+
+    .status-message {
+      position: absolute;
+      bottom: 3px;
+      right: 5px;
+      width: 300px;
+      text-align: right;
+      color: red;
+      font-size: 10pt;
+      line-height: 1.1rem;
+    }
+
+    .sm-status-message {
+      color: red;
+      margin: 4px 0px 8px 0px;
+    }
+
+    .color-green {
+      color: green;
+    }
+  }
+
+  .desktop {
+    .class-table {
+      td.add-cart-cell {
+        @media screen and (min-width: 800px) {
+          .mat-icon svg {
+            width: 32px;
+            height: 32px;
+            path {
+              stroke-width: calc(3px / 2);
+            }
+          }
+
+          .mat-icon:not(.cartSelected) {
+            color: darken($grey-dark, 50%);
+          }
+          .mat-icon:hover {
+            cursor: pointer;
+          }
+        }
+      }
+      @media screen and (min-width: 800px) {
+        td.add-cart-cell.cart {
+          padding-top: 8px;
+        }
+      }
+    }
+  }
+
+  .mobile .class-table {
+    width: 100%;
+
+    .header-row {
+      display: none;
+    }
+    .content-row:not(.plan) td {
+      display: block;
+      padding-bottom: 16px;
+    }
+    .content-row {
+      td.session,
+      td.location,
+      td.classDuration {
+        max-width: 100%;
+      }
+      td.tuition,
+      td.fees,
+      td.price {
+        width: 30%;
+        display: inline-block;
+        margin: 0 auto;
+      }
+    }
+
+    .content-row td:not(.add-cart-cell)::before {
+      content: attr(data-title);
+      display: block;
+      width: 100%;
+      color: $th-font-color;
+      font-size: 14px;
+      background-color: white;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+    td.add-cart-cell {
+      display: flex;
+      text-align: center;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .header-row:hover td,
+    .header-row.hover td {
+      border-top-color: none;
+    }
+    .header-row:hover td:first-child,
+    .header-row.hover td:first-child {
+      border-left-color: rgba(0, 0, 0, 0);
+    }
+    .header-row:hover td:last-child,
+    .header-row.hover td:last-child {
+      border-right-color: rgba(0, 0, 0, 0);
+    }
+
+    .header-row:hover + .content-row td,
+    .content-row:hover td {
+      border-bottom-color: rgba(0, 0, 0, 0);
+    }
+    .header-row:hover + .content-row td:first-child,
+    .content-row:hover td:first-child {
+      border-left-color: rgba(0, 0, 0, 0);
+    }
+    .header-row:hover + .content-row td:last-child,
+    .content-row:hover td:last-child {
+      border-right-color: rgba(0, 0, 0, 0);
+    }
+  }
+
+  /*********** Course description page ************************/
+  .button-wrapper {
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+
+    .mat-icon-button {
+      border-radius: 50%;
+      border: 1px solid $grey-dark;
+      margin: 8px;
+    }
+    .back-button {
+      margin: 4px 8px;
+      padding: 4px 8px;
+      background: transparent;
+      font-weight: normal;
+      .mat-icon {
+        height: 32px !important;
+        width: 32px;
+        margin-right: 8px;
+      }
+      .mat-button-wrapper {
+        margin: 0px 0px;
+      }
+    }
+  }
+  .course-description {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 6px;
+    padding: 4px 0px;
+
+    .course-desc-table {
+      width: auto;
+      margin: 8px auto;
+      //max-width: 800px;
+      @media screen and (max-width: 799px) {
+        margin: 8px 8px;
+      }
+    }
+    .course-class-table {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 100%;
+      padding: 32px 46px;
+      background: #ffffff;
+      margin: 14px 0px;
+      border-radius: $border-radius;
+      .row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        width: 100%;
+        padding: 7px 16px;
+        background-color: #ffffff;
+        // border-radius: $border-radius;
+        .col-right {
+          margin-left: 16px;
+        }
+        .col-left {
+          font-weight: 500;
+          &::after {
+            content: ":";
+            font-weight: 500;
+            padding-left: 2px;
+          }
+        }
+        &:not(:nth-child(2n + 1)) {
+          background-color: $grey-light;
+        }
+      }
+    }
+    .button-row {
+      padding-top: 8px;
+    }
+    @media screen and (max-width: 799px) {
+      .button-wrapper {
+        font-size: 14px;
+        .mat-icon-button {
+          width: 32px;
+          height: 32px;
+          margin: 4px;
+        }
+        .back-button {
+          margin: 4px 4px;
+          padding: 4px 4px;
+          .mat-icon {
+            margin-right: 4px;
+            height: 24px !important;
+            width: 24px;
+          }
+        }
+      }
+      .course-class-table {
+        font-size: 14px;
+        padding: 24px 16px;
+      }
+    }
+  }
+
+  .mat-form-field-appearance-outline {
+    font-size: 11px;
+    .mat-form-field-label {
+      font-size: 14px;
+      top: 1.184375em;
+      margin-top: -0.2em;
+    }
+
+    .mat-option {
+      font-size: 14px !important;
+    }
+  }
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+    .mat-form-field-label,
+  .mat-form-field-appearance-outline.mat-form-field-can-float
+    .mat-input-server:focus
+    + .mat-form-field-label-wrapper
+    .mat-form-field-label {
+    /* -webkit-transform: translateY(-1.59375em) scale(0.75); */
+    transform: translateY(-1.059375em) scale(0.75);
+    width: 133.3333333333%;
+  }
+  /*********** Registration ******************/
+  .reg-type-title {
+    font-size: 28px;
+  }
+  .registration-page {
+    padding-left: 16px;
+    padding-right: 16px;
+    overflow: hidden;
+  }
+  .almost-done {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 0px 8px;
+    text-align: center;
+    .title {
+      align-self: center;
+      font-size: 18px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      .mat-icon {
+        color: white;
+        margin-right: 8px;
+        margin-top: 2px;
+        font-size: 16px;
+        border-radius: 50%;
+        width: 24px;
+        min-width: 24px;
+        max-width: 24px;
+        height: 24px !important;
+        min-height: 24px;
+        max-height: 24px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 100;
+        align-self: flex-start;
+      }
+    }
+
+    .sub-title {
+      font-size: 14px;
+      font-weight: 400;
+      background: inherit;
+    }
+  }
+  .card-button {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 304px;
+    height: 320px;
+    background-color: #ffffff;
+    margin: 20px;
+    border-radius: $border-radius;
+    padding: 0 32px;
+
+    &:hover {
+      box-shadow: -1px 9px 23px rgba(0, 0, 0, 0.06);
+    }
+    img {
+      width: 160px;
+      height: 160px;
+    }
+    button {
+      height: 40px;
+      width: 100%;
+      font-weight: bold;
+    }
+  }
+
+  .all-req-msg {
+    display: flex;
+    width: 100%;
+    place-content: center;
+    align-items: center;
+    background: #fff9ea;
+    border-radius: 8px;
+    text-align: center;
+    padding: 16px;
+    color: #000;
+    font-family: "Inter", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    margin-bottom: 24px;
+    .mat-icon {
+      color: #fbbd19;
+      font-weight: lighter;
+      font-size: 28px;
+    }
+  }
+
+  /********** Login Page ***************/
+  .cart-login-wrapper {
+    margin: 0 auto;
+    padding: 0 16px;
+    mat-form-field {
+      min-width: 250px;
+      width: 100%;
+      .mat-form-field-infix,
+      .mat-form-field-label {
+        padding-left: 8px;
+      }
+    }
+    button {
+      width: 100%;
+      margin-top: 8px;
+    }
+    a {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+  @media screen and (min-width: 800px) {
+    .cart-login-wrapper {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+  }
+
+  /****** sign up ******/
+
+  .cart-form-wrapper {
+    margin: 0 auto;
+    .section {
+      width: 580px;
+      padding: 32px 64px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.02),
+        -1px -1px 10px rgba(0, 0, 0, 0.02);
+    }
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #5a5a5a;
+      margin-bottom: 24px;
+    }
+    mat-form-field {
+      width: 100%;
+      .mat-form-field-infix,
+      .mat-form-field-label {
+        padding-left: 8px;
+      }
+    }
+    button {
+      padding: 4px 64px !important;
+      margin-top: 8px;
+    }
+    .mat-datepicker-toggle button {
+      margin-top: 0px !important;
+      padding: 0px 0px !important;
+      margin-right: 4px;
+      width: 30px;
+    }
+    a {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  label.required::after {
+    content: "*";
+    color: red;
+  }
+
+  @media screen and (max-width: 799px) {
+    .cart-form-wrapper {
+      width: $m-width;
+      margin-left: auto;
+      margin-right: auto;
+      .section {
+        width: 100%;
+        padding: 32px 16px;
+      }
+      button {
+        width: $m-width;
+      }
+    }
+  }
+
+  /********Checkout page ************/
+  .checkout-page {
+    .error {
+      padding-top: 8px;
+    }
+    .payment-screen-msg {
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.04);
+      background: #fff9ea !important;
+      .payment-screen-msg-header {
+        overflow: hidden;
+        mat-panel-title {
+          justify-content: center !important;
+        }
+      }
+      .mat-action-row {
+        cursor: pointer;
+        border-top: none;
+        &:hover:not([aria-disable="true"]) {
+          background: rgba(0, 0, 0, 0.04);
+        }
+      }
+    }
+    .section-content,
+    .section-amount {
+      background: transparent;
+      border-radius: $border-radius;
+    }
+
+    .section-content {
+      min-width: 600px;
+      .header-row td,
+      .content-row td {
+        border: none !important;
+      }
+    }
+
+    .section-amount {
+      min-width: 200px;
+      width: 270px;
+      padding: 32px;
+      font-size: 14px;
+      box-shadow: -1px 2px 18px rgba(0, 0, 0, 0.08);
+    }
+    .amount-table {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      padding-left: 0px;
+      gap: 14px;
+      margin-top: 0px;
+      color: #5a5a5a;
+      li {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 4px;
+        label {
+          flex: 1;
+          display: flex;
+        }
+        &:not(.h-row) label::after {
+          content: " ";
+          flex: 1;
+          border-bottom: 1px dashed #c0c0c0;
+          margin-bottom: 4px;
+        }
+        &.h-row {
+          font-weight: 600;
+        }
+      }
+      &.inline {
+        display: inline-flex;
+        min-width: 250px;
+      }
+    }
+    .mat-expansion-panel {
+      background: $grey-light;
+      border-radius: 0px;
+      &:not(:first-child)::before {
+        content: " ";
+        display: flex;
+        border-bottom: 1px solid #e5e5e5;
+        margin: 0px 16px 0px 52px;
+      }
+      .amount-table {
+        margin-left: 28px;
+      }
+    }
+    .mat-expansion-panel-spacing {
+      margin: 0px 0;
+    }
+    .mat-expansion-panel-header .mat-content {
+      overflow: inherit;
+      align-items: center;
+      label {
+        display: inline-flex;
+        align-self: center;
+        align-items: center;
+      }
+    }
+
+    .sticky {
+      top: 16px;
+    }
+    .msg {
+      color: $grey-dark;
+      font-weight: 400;
+      text-align: center;
+    }
+
+    .other-charge {
+      padding: 16px 24px;
+      border-radius: $border-radius;
+      border: 1px solid #e5e5e5;
+      background: white;
+      margin-top: 12px;
+      .title {
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.5);
+      }
+      ul {
+        list-style-type: none;
+        padding-left: 0px;
+        li {
+          padding: 4px 0px;
+        }
+      }
+    }
+
+    @media screen and (max-width: 799px) {
+      .section-amount {
+        width: 100%;
+      }
+      .section-content {
+        min-width: 100%;
+      }
+    }
+
+    @media screen and (min-width: 800px) {
+      .desktop {
+        .section-content {
+          max-width: calc(100% - 300px);
+        }
+        .section-amount {
+          margin-top: 48px;
+        }
+      }
+    }
+  }
+
+  .desktop .checkout-page {
+    .section-content {
+      max-width: calc(100% - 300px);
+    }
+    .section-amount {
+      margin-top: 48px;
+    }
+  }
+
+  .mobile .checkout-page {
+    .class-table {
+      // width: calc(100% + 16px);
+      // margin-right: -8px !important;
+    }
+    .section-amount {
+      width: 100%;
+    }
+    .section-content {
+      min-width: 100% !important;
+    }
+  }
+
+  /****** billing page *********/
+  .billing-page {
+    .billing-section {
+      max-width: 100%;
+      background: white;
+      border-radius: $border-radius;
+    }
+
+    .contact-section {
+      width: 50%;
+      padding: 32px 0px 32px 32px;
+      .section {
+        padding: 0px 32px;
+        width: 100%;
+      }
+      @media screen and (min-width: 800px) {
+        .section-title {
+          padding-bottom: 16px;
+        }
+      }
+    }
+    .card-section {
+      padding: 32px 32px 32px 0px;
+      width: 50%;
+      .section {
+        background: $body-bg !important;
+        padding: 0px 32px;
+        width: 100%;
+      }
+      @media screen and (min-width: 800px) {
+        .section-title {
+          background: white;
+          margin-left: -32px;
+          margin-right: -32px;
+          margin-bottom: -16px;
+          padding-bottom: 16px;
+        }
+        &.bg-white .section {
+          background: white !important;
+        }
+      }
+    }
+
+    .trans-charge,
+    .proceed-section {
+      place-content: center;
+      align-items: center;
+      flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    .trans-charge {
+      color: red;
+      margin: 8px 32px;
+    }
+    @media screen and (max-width: 799px) {
+      .billing-section {
+        width: 100%;
+        background: $body-bg !important;
+      }
+      .contact-section,
+      .card-section {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+      .contact-section {
+        padding-left: 0px;
+        padding-top: 16px;
+        padding-bottom: 16px;
+        background: white;
+        border-radius: $border-radius;
+      }
+      .card-section {
+        padding-right: 0px;
+      }
+      .section {
+        box-shadow: none;
+      }
+    }
+  }
+
+  /****** billing page end *********/
+
+  /********** thank you page start *******/
+  .thank-you-page {
+    padding: 4px 8px;
+
+    .payment-details {
+      background: $white;
+      border-radius: 8px;
+      padding: 8px;
+      margin: 8px 0px;
+    }
+    .payment-details-table td {
+      padding: 4px 8px;
+    }
+
+    .order-info {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      justify-content: space-between;
+      margin: 8px;
+      font-size: 14px;
+
+      .client-info {
+        display: flex;
+        flex-direction: column;
+        .client-title {
+          margin-bottom: 0px;
+        }
+      }
+
+      .order-details {
+        display: flex;
+        flex-direction: column;
+        .order-title {
+          margin-bottom: 0px;
+        }
+      }
+    }
+  }
+
+  /*********** thank you page end ********/
+
+  .fw {
+    width: 100%;
+  }
+  .fx-right {
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+  .fx-center {
+    justify-content: center;
+    align-items: center;
+  }
+  .fx-column {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .o-dropdown,
+  .o-dropdown-billing {
+    min-width: calc(100% + 8px) !important;
+    border-radius: $border-radius;
+  }
+  .o-dropdown-billing {
+    margin-left: 8px;
+  }
+  /*
+  .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0 0.5em 0;
+  }
+  .mat-form-field-wrapper {
+    padding-bottom: 0.15em;
+  }
+
+  mat-form-field:not(.mat-form-field-should-float) .mat-form-field-infix {
+    top: -0.5em;
+  }
+
+  mat-select.mat-select-empty + span.mat-form-field-label-wrapper {
+    top: -1.15em;
+  }
+
+  mat-select.mat-select-empty:focus + span.mat-form-field-label-wrapper {
+    top: -1em;
+  }
+*/
+  .filter-card .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+
+  @media screen and (min-width: 800px) {
+    .desktop .sm-view {
+      display: none;
+    }
+    .mobile .fw {
+      width: auto !important;
+      float: right;
+      padding-right: 8px;
+    }
+  }
+  @media screen and (max-width: 799px) {
+    .lg-view {
+      display: none;
+    }
+  }
+  .mobile .lg-view {
+    display: none;
+  }
+
+  button .mat-icon {
+    svg path {
+      stroke-width: 2px;
+      fill: inherit;
+    }
+  }
+
+  button.fill .mat-icon {
+    svg path {
+      stroke: white;
+    }
+    svg circle {
+      stroke: white;
+      fill: inherit;
+      stroke-width: calc(3px / 2);
+    }
+  }
+
+  .icon.del {
+    svg path {
+      stroke: #ff6666 !important;
+      stroke-width: 1px;
+    }
+  }
+  .icon16 {
+    width: 16px;
+  }
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+::-webkit-file-upload-button {
+  border: 1px solid gray;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+::-moz-file-upload-button {
+  border: 1px solid gray;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+/************************** Theme color **************************************/
+@mixin cart-theme-color($theme-name, $color-dark, $color-light) {
+  .#{$theme-name} {
+    .theme-color {
+      color: $color-dark;
+    }
+    a {
+      color: $color-dark;
+    }
+    .about-course {
+      color: $color-dark;
+      a {
+        color: $color-dark;
+      }
+    }
+    td.add-cart-cell {
+      .mat-icon:hover {
+        color: $color-dark;
+      }
+      .mat-icon.cartSelected {
+        color: $color-dark;
+      }
+      button.remove-cart-item:hover,
+      mat-icon.remove-cart-item:hover {
+        color: $red;
+      }
+      button.remove-cart-item:hover {
+        mat-icon {
+          color: $red !important;
+          &:hover {
+            color: $red;
+          }
+        }
+      }
+    }
+
+    button.fill .mat-icon,
+    button.fill .mat-icon.cartSelected {
+      color: white;
+      svg path {
+        stroke: white;
+      }
+      svg circle {
+        stroke: white;
+        fill: $color-dark;
+      }
+      &:hover {
+        color: white;
+      }
+    }
+
+    button:not(.fill, .remove-cart-item) {
+      color: $color-light;
+      border: 1 px solid $color-light;
+      .mat-icon:not(.icon.del) {
+        color: $color-light;
+        svg path {
+          stroke: $color-dark !important;
+          stroke-width: 2px;
+        }
+      }
+    }
+    @media screen and (max-width: 799px) {
+      button:not(.fill, .remove-cart-item) {
+        color: $color-light;
+        border: 1 px solid $color-light;
+
+        .mat-icon:not(.icon.del) {
+          color: $color-dark;
+          svg path {
+            stroke: $color-dark !important;
+            stroke-width: 2px;
+          }
+        }
+      }
+      button.fill {
+        background-color: $color-light;
+        color: white !important;
+        .mat-icon {
+          color: white;
+        }
+      }
+    }
+    .mat-stroked-button:not(.mat-button-disabled) {
+      color: $color-light;
+      border-color: $color-light;
+    }
+    button.fill {
+      background-color: $color-light;
+      color: white !important;
+      .mat-icon {
+        color: white;
+      }
+    }
+
+    .mat-form-field:not(.mat-form-field-invalid) {
+      .mat-form-field-ripple {
+        background-color: $color-light !important;
+      }
+    }
+    .mat-form-field-appearance-outline.mat-focused:not(
+        .mat-form-field-invalid
+      ) {
+      .mat-form-field-label,
+      .mat-form-field-outline-thick {
+        color: $color-light !important;
+      }
+    }
+
+    .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+      background-color: $color-dark !important;
+    }
+
+    .mat-radio-button.mat-accent .mat-radio-inner-circle {
+      background-color: $color-dark !important;
+    }
+
+    .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+      border-color: $color-dark !important;
+    }
+
+    .mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+      background-color: $color-dark !important;
+    }
+
+    .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+    .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+      background-color: $color-dark;
+    }
+    .mat-checkbox:not(.mat-checkbox-disabled)
+      .mat-checkbox-ripple
+      .mat-ripple-element {
+      background-color: $color-dark !important;
+    }
+
+    .button-wrapper {
+      .mat-icon-button {
+        border: 1px solid $color-light !important;
+        .mat-icon {
+          color: $color-light !important;
+        }
+      }
+    }
+    .filter-counter {
+      background-color: $color-light;
+    }
+
+    ::-webkit-file-upload-button {
+      border: 1px solid $color-light;
+      color: $color-dark;
+      border-radius: 4px;
+      padding: 4px 8px;
+    }
+    ::-moz-file-upload-button {
+      border: 1px solid $color-light;
+      color: $color-dark;
+      border-radius: 4px;
+      padding: 4px 8px;
+    }
+
+    .almost-done {
+      .mat-icon {
+        background: $color-light;
+      }
+    }
+  }
+}
+/** Animations  **/
+/* blink */
+.blink {
+  animation: blink 0.15s linear 3;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* shake */
+.shakeme {
+  animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+@include cart-theme-color(cartblue, rgb(0, 102, 204), rgb(0, 102, 204));
+@include cart-theme-color(cartchocolate, #8b4950, #8b4950);
+@include cart-theme-color(cartgreen, $green, $green);
+@include cart-theme-color(cartorange, #ff6600, #ff6600);
+@include cart-theme-color(cartpurple, #501b73, #501b73);
+@include cart-theme-color(cartredorange, #ec4213, #ec4213);
+@include cart-theme-color(cartred, #990000, #990000);
+@include cart-theme-color(cartteal, #00aeae, #00aeae);

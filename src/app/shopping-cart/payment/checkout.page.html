@@ -1,0 +1,218 @@
+<div
+  class="checkout-page"
+  fxLayout="column"
+  fxLayoutGap="16px"
+  fxLayoutAlign="center center"
+>
+  <div *ngIf="errorMessage" class="error">{{errorMessage}}</div>
+  <mat-accordion
+    displayMode="flat"
+    style="width: 100%"
+    *ngIf="collectPaymentInfo && collectPaymentInfo.paymentScreenMessage"
+  >
+    <mat-expansion-panel
+      [expanded]="showAdditionalInfo"
+      (opened)="showAdditionalInfo = true"
+      class="payment-screen-msg"
+      hideToggle
+    >
+      <mat-expansion-panel-header
+        expandedHeight="0px"
+        class="payment-screen-msg-header"
+        fxLayoutAlign="center center"
+      >
+        <mat-panel-title>
+          <mat-icon>expand_more</mat-icon>
+          {{"Show more additional info" | translate}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div
+        style="padding-top: 16px"
+        [innerHTML]="collectPaymentInfo.paymentScreenMessage | safeHtml"
+      ></div>
+      <mat-action-row
+        (click)="showAdditionalInfo = false"
+        fxLayoutAlign="center center"
+      >
+        <mat-icon>expand_less</mat-icon>{{"Show Less" | translate}}
+      </mat-action-row>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <br />
+  <div
+    [fxLayout]="isMobile ? 'column':'row wrap'"
+    [fxLayoutGap]="mobileClassTable ? '0px':'16px'"
+    fxLayoutAlign="center start"
+    *ngIf="collectPaymentInfo"
+  >
+    <div class="section-content">
+      <div
+        class="section-header"
+        fxLayout="row"
+        fxLayoutGap="16px"
+        [fxLayoutAlign]="isMobile ? 'space-between baseline' : 'start baseline'"
+      >
+        <h1 style="margin-bottom: 0px">
+          <strong>{{"Checkout" | translate}}</strong>
+        </h1>
+        <div>
+          {{selectedClassIds.length}}&nbsp; {{(selectedClassIds.length <= 1 ?
+          "Course Selected" : "Courses Selected") | translate}}
+        </div>
+      </div>
+      <div *ngIf="selectedClasses.length <= 0">
+        <button mat-stroked-button backToClassList>
+          <mat-icon>add</mat-icon>{{"Select Class" | translate}}
+        </button>
+      </div>
+      <div *ngIf="selectedClasses.length">
+        <table class="class-table">
+          <ng-container *ngFor="let clazz of selectedClasses; let i = index">
+            <tr class="header-row">
+              <td [attr.colspan]="columns.length">{{'Course' | translate}}</td>
+            </tr>
+            <tr class="content-row">
+              <td
+                [attr.colspan]="columns.length"
+                style="padding-bottom: 0px; font-size: 20px; font-weight: 500"
+              >
+                {{clazz.courseName}}
+              </td>
+            </tr>
+            <tr class="header-row">
+              <td
+                *ngFor="let column of columns"
+                [ngClass]="columns.length <= 10 ? 'nowrap':''"
+                [class]="column.name"
+              >
+                {{column.title}}
+              </td>
+            </tr>
+            <tr class="content-row">
+              <td
+                [class]="column.name"
+                *ngFor="let column of columns"
+                [innerHTML]="clazz | formatClassInfo : column.name"
+                attr.data-title="{{column.title}}"
+              ></td>
+            </tr>
+            <tr class="content-row plan" *ngIf="isShowPaymentPlans(clazz)">
+              <td [attr.colspan]="columns.length">
+                <mat-radio-group>
+                  <mat-accordion [multi]="false">
+                    <mat-expansion-panel
+                      class="mat-elevation-z"
+                      *ngFor="let paymentPlan of clazz.paymentPlans; let i = index"
+                      [expanded]="isPaymentPlanChecked(clazz.classId, paymentPlan.paymentPlanId, clazz.studentId)"
+                      [disabled]="isPaymentPlanChecked(clazz.classId, paymentPlan.paymentPlanId, clazz.studentId)"
+                    >
+                      <mat-expansion-panel-header
+                        class="checkout"
+                        (click)="onChecked(clazz.classId, paymentPlan.paymentPlanId, clazz.studentId)"
+                      >
+                        <mat-radio-button
+                        [class.hidden]="ishideRadio(clazz)"
+                          [value]="clazz.classId + '' + i"
+                          [checked]="isPaymentPlanChecked(clazz.classId, paymentPlan.paymentPlanId, clazz.studentId)"
+                        ></mat-radio-button>
+                        <label [innerHTML]="paymentPlan.planName"></label>
+                      </mat-expansion-panel-header>
+                      <ul class="amount-table inline">
+                        <li class="h-row">
+                          <label>{{"Due Date" | translate}}&nbsp;</label>
+                          <div>{{"Amount" | translate}}</div>
+                        </li>
+                        <li
+                          *ngFor="let ps of getPaymentSchedule(clazz.classId, clazz.studentId)"
+                        >
+                          <label>
+                            <span [innerHTML]="ps.dueDate"></span>&nbsp;
+                          </label>
+                          <div>{{currencySign}}{{ps.installment}}</div>
+                        </li>
+                      </ul>
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </mat-radio-group>
+
+                <div
+                  class="other-charge"
+                  *ngIf="clazz.textBookOrOtherCharges.length"
+                >
+                  <div class="title">
+                    {{"Select Text Books or Other Charges" | translate}}
+                  </div>
+                  <div>
+                    <ul>
+                      <li
+                        *ngFor="let otherCharge of clazz.textBookOrOtherCharges"
+                      >
+                        <mat-checkbox
+                          [checked]="otherCharge.checked"
+                          (change)="onAddDeleteClassInvoiceIndividualFee($event, otherCharge)"
+                        >
+                          <span [innerHTML]="otherCharge.name"></span>
+                        </mat-checkbox>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div *ngIf="clazz.comments" class="class-comment">
+                  <mat-icon>error_outline</mat-icon>
+                  <span [innerHTML]="clazz.comments"></span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td [attr.colspan]="columns.length" class="row-space"></td>
+            </tr>
+          </ng-container>
+        </table>
+      </div>
+    </div>
+    <div
+      class="section-amount"
+      fxLayout="column"
+      fxLayoutGap="24px"
+      [cartTopSticky]="1"
+    >
+      <ul class="amount-table" *ngIf="showPrice">
+        <li>
+          <label>{{"Sub-Total" | translate}}&nbsp;</label>
+          <div>{{currencySign}}{{collectPaymentInfo.subTotal || "0.00"}}</div>
+        </li>
+        <li *ngIf="collectPaymentInfo.discount">
+          <label>{{"Discount" | translate}}&nbsp;</label>
+          <div>{{currencySign}}{{collectPaymentInfo.discount || "0.00"}}</div>
+        </li>
+        <li *ngIf="collectPaymentInfo.totalTax">
+          <label>{{"Tax for tuition" | translate}}&nbsp;</label>
+          <div>{{currencySign}}{{collectPaymentInfo.totalTax || "0.00"}}</div>
+        </li>
+        <li>
+          <label>{{"Other Charges" | translate}}&nbsp;</label>
+          <div>{{currencySign}}{{otherCharges || "0.00"}}</div>
+        </li>
+        <li>
+          <label>{{"Total" | translate}}&nbsp;</label>
+          <div>{{currencySign}}{{total || "0.00"}}</div>
+        </li>
+      </ul>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <label><strong>{{"Today's payment" | translate}}</strong></label>
+        <div>
+          <strong>{{currencySign}}{{todayPayment || "0.00"}}</strong>
+        </div>
+      </div>
+      <div>
+        <button mat-stroked-button class="fw fill" (click)="goToBillingPage()">
+          {{"Purchase" | translate}}
+        </button>
+      </div>
+      <div class="msg">
+        {{"You will be redirected to payment page to fill in personal
+        information." | translate}}
+      </div>
+    </div>
+  </div>
+</div>

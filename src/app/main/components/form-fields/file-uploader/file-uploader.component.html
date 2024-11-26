@@ -1,0 +1,15 @@
+<div fxFlex="100" fxLayoutAlign="start center" fxLayoutGap="8px">
+  <button type="button" mat-raised-button class="btn-sm" (click)="uploadFile()">
+    <mat-icon>upload</mat-icon> Upload
+  </button>
+  <button
+    type="button"
+    mat-raised-button
+    class="btn-sm btn-delete btn-icon"
+    (click)="deleteFile()"
+    disabled
+    [oTooltip]="'Remove'"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

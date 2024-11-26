@@ -1,0 +1,25 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <form>
+    <div fxFlex="100" fxLayout="column">
+      <o-form-fields [fields]="fields$" [formGroup]="formGroup"></o-form-fields>
+      <div fxFlex="100" fxLayoutAlign="space-between center">
+        <button
+          type="button"
+          mat-raised-button
+          class="btn-sm"
+          (click)="saveSemester()"
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          mat-raised-button
+          class="btn-sm btn-delete"
+          (click)="deleteSemester()"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </form>
+</o-content-widget>

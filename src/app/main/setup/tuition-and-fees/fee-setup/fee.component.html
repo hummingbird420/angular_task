@@ -1,0 +1,9 @@
+<o-message-box [message]="infoMessage"></o-message-box>
+<o-table
+  [columns]="columns"
+  [dataSource]="dataSource"
+  [dateFormat]="dateFormat"
+  [addButtonTooltip]="addButtonTooltip"
+  [showActionCol]="true"
+  (clickAdd)="createNew()"
+></o-table>

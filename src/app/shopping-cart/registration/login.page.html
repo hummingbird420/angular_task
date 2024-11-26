@@ -1,0 +1,89 @@
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px">
+  <div class="almost-done">
+    <h3 class="title">
+      <mat-icon> check </mat-icon>
+      {{"You are almost done! We just need to know who you are." | translate}}
+    </h3>
+    <div class="sub-title">
+      {{"Please sign in if you have already been a student with us, or enter
+      your information below." | translate}}
+    </div>
+  </div>
+  <div>
+    <h1 class="reg-type-title">
+      {{(currentUserType == 1 ? "Student Registration" : "Group Registration") |
+      translate}}
+    </h1>
+  </div>
+  <div>
+    <mat-radio-group
+      aria-label="Select an option"
+      fxLayout="column"
+      fxLayoutGap="16px"
+    >
+      <mat-radio-button value="1" checked>
+        {{(currentUserType == 1 ? "I am a returning student" : "I am a returning
+        contact") | translate}}
+      </mat-radio-button>
+      <mat-radio-button value="2" (click)="createAccount()">
+        {{(currentUserType == 1 ? "I am a new student" : "I am a new contact") |
+        translate}}
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <form [formGroup]="formGroup">
+    <div fxLayout="column" fxLayoutGap="16px" class="cart-login-wrapper">
+      <div fxLayout="column" fxLayoutGap="4px">
+        <label class="required">{{"Username" | translate}}</label>
+        <div class="o-form-field">
+          <mat-form-field>
+            <input
+              type="text"
+              matInput
+              maxlength="50"
+              [placeholder]="'Username' | translate"
+              autocomplete="off"
+              formControlName="username"
+            />
+          </mat-form-field>
+          <mat-error *ngIf="isInvalid('username')">
+            {{"Please enter username." | translate}}
+          </mat-error>
+        </div>
+      </div>
+      <div fxLayout="column" fxLayoutGap="4px">
+        <label class="required">{{"Password" | translate}}</label>
+        <div class="o-form-field">
+          <mat-form-field>
+            <input
+              type="password"
+              matInput
+              maxlength="50"
+              [placeholder]="'Password' | translate"
+              autocomplete="off"
+              formControlName="password"
+            />
+          </mat-form-field>
+          <mat-error *ngIf="isInvalid('password')">
+            {{"Please enter password." | translate}}
+          </mat-error>
+        </div>
+      </div>
+      <div>
+        <mat-error *ngIf="isLoginFailed">
+          {{"Authentication failed. Please try again." | translate}}
+        </mat-error>
+        <mat-error *ngIf="errorMessage" [innerHTML]="errorMessage | safeHtml">
+        </mat-error>
+      </div>
+      <div fxLayoutAlign="center center">
+        <button mat-stroked-button class="fill" type="button" (click)="login()">
+          {{"Sign In" | translate}}
+        </button>
+      </div>
+      <div fxLayoutAlign="center center">
+        <a (click)="requestPassword()">{{"Forgot Password" | translate}}?</a>
+      </div>
+    </div>
+  </form>
+</div>

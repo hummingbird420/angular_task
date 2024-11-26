@@ -1,0 +1,23 @@
+<div class="message-recipient-header">
+    <ul class="breadcrumb">
+        <li *ngFor="let breadcrumb of NavigationSource.breadcrumbUrls"><a href="">{{breadcrumb.name}}</a>
+        </li>
+    </ul>
+    <div class="recipients-filter-dropdown" panelClass="recipients-filter-dropdown">
+        <o-filter-dropdown panelClass="o-dropdown-message-recipient" class="filter-card-row"
+            (change)="onChangeCampus($event)">
+        </o-filter-dropdown>
+        <o-filter-dropdown panelClass="o-dropdown-message-recipient" class="filter-card-row"
+            (change)="onChangeCampus($event)">
+        </o-filter-dropdown>
+        <o-filter-dropdown panelClass="o-dropdown-message-recipient" class="filter-card-row"
+            (change)="onChangeCampus($event)">
+        </o-filter-dropdown>
+        <o-filter-dropdown panelClass="o-dropdown-message-recipient" class="filter-card-row"
+            (change)="onChangeCampus($event)">
+        </o-filter-dropdown>
+        <!-- <o-filter-dropdown class="filter-card-row" [field]="campusFilterField" [value]="campusValueEmitter"
+            [clearSelection]="clearFilter" [allOption]="numberAllOption" (change)="onChangeCampus($event)">
+        </o-filter-dropdown> -->
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <o-table
+    [columns]="columns"
+    [dataSource]="dataSource"
+    [addButtonTooltip]="addButtonTooltip"
+    (clickAdd)="createDepartment()"
+  ></o-table>
+</o-content-widget>

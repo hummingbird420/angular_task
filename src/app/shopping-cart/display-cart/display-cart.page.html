@@ -1,0 +1,165 @@
+<div
+  class="display-cart-head"
+  [class]="classCount ? 'fx-right' : 'fx-center fx-column'"
+  [cartTopSticky]="1"
+>
+  <div
+    class="button-wrapper"
+    [class]="websiteLink ? '': (classCount > 0 ? 'right':'center')"
+  >
+    <a *ngIf="websiteLink" [href]="websiteLink">
+      <button class="back-button" mat-flat-button>
+        <mat-icon svgIcon="back"></mat-icon>
+        {{"Website" | translate}}
+      </button>
+    </a>
+
+    <button mat-stroked-button backToClassList>
+      <mat-icon>add</mat-icon>
+      {{(classCount ? "Select Another Class" : "Select Class") | translate}}
+    </button>
+  </div>
+  <div class="msg-empty-cart" *ngIf="!classCount">
+    {{"The cart is empty" | translate}}
+  </div>
+</div>
+<div *ngIf="errorMessage" class="error text-center">{{errorMessage}}</div>
+<br />
+<div *ngIf="classCount">
+  <table class="class-table" role="presentation">
+    <ng-container *ngFor="let clazz of selectedClasses$ | async; let i = index">
+      <tr class="header-row" [id]="'header-row'+i">
+        <td
+          *ngFor="let column of columns$ | async"
+          [ngClass]="columnCount < 10 ? 'nowrap':''"
+          [class]="column.name"
+        >
+          {{column.title}}
+        </td>
+        <td></td>
+      </tr>
+      <tr class="content-row" [oHoverItemContent]="i + ''">
+        <td
+          [class]="column.name"
+          *ngFor="let column of columns$ | async"
+          [innerHTML]="clazz | formatClassInfo : column.name"
+          attr.data-title="{{column.title}}"
+        ></td>
+        <td class="add-cart-cell cart">
+          <mat-icon
+            *ngIf="isMobile === false"
+            class="remove-cart-item"
+            [removeCartItem]="clazz"
+            [multiple]="multiple"
+            [oTooltip]="'Remove' | translate"
+            theme="dark"
+          >
+            close
+          </mat-icon>
+          <button
+            *ngIf="isMobile === true"
+            mat-flat-button
+            class="remove-cart-item"
+            [removeCartItem]="clazz"
+            [multiple]="multiple"
+          >
+            <mat-icon> close </mat-icon>
+            {{"Remove" | translate}}
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td [attr.colspan]="columnCount + 1" class="row-space">
+          <div *ngIf="clazz.comments" class="class-comment">
+            <mat-icon>error_outline</mat-icon>
+            <span [innerHTML]="clazz.comments"></span>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </table>
+  <div class="cart-summary">
+    <div *ngIf="hideCoupon">&nbsp;</div>
+    <div class="cart-coupon" *ngIf="!hideCoupon">
+      <mat-label>{{"Coupon Code" | translate}}</mat-label>
+      <div class="coupon-field-group">
+        <div class="o-form-field">
+          <mat-form-field>
+            <input
+              type="text"
+              matInput
+              maxlength="50"
+              [formControl]="couponCode"
+            />
+          </mat-form-field>
+        </div>
+        <div class="apply-button-wrapper">
+          <button
+            mat-stroked-button
+            (click)="applyCouponCode()"
+            class="btn-icon cart-button fill"
+            [disabled]="couponCode.value === ''"
+          >
+            {{"Apply" | translate}}
+          </button>
+        </div>
+      </div>
+      <mat-error *ngIf="(isInvalidCoupon$ | async) === true">
+        {{"Invalid Coupon Code" | translate}}
+      </mat-error>
+    </div>
+    <hr *ngIf="isMobile" />
+    <table
+      class="cart-amount-summary"
+      *ngIf="cartSummary$ | async as cartSummary"
+      role="presentation"
+    >
+      <tr class="row" *ngIf="cartSummary.tuitionTax || cartSummary.discount">
+        <td class="label">{{"Sub-Total" | translate}}</td>
+        <td class="amount">
+          {{currencySign}}{{cartSummary.subTotal | number : "1.2-2"}}
+        </td>
+      </tr>
+      <tr class="row tax" *ngIf="cartSummary.discount">
+        <td class="label">{{"Discount" | translate}}</td>
+        <td class="amount">
+          -{{currencySign}}{{cartSummary.discount | number : "1.2-2"}}
+        </td>
+      </tr>
+      <tr class="row tax" *ngIf="cartSummary.tuitionTax">
+        <td class="label">{{"Tax for tuition" | translate}}</td>
+        <td class="amount">
+          {{currencySign}}{{cartSummary.tuitionTax | number : "1.2-2"}}
+        </td>
+      </tr>
+      <tr class="row total">
+        <td class="label">{{"Total" | translate}}</td>
+        <td class="amount">
+          {{currencySign}}{{cartSummary.total | number : "1.2-2"}}
+        </td>
+      </tr>
+      <tr class="row">
+        <td class="coupon" colspan="2">
+          <button
+            *ngIf="userCouponCode"
+            mat-stroked-button
+            class="btn-sm"
+            (click)="removeCouponCode()"
+          >
+            <mat-icon>close</mat-icon>
+            {{"Remove Coupon" | translate}}
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="continue-button">
+    <button
+      mat-stroked-button
+      (click)="continue()"
+      class="btn-icon cart-button fill"
+    >
+      {{"Continue" | translate}}<mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+</div>

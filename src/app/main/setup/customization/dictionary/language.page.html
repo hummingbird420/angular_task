@@ -1,0 +1,79 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <button mat-raised-button class="btn-sm" (click)="saveWords()">Save</button>
+  </ng-container>
+  <div fxFlex="100" fxLayout="column">
+    <o-alpha-paginator (pageChange)="getWords($event)"></o-alpha-paginator>
+
+    <div fxFlex="100" fxLayout="column">
+      <div [formGroup]="languageFormGroup">
+        <div
+          class="o-form-field"
+          fxFlex="100"
+          fxLayout="row wrap"
+          fxLayoutAlign="start center"
+        >
+          <mat-label fxFlex="20" fxFlex.xs="100"> Language Name </mat-label>
+          <div fxFlex="50" fxFlex.xs="100" fxLayout="column">
+            <mat-form-field fxFlex="100">
+              <input matInput type="text" formControlName="languageName" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div
+          class="o-form-field"
+          fxFlex="100"
+          fxLayout="row wrap"
+          fxLayoutAlign="start center"
+        >
+          <mat-label fxFlex="20" fxFlex.xs="100"> Direction </mat-label>
+          <div fxFlex="50" fxFlex.xs="100" fxLayout="column">
+            <mat-form-field fxFlex="100">
+              <mat-select formControlName="direction">
+                <mat-option [value]="0">Left to Right</mat-option>
+                <mat-option [value]="1">Right to Left</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div
+        fxFlex="100"
+        fxHide.xs
+        fxLayout="row wrap"
+        fxLayoutAlign="start center"
+        class="h-row"
+      >
+        <div fxFlex="50">PHRASE</div>
+        <div fxFlex="50">TRANSLATION</div>
+      </div>
+      <div fxFlex="100" fxLayout="column" [formGroup]="wordsFormGroup">
+        <div
+          class="o-form-field"
+          fxFlex="100"
+          fxLayout="row wrap"
+          fxLayoutAlign="start center"
+          *ngFor="let word of words"
+        >
+          <mat-label fxFlex="50" fxFlex.xs="100">
+            {{ word.word | htmlDecoder }}
+          </mat-label>
+          <div fxFlex="50" fxFlex.xs="100" fxLayout="column">
+            <mat-form-field fxFlex="100">
+              <input
+                matInput
+                type="text"
+                [formControlName]="'w' + word.wordId"
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button mat-raised-button class="btn-sm" (click)="saveWords()">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</o-content-widget>

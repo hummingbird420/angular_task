@@ -1,0 +1,12 @@
+<div class="edit-del-container">
+  <mat-icon *ngIf="!hideEditIcon" class="edit-del-icon" (click)="onEdit()">
+    edit
+  </mat-icon>
+  <mat-icon
+    *ngIf="!hideDeleteIcon"
+    class="edit-del-icon del-icon"
+    (click)="onDelete()"
+  >
+    delete_forever
+  </mat-icon>
+</div>

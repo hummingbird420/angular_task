@@ -1,0 +1,13 @@
+ul {
+  list-style-type: none;
+}
+li.menu {
+  margin-top: 8px;
+}
+.mat-expansion-panel-header {
+  height: 32px;
+}
+.mat-expansion-panel-header.mat-expanded {
+  height: 32px;
+  background: rgba(105, 105, 105, 0.1) !important;
+}

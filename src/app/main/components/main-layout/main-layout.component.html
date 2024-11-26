@@ -1,0 +1,34 @@
+<o-main-header></o-main-header>
+<div class="main-layout">
+  <mat-drawer-container class="sidenav-container">
+    <mat-drawer
+      #drawer
+      class="sidenav"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(isHandset$ | async) === false"
+    >
+      <o-main-nav class="sidnav-content"> </o-main-nav>
+    </mat-drawer>
+    <mat-drawer-content class="content">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        class="menu-switch left"
+      >
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <div matRipple class="left-menu-switch" (click)="drawer.toggle()">
+        <mat-icon
+          [@rotateLeftRight]="(isHandset$ | async) === false ? 'left' : 'right'"
+        >
+          chevron_left
+        </mat-icon>
+      </div>
+      <div class="widget">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

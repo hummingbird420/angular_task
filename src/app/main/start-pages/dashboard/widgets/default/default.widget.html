@@ -1,0 +1,14 @@
+<p>Default Widget</p>
+<mat-grid-list [cols]="2" rowHeight="25px">
+  <mat-grid-tile colspan="1" rowspan="1">Title:</mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1"> {{widget.title}} </mat-grid-tile>
+
+  <mat-grid-tile colspan="1" rowspan="1">Columns:</mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1">{{widget.cols}}</mat-grid-tile>
+
+  <mat-grid-tile colspan="1" rowspan="1">Rows:</mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1">{{widget.rows}}</mat-grid-tile>
+
+  <mat-grid-tile colspan="1" rowspan="1">Refresh After:</mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="1">{{widget.refreshAfter}}</mat-grid-tile>
+</mat-grid-list>

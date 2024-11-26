@@ -1,0 +1,97 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <o-message-box
+    [type]="messageBoxType"
+    [message]="waringMessage"
+  ></o-message-box>
+  <o-form-fields
+    [fields]="formFields$"
+    [formGroup]="formGroup"
+    [requiredFields]="requiredFields"
+  ></o-form-fields>
+
+  <div
+    fxFlex="100"
+    fxLayout.gt-xs="row wrap"
+    fxLayout.xs="column"
+    fxLayoutGap="16px"
+    fxLayoutAlign="start center"
+    [formGroup]="formGroup"
+  >
+    <div fxFlex="25">{{"Responses" | asyncTranslate | async}}</div>
+    <mat-selection-list
+      role="listbox"
+      dense
+      class="glass"
+      #responseList
+      [multiple]="false"
+    >
+      <mat-list-option
+        role="option"
+        *ngFor="let responseInfo of responses; let i = index"
+        [value]="responseInfo"
+        (click)="onSelectionChange(i)"
+      >
+        {{responseInfo.responseText}} ({{responseInfo.responseGrade}})
+      </mat-list-option>
+    </mat-selection-list>
+    <div fxLayout="column" fxLayoutGap="5px">
+      <button mat-raised-button class="btn-sm" (click)="addItem()">
+        <mat-icon>add</mat-icon>{{"Add" | asyncTranslate | async}}
+      </button>
+      <button
+        mat-raised-button
+        class="btn-sm"
+        (click)="editItems(responseList.selectedOptions.selected)"
+      >
+        <mat-icon>edit</mat-icon>{{"Edit" | asyncTranslate | async}}
+      </button>
+      <button
+        mat-raised-button
+        class="btn-sm"
+        (click)="removeItems(responseList.selectedOptions.selected)"
+      >
+        <mat-icon>remove</mat-icon>{{"Remove" | asyncTranslate | async}}
+      </button>
+    </div>
+  </div>
+
+  <o-action-bar
+    (save)="saveResponseSet()"
+    (delete)="deleteResponseSet()"
+    (back)="backToDirectory()"
+    [type]="responseSetId > 0 ? 'edit':'add'"
+  ></o-action-bar>
+</o-content-widget>
+<ng-template #addEditTemplate>
+  <form [formGroup]="addEditFormGroup" class="add-edit-response">
+    <input type="hidden" formControlName="responseId" />
+    <input type="hidden" formControlName="responseSetId" />
+    <mat-form-field appearance="outline">
+      <mat-label [innerHTML]="getFieldTitle('responseText')"></mat-label>
+      <input matInput formControlName="responseText" />
+      <mat-error
+        *ngIf="isInvalid('responseText')"
+        [innerHTML]="getErrorMessage('responseText')"
+      >
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label [innerHTML]="getFieldTitle('responseGrade')"></mat-label>
+      <input matInput formControlName="responseGrade" />
+      <mat-error
+        *ngIf="isInvalid('responseGrade')"
+        [innerHTML]="getErrorMessage('responseGrade')"
+      >
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label [innerHTML]="getFieldTitle('seqNum')"></mat-label>
+      <input matInput oNumber formControlName="seqNum" />
+      <mat-error
+        *ngIf="isInvalid('seqNum')"
+        [innerHTML]="getErrorMessage('seqNum')"
+      >
+      </mat-error>
+    </mat-form-field>
+  </form>
+</ng-template>

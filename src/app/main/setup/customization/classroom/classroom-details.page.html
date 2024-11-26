@@ -1,0 +1,17 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <form>
+    <div fxFlex="100" fxLayout="column">
+      <o-form-fields
+        [fields]="fields$"
+        [formGroup]="formGroup"
+        [requiredFields]="requiredFields"
+      ></o-form-fields>
+      <o-action-bar
+        (save)="saveClassroom()"
+        (delete)="deleteClassroom()"
+        (back)="backToDirectory()"
+        [type]="classroomId > 0 ? 'edit' : 'add'"
+      ></o-action-bar>
+    </div>
+  </form>
+</o-content-widget>

@@ -1,0 +1,9 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <o-table
+    [columns]="columns"
+    [dataSource]="dataSource"
+    [dateFormat]="dateFormat"
+    [addButtonTooltip]="addButtonTooltip"
+    (clickAdd)="createNew()"
+  ></o-table>
+</o-content-widget>

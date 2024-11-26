@@ -1,0 +1,65 @@
+<div
+  class="o-form-field"
+  fxFlex="100"
+  fxLayout="row wrap"
+  fxLayoutGap="2px"
+  fxLayoutAlign="start start"
+>
+  <mat-label fxFlex="25" fxFlex.sm="35" fxFlex.xs="100" class="edit-del-option">
+    <span> {{ field.fieldTitle | htmlDecoder }}</span>
+    <div class="edit-del-element">
+      <mat-icon
+        *ngIf="!hideEditIcon"
+        class="edit-del-icon"
+        (click)="editField()"
+      >
+        edit
+      </mat-icon>
+      <mat-icon
+        *ngIf="!hideRemoveIcon"
+        class="edit-del-icon del-icon"
+        (click)="removeField()"
+      >
+        delete_forever
+      </mat-icon>
+    </div>
+  </mat-label>
+
+  <div fxFlex="70" fxFlex.sm="60" fxFlex.xs="100" fxLayout="column">
+    <div fxFlex="100" fxLayout="row" [ngSwitch]="field.fieldType.toUpperCase()">
+      <mat-form-field
+        fxFlex="50"
+        fxFlex.xs="100"
+        fxFlex.sm="75"
+        *ngSwitchCase="'TEXT' || 'NUMBER' || 'PASSWORD' || 'DATE'"
+      >
+        <input matInput type="text" [disabled]="'true'" />
+      </mat-form-field>
+      <mat-form-field
+        fxFlex="50"
+        fxFlex.xs="100"
+        fxFlex.sm="75"
+        *ngSwitchCase="'MEMO'"
+      >
+        <textarea matInput type="text" [disabled]="'true'"></textarea>
+      </mat-form-field>
+      <mat-form-field
+        fxFlex="50"
+        fxFlex.xs="100"
+        fxFlex.sm="75"
+        *ngSwitchCase="'DROPDOWN'"
+      >
+        <mat-select [disabled]="'true'">
+          <mat-option [value]="''" disabled> </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div fxFlex="100" *ngSwitchCase="'CHECKBOX'">
+        <mat-checkbox [disabled]="'true'"> </mat-checkbox>
+      </div>
+      <div fxFlex="100" *ngSwitchCase="'READ_ONLY'">
+        {{ field.fieldValue }}
+      </div>
+      <mat-hint *ngIf="field.hints"> {{ field.hints | htmlDecoder }} </mat-hint>
+    </div>
+  </div>
+</div>

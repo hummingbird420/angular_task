@@ -1,0 +1,26 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <a
+      mat-raised-button
+      class="btn-sm"
+      routerLink="/setup/customization/course-record-template"
+    >
+      {{"Edit Form" | asyncTranslate | async }}
+    </a>
+  </ng-container>
+  <ng-container>
+    <form>
+      <mat-tab-group [dynamicHeight]="true">
+        <mat-tab
+          [label]="tab.listText"
+          *ngFor="let tab of recordSections | async"
+        >
+          <o-form-fields
+            [fields]="getFormFields(tab.listCode)"
+            [formGroup]="getFormGroup(tab.listCode)"
+          ></o-form-fields>
+        </mat-tab>
+      </mat-tab-group>
+    </form>
+  </ng-container>
+</o-content-widget>

@@ -1,0 +1,38 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <button class="btn-sm" mat-raised-button (click)="saveOptions()">
+      <mat-icon>save</mat-icon>{{'Save' | asyncTranslate | async}}
+    </button>
+  </ng-container>
+  <mat-tab-group [dynamicHeight]="true" [formGroup]="formGroup">
+    <mat-tab
+      [label]="displayOption.name"
+      *ngFor="let displayOption of (displayOptions | async); let i = index"
+      ><br />
+      <mat-accordion [multi]="true" *ngIf="displayOption.displayOptionSections">
+        <div
+          *ngFor="let section of displayOption.displayOptionSections; let i = index"
+        >
+          <mat-expansion-panel
+            [expanded]="'true'"
+            *ngIf="section.fields && section.fields.length"
+          >
+            <mat-expansion-panel-header *ngIf="section.name">
+              <mat-panel-title>{{section.name}}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul>
+              <li *ngFor="let field of section.fields; let i = index">
+                <mat-checkbox [formControlName]="field.name"
+                  >{{field.title}}</mat-checkbox
+                >
+              </li>
+            </ul>
+          </mat-expansion-panel>
+        </div>
+      </mat-accordion>
+    </mat-tab>
+  </mat-tab-group>
+  <button class="btn-sm" mat-raised-button (click)="saveOptions()">
+    <mat-icon>save</mat-icon>{{'Save' | asyncTranslate | async}}
+  </button>
+</o-content-widget>

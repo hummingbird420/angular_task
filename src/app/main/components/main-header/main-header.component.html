@@ -1,0 +1,29 @@
+<mat-toolbar fxLayout="row wrap" fxLayoutAlign="center" class="header">
+  <mat-card fxFlex="100" class="glass white">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <div fxLayout="row wrap" fxFlex.lt-md="100" fxLayoutAlign="center center">
+        <img class="logo" [src]="logo | async" alt="" (error)="onLogoError()" />
+        <span class="school-name">{{ schoolName }}</span>
+      </div>
+      <hr
+        fxFlex="100"
+        fxHide.gt-sm
+        class="sep-center"
+        style="margin: 8px 0px 4px"
+      />
+      <div fxLayout="row wrap" class="right-part" fxLayoutAlign="center center">
+        <button mat-flat-button (click)="logout()">
+          <mat-icon>power_settings_new</mat-icon>
+          {{ getTranslatedWord("Logout") | async }}
+        </button>
+        <button mat-flat-button>
+          <mat-icon>help_outline</mat-icon>
+          {{ getTranslatedWord("Live Help") | async }}
+        </button>
+        <button mat-flat-button>
+          <mat-icon>search</mat-icon>{{ getTranslatedWord("Search") | async }}
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</mat-toolbar>

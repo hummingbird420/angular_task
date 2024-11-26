@@ -1,0 +1,90 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <div fxFlex="100" fxLayout="column">
+    <div
+      fxFlex="100"
+      fxLayout.gt-xs="row wrap"
+      fxLayout.xs="column"
+      fxLayoutGap="20px"
+      fxLayoutAlign="start center"
+    >
+      <div>{{"Options" | asyncTranslate | async}}</div>
+      <div class="o-list-field-wrapper">
+        <mat-selection-list
+          role="listbox"
+          dense
+          class="glass"
+          #listCodes1
+          [multiple]="false"
+        >
+          <mat-list-option
+            role="option"
+            *ngFor="let listCodeInfo of listCodes; let i = index"
+            [value]="listCodeInfo"
+            (click)="onSelectionChange(i)"
+          >
+            {{listCodeInfo.listText}} ({{listCodeInfo.listCode}})
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+      <div fxLayout="column" fxLayoutGap="5px">
+        <button mat-raised-button class="btn-sm" (click)="addItem()">
+          <mat-icon>add</mat-icon>{{"Add" | asyncTranslate | async}}
+        </button>
+        <button
+          mat-raised-button
+          class="btn-sm"
+          (click)="editItems(listCodes1.selectedOptions.selected)"
+        >
+          <mat-icon>edit</mat-icon>{{"Edit" | asyncTranslate | async}}
+        </button>
+        <button
+          mat-raised-button
+          class="btn-sm"
+          (click)="removeItems(listCodes1.selectedOptions.selected)"
+        >
+          <mat-icon>remove</mat-icon>{{"Remove" | asyncTranslate | async}}
+        </button>
+      </div>
+    </div>
+    <o-action-bar
+      (save)="saveListCodes()"
+      (back)="back()"
+      [type]="'add'"
+      [fullWidth]="true"
+    ></o-action-bar>
+  </div>
+</o-content-widget>
+<ng-template #addEditListCodeTemplate>
+  <form [formGroup]="addEditListCodeFormGroup" class="add-edit-listcode">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ listTypeInfo.textLabel }}</mat-label>
+      <input matInput formControlName="listText" [maxLength]="251" />
+      <mat-error
+        *ngIf="isInvalid('listText')"
+        [innerHtml]="getErrorMessage('listText')"
+      >
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ listTypeInfo.codeLabel }}</mat-label>
+      <input
+        *ngIf="!numeric"
+        matInput
+        formControlName="listCode"
+        [maxLength]="251"
+      />
+      <input
+        *ngIf="numeric"
+        matInput
+        oNumber
+        formControlName="listCode"
+        [maxValue]="maxValue"
+      />
+      <mat-error
+        *ngIf="isInvalid('listCode')"
+        [innerHtml]="getErrorMessage('listCode')"
+      >
+      </mat-error>
+    </mat-form-field>
+  </form>
+</ng-template>

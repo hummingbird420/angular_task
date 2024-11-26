@@ -1,0 +1,129 @@
+<form
+  fxFlex="100"
+  fxLayout="column"
+  [formGroup]="formGroup"
+  [class]="adjustMargin === true ? 'mr' : ''"
+  style="padding-top: 8px"
+>
+  <div
+    class="o-form-field"
+    fxFlex="100"
+    fxLayout="row wrap"
+    fxLayoutAlign="start start"
+    fxLayoutGap="16px"
+    [class]="field.fieldName.startsWith('tuitionRate') ? 'mt-16' : ''"
+    *ngFor="let field of formFields$ | async"
+  >
+    <mat-label
+      fxFlex="25"
+      fxFlex.xs="100"
+      [class]="required(field.fieldName) ? 'required-mark' : ''"
+    >
+      {{ field.fieldTitle | htmlDecoder }}
+    </mat-label>
+
+    <div fxFlex="70" fxFlex.xs="100" fxLayout="column">
+      <div
+        fxFlex="100"
+        fxLayout="row"
+        [ngSwitch]="field.fieldType.toUpperCase()"
+      >
+        <mat-form-field
+          fxFlex="50"
+          fxFlex.xs="100"
+          fxFlex.sm="75"
+          *ngSwitchCase="'TEXT'"
+        >
+          <input
+            matInput
+            type="text"
+            [formControlName]="field.fieldName"
+            [value]="field.fieldValue"
+            [maxLength]="maxLengthText(field.maxLength)"
+          />
+        </mat-form-field>
+        <mat-form-field
+          fxFlex="50"
+          fxFlex.xs="100"
+          fxFlex.sm="75"
+          *ngSwitchCase="'NUMBER'"
+        >
+          <input
+            matInput
+            oNumber
+            type="text"
+            [formControlName]="field.fieldName"
+            [value]="field.fieldValue"
+            [maxValue]="maxValue"
+          />
+        </mat-form-field>
+        <mat-form-field
+          fxFlex="50"
+          fxFlex.xs="100"
+          fxFlex.sm="75"
+          *ngSwitchCase="'DECIMAL'"
+        >
+          <input
+            matInput
+            oNumber="decimal"
+            type="text"
+            [formControlName]="field.fieldName"
+            [value]="field.fieldValue"
+            [maxValue]="maxValue"
+          />
+          <div
+            *ngIf="field.fieldName.startsWith('tuitionRate')"
+            matPrefix
+            class="currency-prefix"
+          >
+            {{currencySign}}
+          </div>
+          <div
+            *ngIf="field.fieldName.startsWith('tuitionRate')"
+            matSuffix
+            style="padding-right: 4px"
+          >
+            /credit
+          </div>
+        </mat-form-field>
+
+        <mat-form-field
+          fxFlex="50"
+          fxFlex.xs="100"
+          fxFlex.sm="75"
+          *ngSwitchCase="'DROPDOWN'"
+        >
+          <mat-select [formControlName]="field.fieldName">
+            <mat-option
+              [value]="option.value"
+              *ngFor="let option of field.options"
+            >
+              {{ option.title | htmlDecoder }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div fxFlex="100" *ngSwitchCase="'READ_ONLY'">
+          {{ field.fieldValue }}
+        </div>
+      </div>
+      <mat-hint *ngIf="field.hints"> {{ field.hints | htmlDecoder }} </mat-hint>
+      <mat-error
+        *ngIf="isInvalid(field.fieldName)"
+        [innerHTML]="getErrorMessage(field.fieldName, field.fieldTitle)"
+      >
+      </mat-error>
+    </div>
+  </div>
+  <div>
+    <button
+      type="button"
+      mat-raised-button
+      class="btn-sm"
+      (click)="saveTuitionRate()"
+    >
+      <mat-icon>save</mat-icon>
+      {{ saveButtonLabel }}
+    </button>
+    <div class="mt-16"></div>
+  </div>
+</form>

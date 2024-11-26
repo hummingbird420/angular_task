@@ -1,0 +1,28 @@
+<div
+  fxFlex="100"
+  fxLayout.gt-xs="row wrap"
+  fxLayout.xs="column"
+  fxLayoutGap="20px"
+  fxLayoutAlign="start center"
+>
+  <mat-selection-list
+    role="listbox"
+    dense
+    class="glass"
+    #list
+    [multiple]="false"
+  >
+    <ng-content></ng-content>
+  </mat-selection-list>
+  <div fxLayout="column" fxLayoutGap="5px">
+    <button mat-raised-button class="btn-sm">
+      {{ dictionaryService.getTranslatedWord("Add") | async }}
+    </button>
+    <button mat-raised-button class="btn-sm">
+      {{ dictionaryService.getTranslatedWord("Edit") | async }}
+    </button>
+    <button mat-raised-button class="btn-sm">
+      {{ dictionaryService.getTranslatedWord("Remove") | async }}
+    </button>
+  </div>
+</div>

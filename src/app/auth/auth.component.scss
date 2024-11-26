@@ -1,0 +1,40 @@
+mat-card {
+  width: 264px;
+  margin: 0px auto;
+  padding: 15px 30px 15px;
+  border-radius: 12px;
+}
+.card-auth.agreement {
+  width: 600px;
+  .mat-card-header {
+    display: none;
+  }
+}
+.mat-card-header {
+  justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+  .card-auth.agreement {
+    width: 80%;
+  }
+}
+mat-card-header {
+  margin-top: -80px !important;
+  border-radius: 12px;
+}
+
+mat-card-header mat-card-subtitle {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 1.25em;
+}
+.card-auth .mat-card-title {
+  text-align: center;
+}
+.logo {
+  width: auto;
+  max-height: 50px;
+  max-width: 100%;
+  margin: 5px auto;
+}

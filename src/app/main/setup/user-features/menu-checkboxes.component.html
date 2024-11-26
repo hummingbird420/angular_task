@@ -1,0 +1,15 @@
+<div [formGroup]="formGroup">
+  <mat-checkbox
+    [checked]="allChecked"
+    [indeterminate]="isIndeterminate()"
+    (change)="checkAll($event.checked)"
+    >{{ menu.menuLabel }}</mat-checkbox
+  >
+  <ul *ngIf="menu.menuItems">
+    <li *ngFor="let menuItem of menu.menuItems">
+      <mat-checkbox [formControlName]="menuItem.itemId">{{
+        menuItem.itemLabel
+      }}</mat-checkbox>
+    </li>
+  </ul>
+</div>

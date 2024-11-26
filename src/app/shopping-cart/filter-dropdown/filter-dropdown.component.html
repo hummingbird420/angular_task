@@ -1,0 +1,22 @@
+<div
+  fxFlex="100"
+  fxLayout="row wrap"
+  fxLayoutAlign="start center"
+  fxLayoutGap="10px"
+>
+  <mat-form-field appearance="outline">
+    <mat-label [innerHTML]="field.fieldTitle"></mat-label>
+    <mat-select
+      [formControl]="formControl"
+      disableOptionCentering
+      (selectionChange)="onChange()"
+    >
+      <mat-option [value]="option.value" *ngFor="let option of field.options">
+        {{ option.title }}
+      </mat-option>
+      <mat-option [value]="allOption.value" *ngIf="allOption">
+        {{ allOption.title | translate }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

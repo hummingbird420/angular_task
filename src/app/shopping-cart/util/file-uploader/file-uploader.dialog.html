@@ -1,0 +1,37 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  <b>{{"Upload File" | translate}}</b>
+</h3>
+<div mat-dialog-content>
+  <div fxLayout="column" fxLayoutGap="8px" class="upload-content">
+    <div class="progress">
+      <mat-progress-bar
+        class="progress-bar"
+        mode="determinate"
+        [value]="uploadProgress"
+        *ngIf="uploadProgress"
+      >
+      </mat-progress-bar>
+    </div>
+    <div>
+      <input type="file" (change)="onFileSelected($event)" />
+    </div>
+    <div class="error" [class]="shakeError ? 'shakeme' : ''">
+      {{errorMessage | translate}}
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions fxLayoutAlign="center center" fxLayoutGap="8px">
+  <button mat-stroked-button class="fill" (click)="upload()">
+    <mat-icon>upload</mat-icon>
+    {{"Upload" | translate }}
+  </button>
+  <button mat-stroked-button mat-dialog-close class="bg-white">
+    <mat-icon>close</mat-icon>
+    {{"Close" | translate }}
+  </button>
+</div>

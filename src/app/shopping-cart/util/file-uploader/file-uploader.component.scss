@@ -1,0 +1,14 @@
+button.upload-delete {
+  width: 30px !important;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+button:not(:disabled).remove,
+button:not(:disabled).remove mat-icon {
+  color: red !important;
+  border-color: lighten($color: red, $amount: 40%) !important;
+}
+button:disabled.remove mat-icon {
+  color: darkgray !important;
+  cursor: not-allowed;
+}

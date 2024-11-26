@@ -1,0 +1,230 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  {{"Add Student" | translate}}
+</h3>
+<div mat-dialog-content class="add-student-multiple">
+  <div *ngIf="maDisplayCartStudents.length" [formGroup]="exFormGroup">
+    <div
+      class="row"
+      *ngFor="let student of maDisplayCartStudents; let i = index"
+    >
+      <div class="col">
+        <label class="title">&nbsp;</label>
+        <div class="content">
+          <div class="o-form-field">
+            <mat-checkbox
+              [formControlName]="'exstudent'+i"
+              (change)="validateStudent($event, student)"
+              [name]="'exstudent'+i"
+              style="margin-top: 4px; margin-left: 8px"
+              >&nbsp;</mat-checkbox
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <label class="title required">
+          <strong>{{"First Name" | translate}}</strong>
+        </label>
+        <div class="content">
+          <div class="o-form-field">
+            <mat-form-field>
+              <input
+                matInput
+                type="TEXT"
+                [value]="student.firstName"
+                disabled
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <label class="title required">
+          <strong>{{"Last Name" | translate}}</strong>
+        </label>
+        <div class="content">
+          <div class="o-form-field">
+            <mat-form-field>
+              <input matInput type="TEXT" [value]="student.lastName" disabled />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <label class="title required">
+          <strong>{{"Date of Birth" | translate}}</strong>
+        </label>
+        <div class="content">
+          <div class="o-form-field">
+            <mat-form-field>
+              <input
+                matInput
+                type="TEXT"
+                [value]="getDate(student.dateOfBirth)"
+                [disabled]="true"
+                [placeholder]="dateFormat"
+              />
+              <mat-datepicker-toggle matSuffix [for]="birthDatePicker">
+                <mat-icon matDatepickerToggleIcon style="margin-right: 8px">
+                  calendar_month
+                </mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker
+                #birthDatePicker
+                [disabled]="true"
+                [touchUi]="isMobile"
+              ></mat-datepicker>
+            </mat-form-field>
+            <div class="error" [innerHtml]="exErrors['exstudent'+i]"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <label [class]="makeStudentEmailAsUsername ? 'title required' :'title'">
+          <strong>{{"Email" | translate}}</strong>
+        </label>
+        <div class="content">
+          <div class="o-form-field">
+            <mat-form-field>
+              <input matInput type="TEXT" [value]="student.email" disabled />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="row"
+    *ngFor="let formGroup of formGroups; let j = index"
+    [formGroup]="formGroup"
+  >
+    <div class="col fake-option" *ngIf="maDisplayCartStudents.length">
+      <label class="title">&nbsp;</label>
+      <div class="content">
+        <div class="o-form-field">
+          <div>&nbsp;</div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <label class="title required">
+        <strong>{{"First Name" | translate}}</strong>
+      </label>
+      <div class="content">
+        <div class="o-form-field">
+          <mat-form-field>
+            <input matInput type="TEXT" formControlName="firstName" />
+          </mat-form-field>
+          <mat-error
+            *ngIf="isInvalid('firstName', j)"
+            [innerHtml]="getErrorMessage('firstName', j)"
+          >
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <label class="title required">
+        <strong>{{"Last Name" | translate}}</strong>
+      </label>
+      <div class="content">
+        <div class="o-form-field">
+          <mat-form-field>
+            <input matInput type="TEXT" formControlName="lastName" />
+          </mat-form-field>
+          <mat-error
+            *ngIf="isInvalid('lastName', j)"
+            [innerHtml]="getErrorMessage('lastName', j)"
+          >
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <label class="title required">
+        <strong>{{"Date of Birth" | translate}}</strong>
+      </label>
+      <div class="content">
+        <div class="o-form-field">
+          <mat-form-field>
+            <input
+              matInput
+              type="TEXT"
+              [min]="minDate"
+              [max]="maxDate"
+              formControlName="dateOfBirth"
+              [matDatepicker]="birthDatePicker"
+              (click)="birthDatePicker.open()"
+              [placeholder]="dateFormat"
+            />
+            <mat-datepicker-toggle matSuffix [for]="birthDatePicker">
+              <mat-icon matDatepickerToggleIcon style="margin-right: 8px">
+                calendar_month
+              </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker
+              #birthDatePicker
+              [disabled]="false"
+              [touchUi]="isMobile"
+            ></mat-datepicker>
+          </mat-form-field>
+          <mat-error
+            *ngIf="isInvalid('dateOfBirth', j)"
+            [innerHtml]="getErrorMessage('dateOfBirth', j)"
+          >
+          </mat-error>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <label [class]="makeStudentEmailAsUsername ? 'title required' :'title'">
+        <strong>{{"Email" | translate}}</strong>
+      </label>
+      <div class="content">
+        <div class="o-form-field">
+          <mat-form-field>
+            <input matInput type="TEXT" formControlName="email" />
+          </mat-form-field>
+          <mat-error
+            *ngIf="isInvalid('email', j)"
+            [innerHtml]="getErrorMessage('email', j)"
+          >
+          </mat-error>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row">
+    <div *ngIf="maDisplayCartStudents.length" class="fake-option">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+    <button mat-stroked-button (click)="addFormGroup()">
+      <mat-icon>add</mat-icon>
+      {{"Add Student" | translate}}
+    </button>
+  </div>
+</div>
+<div
+  mat-dialog-actions
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="8px"
+>
+  <div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
+  <div fxLayoutAlign="center center">
+    <button mat-stroked-button class="fill" (click)="addStudents()">
+      <mat-icon>add</mat-icon>
+      {{"Add" | translate}}
+    </button>
+    <button mat-stroked-button mat-dialog-close class="bg-white">
+      <mat-icon>close</mat-icon>
+      {{"Cancel" | translate }}
+    </button>
+  </div>
+</div>

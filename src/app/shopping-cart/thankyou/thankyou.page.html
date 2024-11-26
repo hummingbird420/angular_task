@@ -1,0 +1,199 @@
+<div class="thank-you-page">
+  <div [cartTopSticky]="1">
+    <div class="button-wrapper no-print">
+      <div>
+        <a *ngIf="websiteLink" [href]="websiteLink">
+          <button class="back-button" mat-flat-button>
+            <mat-icon svgIcon="back"></mat-icon>
+            {{"Website" | translate}}
+          </button>
+        </a>
+      </div>
+      <div>
+        <button mat-icon-button oTooltip="{{'Print This Page' | translate}}" theme="dark" cartPrint>
+          <mat-icon>print</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="thank-you-message" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="4px">
+      <div [innerHTML]="printMessage() | safeHtml"></div>
+      <h1 *ngIf="hasThanksMessageTitle()" [innerHTML]="thanksMessageTitle() | safeHtml"></h1>
+      <div [innerHTML]="thanksMessage() | safeHtml"></div>
+      <div>&nbsp;</div>
+    </div>
+  </div>
+  <div class="order-info">
+    <div class="client-info" *ngIf="thankYouPageClientInfo">
+      <h2 class="client-title" [innerHTML]="thankYouPageClientInfo.title | safeHtml"></h2>
+      <div>{{getClientName()}}</div>
+      <div>{{getOrganization()}}</div>
+      <div>{{getClientAddress()}}</div>
+      <div>{{getCountry()}}</div>
+    </div>
+    <div class="order-details" *ngIf="thankYouPageOrderReceiptInfo">
+      <h2 class="order-title" [innerHTML]="thankYouPageOrderReceiptInfo.title | safeHtml"></h2>
+      <div>
+        <strong [innerHTML]="thankYouPageOrderReceiptInfo.orderIdTitle | safeHtml"></strong>
+        {{thankYouPageOrderReceiptInfo.orderId}}
+      </div>
+    </div>
+  </div>
+  <table class="class-table" *ngIf="thankYouPageInfo">
+    <ng-container *ngFor="let clazz of thankYouPageInfo.thankYouPageClasses; let i = index">
+      <tr class="header-row" [id]="'header-row'+i">
+        <td *ngFor="let column of thankYouPageInfo.columns"
+          [ngClass]="thankYouPageInfo.columns.length < 10 ? 'nowrap':''" [class]="column.name">
+          {{column.title}}
+        </td>
+      </tr>
+      <tr class="content-row" [oHoverItemContent]="i + ''">
+        <td [class]="column.name" *ngFor="let column of thankYouPageInfo.columns"
+          [innerHTML]="clazz | formatClassInfo : column.name" attr.data-title="{{column.title}}"></td>
+      </tr>
+      <tr>
+        <td [attr.colspan]="thankYouPageInfo.columns.length + 1" class="row-space">
+          <div *ngIf="clazz.comments" class="class-comment">
+            <mat-icon>error_outline</mat-icon>
+            <span [innerHTML]="clazz.comments"></span>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+    <tr>
+      <td [attr.colspan]="thankYouPageInfo.columns.length + 1" class="row-space text-right">
+        <table class="cart-amount-summary" *ngIf="cartSummary" role="presentation" style="float: right">
+          <tr class="row" *ngIf="cartSummary.tutionTax || cartSummary.discount || cartSummary.otherCharges">
+            <td class="label">{{"Sub-Total" | translate}}</td>
+            <td class="amount">
+              {{currencySign}}{{cartSummary.subTotal | number : "1.2-2"}}
+            </td>
+          </tr>
+          <tr class="row tax" *ngIf="cartSummary.discount">
+            <td class="label">{{"Discount" | translate}}</td>
+            <td class="amount">
+              -{{currencySign}}{{cartSummary.discount | number : "1.2-2"}}
+            </td>
+          </tr>
+          <tr class="row tax" *ngIf="cartSummary.tutionTax">
+            <td class="label">{{"Tax for tuition" | translate}}</td>
+            <td class="amount">
+              {{currencySign}}{{cartSummary.tutionTax | number : "1.2-2"}}
+            </td>
+          </tr>
+          <tr class="row othercharge" *ngIf="cartSummary.otherCharges">
+            <td class="label">{{"Other Charges" | translate}}</td>
+            <td class="amount">
+              {{currencySign}}{{cartSummary.otherCharges | number : "1.2-2"}}
+            </td>
+          </tr>
+          <tr class="row total">
+            <td class="label">{{"Total" | translate}}</td>
+            <td class="amount">
+              {{currencySign}}{{cartSummary.total | number : "1.2-2"}}
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <div class="payment-details" *ngIf="thankYouPagePaymentDetailsInfo && thankYouPagePaymentDetailsInfo.title">
+    <table class="payment-details-table" style="width: auto">
+      <tr>
+        <td colspan="2">
+          <h2>{{thankYouPagePaymentDetailsInfo.title}}</h2>
+        </td>
+      </tr>
+      <tr>
+        <td>{{"Date" | translate}}:</td>
+        <td><strong>{{thankYouPagePaymentDetailsInfo.date}}</strong></td>
+      </tr>
+      <tr>
+        <td>{{"Payment Method" | translate}}:</td>
+        <td>
+          <strong>{{thankYouPagePaymentDetailsInfo.paymentMethod}}</strong>
+        </td>
+      </tr>
+      <tr *ngIf="thankYouPagePaymentDetailsInfo.transactionId">
+        <td>{{"Transaction ID" | translate}}:</td>
+        <td>
+          <strong>{{thankYouPagePaymentDetailsInfo.transactionId}}</strong>
+        </td>
+      </tr>
+      <tr>
+        <td>{{"Transaction Fee" | translate}}:</td>
+        <td>
+          <strong>{{thankYouPagePaymentDetailsInfo.transactionFee}}</strong>
+        </td>
+      </tr>
+      <tr>
+        <td>{{"Paid Amount" | translate}}:</td>
+        <td><strong>{{thankYouPagePaymentDetailsInfo.paidAmount}}</strong></td>
+      </tr>
+      <tr>
+        <td>{{"Currency" | translate}}:</td>
+        <td>
+          <strong>{{thankYouPagePaymentDetailsInfo.currencyCode}}</strong>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <table *ngIf="courseDescriptions && courseDescriptions.length">
+    <ng-container *ngFor="let course of courseDescriptions">
+      <tr>
+        <td class="text-center">
+          <strong [innerHTML]="course.courseName | formatCourseName : course.courseNumber | safeHtml"></strong>
+        </td>
+      </tr>
+      <tr>
+        <td [class]="course.refundPolicyTitle && !multiple?'hr':''" [innerHTML]="course.courseDescription | safeHtml">
+        </td>
+      </tr>
+
+      <tr>
+        <td class="text-center">
+          <strong [innerHTML]="course.refundPolicyTitle | safeHtml"></strong>
+        </td>
+      </tr>
+      <tr>
+        <td [class]="!multiple?'hr':''" [innerHTML]="course.refundPolicyDescription | safeHtml"></td>
+      </tr>
+    </ng-container>
+  </table>
+  <table *ngIf="courseDescriptionWaitings && courseDescriptionWaitings.length">
+    <tr>
+      <td class="text-center">
+        <strong [innerHTML]="waitingMessage | safeHtml"></strong>
+      </td>
+    </tr>
+    <ng-container *ngFor="let course of courseDescriptionWaitings">
+      <tr>
+        <td [innerHTML]="course.courseName | formatCourseName : course.courseNumber | safeHtml"></td>
+      </tr>
+      <tr>
+        <td [class]="course.refundPolicyTitle && !multiple?'hr':''" [innerHTML]="course.courseDescription | safeHtml">
+        </td>
+      </tr>
+
+      <tr>
+        <td class="text-center">
+          <strong [innerHTML]="course.refundPolicyTitle | safeHtml"></strong>
+        </td>
+      </tr>
+      <tr>
+        <td [class]="!multiple?'hr':''" [innerHTML]="course.refundPolicyDescription | safeHtml"></td>
+      </tr>
+    </ng-container>
+  </table>
+  <table *ngIf="multiple">
+    <tr>
+      <td class="hr"></td>
+    </tr>
+  </table>
+  <table *ngIf="hasThanksFooterMessage" class="thanks-footer">
+    <tr>
+      <td [innerHTML]="thanksFooterMessage() | safeHtml"></td>
+    </tr>
+  </table>
+</div>

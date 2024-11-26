@@ -1,0 +1,9 @@
+mat-card-content {
+  flex-direction: column;
+  position: absolute;
+  width: calc(100% - 16px);
+}
+.sep-left {
+  margin-bottom: 8px;
+  margin-top: 4px;
+}

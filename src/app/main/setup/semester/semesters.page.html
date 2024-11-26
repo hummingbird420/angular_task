@@ -1,0 +1,8 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <o-table
+    [columns]="columns"
+    [dataSource]="dataSource"
+    [dateFormat]="dateFormat"
+    (clickAdd)="createSemester()"
+  ></o-table>
+</o-content-widget>

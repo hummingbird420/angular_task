@@ -1,0 +1,72 @@
+<div
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="16px"
+  id="no-more-tables"
+>
+  <div></div>
+  <div style="width: 99%" fxLayout="row" fxLayoutAlign="end center">
+    <button mat-stroked-button (click)="showAddStudentDialog()">
+      <mat-icon>add</mat-icon>
+      {{"Add Student" | translate}}
+    </button>
+  </div>
+  <table class="group-student-table">
+    <thead>
+      <tr>
+        <th>{{"First Name" | translate}}</th>
+        <th>{{"Last Name" | translate}}</th>
+        <th>{{"Birth Date" | translate}}</th>
+        <th>{{"Home Phone" | translate}}</th>
+        <th>{{"Email" | translate}}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+        <td data-title="{{'First Name' | translate}}">
+          {{student.firstName}}&nbsp;
+        </td>
+        <td data-title="{{'Last Name' | translate}}">
+          {{student.lastName}}&nbsp;
+        </td>
+        <td data-title="{{'Birth Date' | translate}}">
+          {{student.dateOfBirth}}&nbsp;
+        </td>
+        <td data-title="{{'Home Phone' | translate}}">
+          {{student.homePhone}}&nbsp;
+        </td>
+        <td data-title="{{'Email' | translate}}">{{student.email}}&nbsp;</td>
+        <td (click)="deleteStudent(student.studentId)">
+          <mat-icon>close</mat-icon>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="errorMessage" fxLayoutAlign="center center" style="color: red">
+    {{errorMessage}}
+  </div>
+  <div fxLayoutAlign="center center">
+    <button
+      *ngIf="showBackToClassButton === false"
+      mat-stroked-button
+      type="button"
+      class="fill"
+      (click)="enrollStudents()"
+    >
+      <mat-icon>check</mat-icon>
+      {{"Register" | translate}}
+    </button>
+    <button
+      *ngIf="showBackToClassButton === true"
+      mat-stroked-button
+      backToClassList
+      type="button"
+      class="fill"
+      (click)="enrollStudents()"
+    >
+      <mat-icon>add</mat-icon>
+      {{"Select Another Class" | translate}}
+    </button>
+  </div>
+</div>

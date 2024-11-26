@@ -1,0 +1,35 @@
+<div fxLayoutAlign="start center" fxLayoutGap="8px">
+  <button
+    *ngIf="!isUploaded"
+    type="button"
+    class="btn-sm fill"
+    [oTooltip]="'Upload File' | translate"
+    theme="dark"
+    mat-stroked-button
+    (click)="uploadFile()"
+    style="
+      width: 30px !important;
+      padding-left: 8px !important;
+      padding-right: 8px !important;
+    "
+  >
+    <mat-icon>attach_file</mat-icon>
+  </button>
+  <div *ngIf="isUploaded">{{ fileName | trimFileName }}</div>
+  <button
+    type="button"
+    mat-stroked-button
+    (click)="deleteFile()"
+    [disabled]="!isUploaded"
+    class="btn-sm remove"
+    [oTooltip]="'Remove' | translate"
+    theme="dark"
+    style="
+      width: 30px !important;
+      padding-left: 8px !important;
+      padding-right: 8px !important;
+    "
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

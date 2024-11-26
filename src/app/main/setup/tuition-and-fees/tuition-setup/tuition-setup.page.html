@@ -1,0 +1,53 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <mat-form-field appearance="outline">
+      <mat-label>{{semesterDropdown.fieldTitle}}</mat-label>
+      <mat-select
+        (selectionChange)="onSemesterChange()"
+        [formControl]="semesterFormControl"
+        #semester
+      >
+        <mat-option
+          *ngFor="let option of semesterDropdown.options"
+          [value]="option.value"
+        >
+          {{option.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </ng-container>
+  <mat-tab-group [dynamicHeight]="true">
+    <mat-tab [label]="tab.listText" *ngFor="let tab of recordSections | async">
+      <ng-template matTabContent [ngSwitch]="tab.listCode">
+        <o-credit-hour-tuition
+          *ngSwitchCase="'creditHour'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-credit-hour-tuition>
+        <o-program-credit-hour-tuition
+          *ngSwitchCase="'programHour'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-program-credit-hour-tuition>
+        <o-instructional-hour-tuition
+          *ngSwitchCase="'instructionalHour'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-instructional-hour-tuition>
+        <o-category-tuition
+          *ngSwitchCase="'category'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-category-tuition>
+        <o-course-tuition
+          *ngSwitchCase="'course'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-course-tuition>
+        <o-lesson-tuition
+          *ngSwitchCase="'lesson'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-lesson-tuition>
+        <o-program-tuition
+          *ngSwitchCase="'programRates'"
+          [semesterId]="selectedSemester.asObservable()"
+        ></o-program-tuition>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</o-content-widget>

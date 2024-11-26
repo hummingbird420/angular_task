@@ -1,0 +1,71 @@
+.add-student-multiple {
+  margin: 16px 16px;
+  background: white;
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    overflow-x: auto;
+    max-width: 100% !important;
+    position: relative !important;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+  .col {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    margin: 4px 8px;
+  }
+
+  .title {
+    display: none;
+  }
+  .row:first-child .title {
+    display: flex;
+  }
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  @media screen and (min-width: 800px) {
+    .col {
+      max-width: 182px;
+    }
+    .col:first-child {
+      margin-left: auto;
+    }
+
+    .col:last-child {
+      margin-right: auto;
+    }
+  }
+
+  .fake-option {
+    margin-top: 4px;
+    margin-left: 24px !important;
+  }
+
+  @media screen and (max-width: 799px) {
+    background: transparent;
+    .row {
+      flex-direction: column;
+      background: white;
+      border-radius: 8px;
+      margin: 16px 0px;
+      padding: 8px 16px;
+    }
+
+    .title {
+      display: flex;
+    }
+    .fake-option {
+      display: none;
+    }
+  }
+  .mat-datepicker-toggle button {
+    margin-right: 8px !important;
+  }
+}

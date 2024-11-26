@@ -1,0 +1,204 @@
+<div fxLayout="row wrap" fxLayoutAlign="center" class="header">
+  <mat-card fxFlex="100">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <div fxLayout="row wrap" fxFlex.lt-md="100" [fxLayoutAlign]="headerAlign">
+        <img class="logo" [src]="logo | async" alt="" (error)="onLogoError()" />
+        <span class="school-name">{{ schoolName }}</span>
+      </div>
+      <hr
+        fxFlex="100"
+        fxHide
+        class="sep-center"
+        style="margin: 8px 0px 4px; height: 3px"
+      />
+      <div
+        fxHide.lt-md
+        fxLayout="row wrap"
+        class="right-part"
+        fxLayoutAlign="center center"
+      >
+        <button mat-flat-button>
+          <mat-icon>search</mat-icon>{{ "Search" | asyncTranslate | async }}
+        </button>
+        <button mat-flat-button>
+          <mat-icon>help_outline</mat-icon>
+          {{ "Live Help" | asyncTranslate | async }}
+        </button>
+        <button mat-flat-button (click)="logout()">
+          <mat-icon>power_settings_new</mat-icon>
+          {{ "Logout" | asyncTranslate | async }}
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<div
+  fxLayout="row"
+  fxLayoutAlign="start"
+  fxLayoutGap="0px"
+  class="main-container"
+>
+  <mat-card
+    class="side-nav glass"
+    [class]="expand ? '' : 'iconized'"
+    [@openClose]="expand ? 'open' : 'closed'"
+    (mouseenter)="onMouseEnterSideNav()"
+    (mouseleave)="onMouseLeaveSideNav()"
+  >
+    <div>
+      <div class="profile sticky">
+        <div
+          class="profile-photo"
+          [oTooltip]="name + ' (' + roleName + ')'"
+          [display]="expand === false"
+          placement="right"
+        >
+          <img
+            src="./assets/images/user.png"
+            alt=""
+            onerror="this.src='./assets/images/user.png'"
+          />
+        </div>
+        <div class="name" [fxHide]="expand === false">{{ name }}</div>
+        <div class="role" [fxHide]="expand === false">{{ roleName }}</div>
+        <hr class="sep-center" style="margin-bottom: 0px" />
+      </div>
+
+      <mat-nav-list class="pt-0 start-page">
+        <a
+          mat-list-item
+          routerLink="/dashboard"
+          routerLinkActive="active-link"
+          (click)="onClickMenuItem('home')"
+        >
+          <mat-icon
+            [oTooltip]="getTranslatedWord('Home')"
+            [display]="expand === false"
+            placement="right"
+            >home</mat-icon
+          >
+          <span
+            class="label"
+            [fxHide]="expand === false"
+            style="font-size: 15px"
+            >{{ "Home" | asyncTranslate | async }}</span
+          >
+        </a>
+      </mat-nav-list>
+
+      <mat-accordion class="p-0">
+        <mat-expansion-panel
+          [expanded]="isExpanded(menu.menuId)"
+          hideToggle
+          *ngFor="let menu of menus"
+          class="p-0"
+        >
+          <mat-expansion-panel-header
+            [oTooltip]="menu.menuLabel"
+            [display]="expand === false"
+            placement="right"
+          >
+            <mat-panel-title>
+              <mat-icon>{{ getMenuIconName(menu.menuId) }}</mat-icon>
+              <span class="label" [fxHide]="expand === false">{{
+                menu.menuLabel
+              }}</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <hr class="sep-center" />
+          <mat-nav-list class="p-0">
+            <a
+              mat-list-item
+              class="p-0"
+              [class]="item.itemId === activeMenuItem ? 'active' : ''"
+              [oTooltip]="item.itemLabel"
+              [display]="expand === false"
+              placement="right"
+              [routerLink]="item.itemUrl"
+              routerLinkActive="active-link"
+              *ngFor="let item of menu.menuItems"
+              (click)="onClickMenuItem(item.itemId)"
+            >
+              <mat-icon>{{ getMenuItemIconName(item.itemUrl) }}</mat-icon>
+              <span class="label" [fxHide]="expand === false">{{
+                item.itemLabel
+              }}</span>
+            </a>
+          </mat-nav-list>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <div class="brand" [fxHide]="true">Powered by Orbund LLC</div>
+    </div>
+  </mat-card>
+  <mat-card
+    class="widget-main glass white"
+    [class]="expand ? '' : 'expanded'"
+    fxLayout="column"
+    fxLayoutAlign="start"
+    style="width: calc(100% - 212px)"
+    fxFlex="calc(100% - 212px)"
+  >
+    <div
+      matRipple
+      class="left-menu-switch"
+      (click)="toogleSideNav()"
+      [oTooltip]="'Toogle Left Menu' | asyncTranslate | async"
+    >
+      <mat-icon [@rotateLeftRight]="expand ? 'left' : 'right'">
+        chevron_left
+      </mat-icon>
+    </div>
+
+    <div fxLayoutGap="8px" style="position: absolute; top: -13px; right: 16px">
+      <button
+        fxHide.gt-sm
+        mat-raised-button
+        class="btn-sm btn-border"
+        [oTooltip]="'Search' | asyncTranslate | async"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+
+      <button
+        fxHide.gt-sm
+        mat-raised-button
+        class="btn-sm btn-border"
+        [oTooltip]="'Live Help' | asyncTranslate | async"
+      >
+        <mat-icon>help_outline</mat-icon>
+      </button>
+      <button
+        fxHide.gt-sm
+        mat-raised-button
+        class="btn-sm btn-border"
+        [oTooltip]="'Logout' | asyncTranslate | async"
+        (click)="logout()"
+      >
+        <mat-icon>power_settings_new</mat-icon>
+      </button>
+      <button
+        mat-raised-button
+        *ngIf="isRightLinkNotEmpty$ | async"
+        class="btn-sm btn-border"
+        [matMenuTriggerFor]="rightMenu"
+        [oTooltip]="'Right Menu' | asyncTranslate | async"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </div>
+    <mat-card-content fxLayout="column">
+      <router-outlet></router-outlet>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<mat-menu #rightMenu="matMenu">
+  <a
+    mat-menu-item
+    *ngFor="let menuItem of rightLinks$ | async"
+    [routerLink]="menuItem.itemUrl"
+  >
+    {{ menuItem.itemLabel }}
+  </a>
+</mat-menu>

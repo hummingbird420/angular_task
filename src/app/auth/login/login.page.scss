@@ -1,0 +1,50 @@
+mat-card-content {
+  margin-top: 20px;
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-content mat-form-field {
+  transition: margin 350ms;
+}
+
+mat-card-content mat-form-field.ng-touched.ng-invalid,
+mat-card-content mat-form-field.mat-form-field-invalid {
+  margin-bottom: 8px !important;
+}
+
+mat-card-actions {
+  padding: 0px 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+.footer-content {
+  margin: 16px auto 0;
+  p {
+    text-align: center;
+  }
+}
+.mat-divider-horizontal {
+  position: relative;
+}
+.login-button {
+  height: 44px;
+  font-size: 18px;
+}
+.forgot-password-link {
+  font-size: 16px;
+}
+.microsoft-button {
+  padding: 0;
+  padding-left: 0;
+  padding-bottom: 0px !important;
+  border: none;
+  height: 44px;
+  img {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0px !important;
+  }
+}

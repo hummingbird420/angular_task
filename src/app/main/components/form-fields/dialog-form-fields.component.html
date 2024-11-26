@@ -1,0 +1,163 @@
+<div [formGroup]="formGroup" fxLayout="column">
+  <div *ngFor="let item of formFields | keyvalue">
+    <div [ngSwitch]="item.value.fieldType.toUpperCase()">
+      <mat-form-field
+        appearance="outline"
+        *ngSwitchCase="
+          ['TEXT', 'NUMBER', 'PASSWORD', 'MEMO', 'DROPDOWN'].includes(
+            item.value.fieldType.toUpperCase()
+          )
+            ? item.value.fieldType.toUpperCase()
+            : ''
+        "
+      >
+        <mat-label
+          [class]="required(item.value.fieldName) ? 'required-mark' : ''"
+        >
+          {{ item.value.fieldTitle | htmlDecoder }}
+        </mat-label>
+        <input
+          *ngIf="item.value.fieldType.toUpperCase() === 'TEXT'"
+          matInput
+          type="text"
+          [formControlName]="item.value.fieldName"
+          [value]="item.value.fieldValue"
+          [maxLength]="maxLengthText(item.value.maxLength)"
+        />
+        <input
+          *ngIf="item.value.fieldType.toUpperCase() === 'NUMBER'"
+          matInput
+          oNumber
+          type="text"
+          [formControlName]="item.value.fieldName"
+          [value]="item.value.fieldValue"
+          [maxValue]="maxValue"
+        />
+        <input
+          *ngIf="item.value.fieldType.toUpperCase() === 'PASSWORD'"
+          matInput
+          type="password"
+          [formControlName]="item.value.fieldName"
+          [value]="item.value.fieldValue"
+          [maxLength]="maxLengthPassword(item.value.maxLength)"
+          autocomplete="false"
+        />
+        <textarea
+          *ngIf="item.value.fieldType.toUpperCase() === 'MEMO'"
+          matInput
+          type="text"
+          [formControlName]="item.value.fieldName"
+          [value]="item.value.fieldValue"
+          [maxLength]="maxLengthMemo(item.value.maxLength)"
+        ></textarea>
+        <mat-select
+          *ngIf="item.value.fieldType.toUpperCase() === 'DROPDOWN'"
+          [formControlName]="item.value.fieldName"
+          aria-describedby="dropdown"
+        >
+          <mat-option>---</mat-option>
+          <mat-option
+            [value]="option.value"
+            *ngFor="let option of item.value.options"
+          >
+            {{ option.title | htmlDecoder }}
+          </mat-option>
+        </mat-select>
+        <mat-hint *ngIf="item.value.hints">
+          {{ item.value.hints | htmlDecoder }}
+        </mat-hint>
+        <mat-error
+          *ngIf="isInvalid(item.value.fieldName)"
+          [innerHTML]="
+            getErrorMessage(item.value.fieldName, item.value.fieldTitle)
+          "
+        >
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field
+        fxFlex="50"
+        fxFlex.xs="100"
+        fxFlex.sm="75"
+        *ngSwitchCase="'DATE'"
+      >
+        <mat-label
+          [class]="required(item.value.fieldName) ? 'required-mark' : ''"
+        >
+          {{ item.value.fieldTitle | htmlDecoder }}
+        </mat-label>
+        <input
+          matInput
+          [matDatepicker]="dp"
+          [formControlName]="item.value.fieldName"
+        />
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp></mat-datepicker>
+        <mat-hint *ngIf="item.value.hints">
+          {{ item.value.hints | htmlDecoder }}
+        </mat-hint>
+        <mat-error
+          *ngIf="isInvalid(item.value.fieldName)"
+          [innerHTML]="
+            getErrorMessage(item.value.fieldName, item.value.fieldTitle)
+          "
+        >
+        </mat-error>
+      </mat-form-field>
+      <div fxFlex="100" *ngSwitchCase="'RADIO'">
+        <mat-radio-group
+          [formControlName]="item.value.fieldName"
+          aria-label="Select an option"
+        >
+          <mat-radio-button
+            [value]="option.value"
+            *ngFor="let option of item.value.options"
+          >
+            {{ option.title | htmlDecoder }}
+          </mat-radio-button>
+        </mat-radio-group>
+        <mat-hint *ngIf="item.value.hints">
+          {{ item.value.hints | htmlDecoder }}
+        </mat-hint>
+        <mat-error
+          *ngIf="isInvalid(item.value.fieldName)"
+          [innerHTML]="
+            getErrorMessage(item.value.fieldName, item.value.fieldTitle)
+          "
+        >
+        </mat-error>
+      </div>
+      <div fxFlex="100" *ngSwitchCase="'CHECKBOX'">
+        <mat-checkbox [formControlName]="item.value.fieldName"
+          >{{ item.value.fieldTitle | htmlDecoder }}
+        </mat-checkbox>
+        <mat-hint *ngIf="item.value.hints">
+          {{ item.value.hints | htmlDecoder }}
+        </mat-hint>
+        <mat-error
+          *ngIf="isInvalid(item.value.fieldName)"
+          [innerHTML]="
+            getErrorMessage(item.value.fieldName, item.value.fieldTitle)
+          "
+        >
+        </mat-error>
+      </div>
+      <div fxFlex="100" *ngSwitchCase="'MULTI_CHECKBOX'">
+        <o-multi-checkbox
+          [formControlName]="item.value.fieldName"
+          [checkboxes]="item.value.fieldValue"
+        >
+        </o-multi-checkbox>
+        <mat-hint *ngIf="item.value.hints">
+          {{ item.value.hints | htmlDecoder }}
+        </mat-hint>
+        <mat-error
+          *ngIf="isInvalid(item.value.fieldName)"
+          [innerHTML]="
+            getErrorMessage(item.value.fieldName, item.value.fieldTitle)
+          "
+        >
+        </mat-error>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<o-content-widget [title]="title" [subTitles]="subTitles">
+  <ng-container slot="head">
+    <div class="o-form-field">
+      <mat-form-field>
+        <mat-label>&nbsp;&nbsp;&nbsp;Filter</mat-label>
+        <input matInput type="text" [(ngModel)]="search" />
+      </mat-form-field>
+    </div>
+  </ng-container>
+  <form [formGroup]="formGroup">
+    <mat-accordion [multi]="true">
+      <mat-expansion-panel
+        [expanded]="'true'"
+        *ngFor="let systemOption of systemOptions | systemOptionFilter: search"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{systemOption.optionGroupTitle}} </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <ul>
+          <li
+            *ngFor="let option of systemOption.options | optionFilter : search"
+          >
+            <mat-checkbox [formControlName]="option.value">
+              {{option.title | htmlDecoder}}
+            </mat-checkbox>
+          </li>
+        </ul>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </form>
+</o-content-widget>

@@ -1,0 +1,204 @@
+<form>
+  <div
+    fxFlex="100"
+    [fxLayout]="layout"
+    [formGroup]="formGroup"
+    [class]="adjustMargin === true ? 'mr' : ''"
+  >
+    <div
+      class="o-form-field"
+      fxFlex="100"
+      fxLayout="row wrap"
+      fxLayoutAlign="start start"
+      fxLayoutGap="16px"
+      *ngFor="let field of fields | async"
+    >
+      <mat-label
+        fxFlex="25"
+        fxFlex.xs="100"
+        [class]="required(field.fieldName) ? 'required-mark' : ''"
+      >
+        {{ field.fieldTitle | htmlDecoder }}
+      </mat-label>
+
+      <div fxFlex="70" fxFlex.xs="100" fxLayout="column">
+        <div
+          fxFlex="100"
+          fxLayout="row"
+          [ngSwitch]="field.fieldType.toUpperCase()"
+        >
+          <mat-form-field
+            fxFlex="50"
+            fxFlex.xs="100"
+            fxFlex.sm="75"
+            *ngSwitchCase="'TEXT'"
+          >
+            <input
+              matInput
+              type="text"
+              [formControlName]="field.fieldName"
+              [value]="field.fieldValue"
+              [maxLength]="maxLengthText(field.maxLength)"
+            />
+          </mat-form-field>
+          <mat-form-field
+            fxFlex="50"
+            fxFlex.xs="100"
+            fxFlex.sm="75"
+            *ngSwitchCase="'NUMBER'"
+          >
+            <input
+              matInput
+              oNumber
+              type="text"
+              [formControlName]="field.fieldName"
+              [value]="field.fieldValue"
+              [maxValue]="maxValue"
+            />
+          </mat-form-field>
+          <mat-form-field
+            fxFlex="50"
+            fxFlex.xs="100"
+            fxFlex.sm="75"
+            *ngSwitchCase="'DECIMAL'"
+          >
+            <input
+              matInput
+              oNumber="decimal"
+              type="text"
+              [formControlName]="field.fieldName"
+              [value]="field.fieldValue"
+              [maxValue]="maxValue"
+            />
+          </mat-form-field>
+          <mat-form-field
+            fxFlex="50"
+            fxFlex.xs="100"
+            fxFlex.sm="75"
+            *ngSwitchCase="'CURRENCY'"
+          >
+            <div matPrefix class="currency-prefix">
+              {{ currencySign }}
+            </div>
+            <input
+              matInput
+              oNumber="decimal"
+              type="text"
+              [formControlName]="field.fieldName"
+              [value]="field.fieldValue"
+              [maxValue]="maxValue"
+            />
+          </mat-form-field>
+          <mat-form-field fxFlex="100" *ngSwitchCase="'MEMO'">
+            <textarea
+              matInput
+              type="text"
+              [formControlName]="field.fieldName"
+              [value]="field.fieldValue"
+              [maxLength]="maxLengthMemo(field.maxLength)"
+            ></textarea>
+          </mat-form-field>
+          <mat-form-field
+            fxFlex="50"
+            fxFlex.xs="100"
+            fxFlex.sm="75"
+            *ngSwitchCase="'PASSWORD'"
+          >
+            <input
+              matInput
+              type="password"
+              [formControlName]="field.fieldName"
+              [value]="field.fieldValue"
+              [maxLength]="maxLengthPassword(field.maxLength)"
+              autocomplete="false"
+            />
+          </mat-form-field>
+          <mat-form-field
+            fxFlex="50"
+            fxFlex.xs="100"
+            fxFlex.sm="75"
+            *ngSwitchCase="'DATE'"
+          >
+            <input
+              matInput
+              [matDatepicker]="dp"
+              [formControlName]="field.fieldName"
+            />
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field
+            fxFlex="50"
+            fxFlex.xs="100"
+            fxFlex.sm="75"
+            *ngSwitchCase="'DROPDOWN'"
+          >
+            <mat-select [formControlName]="field.fieldName">
+              <!-- <mat-option disabled>
+                <input type="text" class="select-search" />
+              </mat-option> -->
+
+              <mat-option
+                [value]="option.value"
+                *ngFor="let option of field.options"
+              >
+                {{ option.title | htmlDecoder }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div fxFlex="100" *ngSwitchCase="'CHECKBOX'">
+            <mat-checkbox [formControlName]="field.fieldName"> </mat-checkbox>
+          </div>
+          <div fxFlex="100" *ngSwitchCase="'MULTI_CHECKBOX'">
+            <o-multi-checkbox
+              [formControlName]="field.fieldName"
+              [checkboxes]="field.fieldValue"
+            >
+            </o-multi-checkbox>
+          </div>
+          <div fxFlex="100" *ngSwitchCase="'RADIO'">
+            <mat-radio-group
+              [formControlName]="field.fieldName"
+              aria-label="Select an option"
+            >
+              <mat-radio-button
+                [value]="option.value"
+                *ngFor="let option of field.options"
+              >
+                {{ option.title | htmlDecoder }}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div fxFlex="100" *ngSwitchCase="'READ_ONLY'">
+            {{ field.fieldValue }}
+          </div>
+          <div fxFlex="100" *ngSwitchCase="'RICH_EDITOR'">
+            <o-rich-editor [formControlName]="field.fieldName"> </o-rich-editor>
+          </div>
+          <div fxFlex="100" *ngSwitchCase="'SQL_EDITOR'">
+            <o-code-editor [formControlName]="field.fieldName"> </o-code-editor>
+          </div>
+          <div fxFlex="100" *ngSwitchCase="'LIST'">
+            <o-list-field [formControlName]="field.fieldName"> </o-list-field>
+          </div>
+          <div fxFlex="100" *ngSwitchCase="'FILE'">
+            <o-file-uploader [formControlName]="field.fieldName">
+            </o-file-uploader>
+          </div>
+          <div fxFlex="100" *ngSwitchCase="'THEME_COLOR_CHOOSER'">
+            <o-theme-color-chooser [formControlName]="field.fieldName">
+            </o-theme-color-chooser>
+          </div>
+        </div>
+        <mat-hint *ngIf="field.hints">
+          {{ field.hints | htmlDecoder }}
+        </mat-hint>
+        <mat-error
+          *ngIf="isInvalid(field.fieldName)"
+          [innerHTML]="getErrorMessage(field.fieldName, field.fieldTitle)"
+        >
+        </mat-error>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,23 @@
+<div
+  *ngIf="displayNameAndLogo"
+  fxLayout="row"
+  fxLayoutGap="16px"
+  fxLayoutAlign="start center"
+>
+  <img class="logo" [src]="logo | async" alt="" (error)="onLogoError()" />
+  <div>
+    <div *ngIf="displaySchoolName" class="school-name">{{ schoolName }}</div>
+  </div>
+</div>
+<div *ngIf="!displayNameAndLogo"></div>
+<div class="top-cart">
+  <div class="item" oDisplayCart>
+    <div class="icon-cart-selected">
+      <div class="cart-count" [class]="cartCount ? 'theme-color' : ''">
+        {{ cartCount }}
+      </div>
+      <mat-icon svgIcon="cart"></mat-icon>
+    </div>
+    <div>{{ "Your Cart" | translate }}</div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  {{dialogTitle}}
+</h3>
+<div mat-dialog-content>
+  <form [formGroup]="formGroup">
+    <mat-form-field appearance="outline">
+      <mat-label>{{fieldTitle}}</mat-label>
+      <mat-select formControlName="tab">
+        <mat-option *ngFor="let field of fields" [value]="field.listCode">
+          {{field.listText}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="formGroup.invalid">{{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+  <button mat-raised-button class="btn-sm" (click)="editField()">
+    {{addButtonLabel}}
+  </button>
+  <button mat-raised-button (click)="closeDialog()" class="btn-sm">
+    {{closeButtonLabel}}
+  </button>
+</div>

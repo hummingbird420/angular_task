@@ -1,0 +1,24 @@
+<h3
+  mat-dialog-title
+  cdkDrag
+  cdkDragRootElement=".cdk-overlay-pane"
+  cdkDragHandle
+>
+  {{dialogTitle}}
+</h3>
+<div mat-dialog-content>
+  <form [formGroup]="formGroup">
+    <mat-form-field appearance="outline" cdkFocusInitial>
+      <mat-label> {{tabNameLabel}} </mat-label>
+      <input matInput formControlName="tabName" />
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+  <button mat-raised-button class="btn-sm" (click)="addTab()">
+    {{addButtonLabel}}
+  </button>
+  <button mat-raised-button (click)="closeDialog()" class="btn-sm">
+    {{closeButtonLabel}}
+  </button>
+</div>

@@ -1,0 +1,12 @@
+.form {
+  padding: 8px 16px;
+  background: white;
+  margin: 8px 0px;
+  border-radius: 8px;
+}
+
+@media screen and (min-width: 800px) {
+  .form .cart-form-wrapper {
+    min-width: 300px;
+  }
+}

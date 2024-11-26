@@ -1,0 +1,242 @@
+<div class="billing-page">
+  <div class="button-wrapper">
+    <div>
+      <button class="back-button" mat-flat-button oDisplayCart>
+        <mat-icon svgIcon="back"></mat-icon>
+        {{"Back to your Cart" | translate}}
+      </button>
+    </div>
+  </div>
+  <div style="margin-left: 16px">
+    <h1><b>{{"Billing Information" | translate}}</b></h1>
+  </div>
+  <form *ngIf="formGroup" [formGroup]="formGroup">
+    <div fxLayout="row wrap" class="billing-section">
+      <div
+        class="cart-form-wrapper card-section bg-white"
+        fxLayout="column"
+        fxLayoutGap="16px"
+      >
+        <div
+          *ngIf="paymentMethodField"
+          class="section"
+          fxLayout="column"
+          fxLayoutGap="16px"
+        >
+          <div class="field" fxLayout="column" fxLayoutGap="4px">
+            <label class="required">
+              <b>{{paymentMethodField.fieldTitle}}</b>
+            </label>
+            <div class="o-form-field">
+              <mat-form-field>
+                <mat-select
+                  [placeholder]="paymentMethodField.fieldTitle"
+                  disableOptionCentering
+                  panelClass="o-dropdown-billing"
+                  [formControlName]="paymentMethodField.fieldName"
+                  [value]="paymentMethodField.fieldValue"
+                  (selectionChange)="onPaymentMethodChange($event.value)"
+                >
+                  <mat-option
+                    *ngFor="let option of paymentMethodField.options"
+                    [value]="option.value"
+                    >{{option.title}}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row wrap" class="billing-section">
+      <div
+        class="cart-form-wrapper contact-section"
+        fxLayout="column"
+        fxLayoutGap="16px"
+        *ngIf="profileFields && profileFields.length"
+      >
+        <div
+          class="section"
+          fxLayout="column"
+          fxLayoutGap="16px"
+          *ngIf="profileFields && profileFields.length"
+        >
+          <div class="section-title">{{"Contact Information" | translate}}</div>
+          <div
+            fxLayout="column"
+            fxLayoutGap="4px"
+            *ngFor="let profileField of profileFields"
+          >
+            <label [ngClass]="profileField.required ? 'required' : ''">
+              <b>{{profileField.fieldTitle}}</b>
+            </label>
+            <div class="o-form-field">
+              <mat-form-field *ngIf="profileField.fieldType === 'TEXT'">
+                <input
+                  [type]="profileField.fieldType"
+                  matInput
+                  maxlength="50"
+                  [formControlName]="profileField.fieldName"
+                  [placeholder]="profileField.fieldTitle"
+                />
+              </mat-form-field>
+              <mat-form-field *ngIf="profileField.fieldType === 'DROPDOWN'">
+                <mat-select
+                  disableOptionCentering
+                  [formControlName]="profileField.fieldName"
+                  [placeholder]="profileField.fieldTitle"
+                  (selectionChange)="onDropDownChange($event.value, profileField.fieldName)"
+                >
+                  <ng-container *ngIf="profileField.fieldName === 'state'">
+                    <mat-option
+                      [value]="option.value"
+                      *ngFor="let option of stateOptions"
+                    >
+                      {{ option.title }}
+                    </mat-option>
+                  </ng-container>
+                  <ng-container *ngIf="profileField.fieldName !== 'state'">
+                    <mat-option
+                      [value]="option.value"
+                      *ngFor="let option of profileField.options"
+                    >
+                      {{ option.title }}
+                    </mat-option>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
+              <mat-error
+                *ngIf="isInvalid(profileField.fieldName)"
+                [innerHtml]="getErrorMessage(profileField.fieldName)"
+              >
+              </mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="cart-form-wrapper card-section"
+        *ngIf="paymentFields && paymentFields.length"
+      >
+        <div class="section" fxLayout="column" fxLayoutGap="16px">
+          <div class="section-title">{{"Payment Information" | translate}}</div>
+
+          <div
+            class="field"
+            fxLayout="column"
+            fxLayoutGap="4px"
+            *ngFor="let payField of paymentFields"
+          >
+            <label
+              [ngClass]="payField.required ? 'required' : ''"
+              *ngIf="payField.fieldType !== 'CHECKBOX'"
+            >
+              <b>{{payField.fieldTitle}}</b>
+            </label>
+            <div class="o-form-field">
+              <mat-form-field *ngIf="payField.fieldType === 'TEXT'">
+                <input
+                  type="TEXT"
+                  matInput
+                  maxlength="250"
+                  [formControlName]="payField.fieldName"
+                  [placeholder]="payField.fieldTitle"
+                  [attr.data-cayan]="getCayanFieldName(payField.fieldName)"
+                />
+              </mat-form-field>
+              <mat-form-field *ngIf="payField.fieldType === 'NUMBER'">
+                <input
+                  type="TEXT"
+                  matInput
+                  maxlength="250"
+                  [formControlName]="payField.fieldName"
+                  [placeholder]="payField.fieldTitle"
+                  [attr.data-cayan]="getCayanFieldName(payField.fieldName)"
+                />
+              </mat-form-field>
+              <mat-form-field *ngIf="payField.fieldType === 'PASSWORD'">
+                <input
+                  type="password"
+                  matInput
+                  maxlength="250"
+                  [formControlName]="payField.fieldName"
+                  [placeholder]="payField.fieldTitle"
+                  [attr.data-cayan]="getCayanFieldName(payField.fieldName)"
+                />
+              </mat-form-field>
+              <mat-form-field *ngIf="payField.fieldType === 'DROPDOWN'">
+                <select
+                  disableOptionCentering
+                  [formControlName]="payField.fieldName"
+                  [placeholder]="payField.fieldTitle"
+                  [attr.data-cayan]="getCayanFieldName(payField.fieldName)"
+                  matNativeControl
+                >
+                  <option
+                    [value]="option.value"
+                    *ngFor="let option of payField.options"
+                  >
+                    &nbsp;&nbsp;&nbsp;{{ option.title }}
+                  </option>
+                </select>
+              </mat-form-field>
+              <div *ngIf="payField.fieldType === 'FILE'">
+                <cart-file-uploader [formControlName]="payField.fieldName">
+                </cart-file-uploader>
+              </div>
+              <div *ngIf="payField.fieldType === 'CHECKBOX'">
+                <div fxLayout="row" fxLayoutGap="8px">
+                  <mat-checkbox [formControlName]="payField.fieldName">
+                  </mat-checkbox>
+                  <span [innerHTML]="payField.fieldTitle"></span>
+                </div>
+              </div>
+              <mat-error
+                *ngIf="isInvalid(payField.fieldName)"
+                [innerHtml]="getErrorMessage(payField.fieldName)"
+              >
+              </mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="transactionCharge > 0" class="trans-charge">
+        {{"Transaction fee" | translate}}&nbsp;{{currencySign +
+        transactionCharge}}&nbsp;{{"will be deducted from your account." |
+        translate}}
+      </div>
+      <div *ngIf="errorMessage" class="trans-charge">
+        <div [innerHTML]="errorMessage"></div>
+      </div>
+      <div class="proceed-section">
+        <button
+          *ngIf="sessionExpired == false"
+          mat-stroked-button
+          class="fill"
+          [disabled]="disblePaymentButton"
+          (click)="proceedPayment()"
+        >
+          {{"Submit Payment" | translate}}
+        </button>
+        <button *ngIf="sessionExpired" mat-stroked-button backToClassList>
+          {{"Select the class again" | translate}}
+        </button>
+      </div>
+      <div
+        *ngIf="instapago"
+        fxFlex="100"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        class="instapago-message"
+      >
+        <p fxFlex="96">
+          {{'Esta transacción será procesada de forma segura gracias a la
+          plataforma de' | translate}}
+        </p>
+        <img src="assets/images/Instapago_small_logos.png" />
+      </div>
+    </div>
+    <br />
+  </form>
+</div>

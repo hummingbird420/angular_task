@@ -1,0 +1,39 @@
+.sidenav {
+  width: 230px;
+}
+
+.sidenav-container {
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+  background-color: transparent;
+}
+.sidenav {
+  border-right: none !important;
+  background: transparent !important;
+  padding-right: 16px !important;
+}
+
+::ng-deep .mat-drawer-inner-container {
+  background-color: white !important;
+  border-radius: 8px;
+}
+.sidenav .sidnav-content {
+  background-color: turquoise !important;
+}
+
+.content {
+  position: relative;
+  overflow: visible !important;
+}
+
+.menu-switch {
+  position: absolute;
+  z-index: 1999;
+  border: 1px solid black;
+  background: cadetblue;
+}
+.menu-switch.left {
+  top: -16px;
+  left: 16px;
+}

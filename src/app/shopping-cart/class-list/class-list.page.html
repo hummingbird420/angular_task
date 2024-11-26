@@ -1,0 +1,409 @@
+<table class="class-table">
+  <tr class="filter-row" [cartTopSticky]="1">
+    <td [attr.colspan]="columns.length + 1">
+      <div class="filter-card">
+        <div *ngIf="allowSearchClasses" class="filter-header">
+          <h2>{{"Courses" | translate}}</h2>
+          <a
+            mat-stroked-button
+            class="filter-counter-button"
+            (click)="showFilter = !showFilter"
+          >
+            <mat-icon svgIcon="filters" class="svg icon16"></mat-icon>
+            &nbsp;{{"Filters" | translate}} &nbsp;
+            <div *ngIf="filterSet.size" class="filter-counter">
+              {{filterSet.size}}
+            </div>
+          </a>
+        </div>
+        <div
+          *ngIf="allowSearchClasses"
+          [@collapseUpDown]="showFilter ? 'expanded' : 'collapsed'"
+          class="filter-card-body"
+        >
+          <div class="filter-card-row" fxLayoutAlign="space-between">
+            <b nowrap>{{"Filter By" | translate}}</b>
+            <button
+              mat-flat-button
+              class="clear-all"
+              (click)="clearAllFilter()"
+            >
+              <mat-icon svgIcon="delete" class="icon icon16 del"></mat-icon
+              >&nbsp; {{"Clear all" | translate}}
+            </button>
+          </div>
+
+          <cart-filter-dropdown
+            *ngIf="allowSearchProgramClasses && showCampusFilter"
+            class="filter-card-row"
+            [field]="campusFilterField"
+            [value]="campusValueEmitter"
+            [clearSelection]="clearFilter"
+            [allOption]="numberAllOption"
+            (change)="onChangeCampus($event)"
+          ></cart-filter-dropdown>
+          <cart-filter-dropdown
+            *ngIf="allowSearchProgramClasses && showDepartmentFilter"
+            class="filter-card-row"
+            [field]="departmentFilterField"
+            [value]="departmentValueEmitter"
+            [clearSelection]="clearFilter"
+            [allOption]="numberAllOption"
+            (change)="onChangeDepartment($event)"
+          ></cart-filter-dropdown>
+          <cart-filter-dropdown
+            *ngIf="showCategoryFilter"
+            class="filter-card-row"
+            [field]="categoryFilterField"
+            [value]="categoryValueEmitter"
+            [clearSelection]="clearFilter"
+            [allOption]="numberAllOption"
+            (change)="onChangeCategory($event)"
+          ></cart-filter-dropdown>
+          <cart-filter-dropdown
+            *ngIf="showProgramFilter"
+            class="filter-card-row"
+            [field]="programFilterField"
+            [value]="programValueEmitter"
+            [clearSelection]="clearFilter"
+            [allOption]="numberAllOption"
+            (change)="onChangeProgram($event)"
+          ></cart-filter-dropdown>
+          <cart-filter-dropdown
+            *ngIf="showProgramLevelFilter"
+            class="filter-card-row"
+            [field]="programLevelFilterField"
+            [value]="programLevelValueEmitter"
+            [clearSelection]="clearFilter"
+            [allOption]="numberAllOption"
+            (change)="onChangeProgramLevel($event)"
+          ></cart-filter-dropdown>
+          <cart-filter-dropdown
+            *ngIf="showSemesterFilter"
+            class="filter-card-row"
+            [field]="semesterFilterField"
+            [value]="semesterValueEmitter"
+            [clearSelection]="clearFilter"
+            [allOption]="numberAllOption"
+            (change)="onChangeSemester($event)"
+          ></cart-filter-dropdown>
+          <cart-filter-dropdown
+            *ngIf="showLocationFilter"
+            class="filter-card-row"
+            [field]="locationFilterField"
+            [value]="locationValueEmitter"
+            [clearSelection]="clearFilter"
+            [allOption]="locationAllOption"
+            (change)="onChangeLocation($event)"
+          ></cart-filter-dropdown>
+          <mat-form-field
+            *ngIf="showStartDateFilter"
+            appearance="outline"
+            class="filter-card-row date-field"
+          >
+            <mat-label>{{"Start Date" | translate}}</mat-label>
+            <input
+              matInput
+              type="TEXT"
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="dpStartDate"
+              [formControl]="startDateControl"
+              (click)="dpStartDate.open()"
+              [placeholder]="dateFormat"
+            />
+
+            <mat-datepicker-toggle matSuffix [for]="dpStartDate">
+              <mat-icon matDatepickerToggleIcon> calendar_month </mat-icon>
+            </mat-datepicker-toggle>
+
+            <mat-datepicker #dpStartDate disabled="false"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field
+            *ngIf="showEndDateFilter"
+            appearance="outline"
+            class="filter-card-row date-field"
+          >
+            <mat-label>{{"End Date" | translate}}</mat-label>
+            <input
+              matInput
+              type="TEXT"
+              [min]="minDate"
+              [max]="maxDate"
+              [matDatepicker]="dpEndDate"
+              [formControl]="endDateControl"
+              (click)="dpEndDate.open()"
+              [placeholder]="dateFormat"
+            />
+            <mat-datepicker-toggle matSuffix [for]="dpEndDate">
+              <mat-icon matDatepickerToggleIcon> calendar_month </mat-icon>
+            </mat-datepicker-toggle>
+            <mat-datepicker #dpEndDate disabled="false"></mat-datepicker>
+          </mat-form-field>
+          <button mat-stroked-button class="fill" (click)="fetchClasses()">
+            &nbsp;&nbsp;{{"Apply" | translate}}
+          </button>
+        </div>
+        <div *ngIf="allowFilterClasses" class="filter-card-body">
+          <div class="filter-card-row">
+            <mat-form-field appearance="outline" class="filter-inline">
+              <mat-label>{{"Search" | translate}}</mat-label>
+              <input matInput [formControl]="filterControl" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+  <ng-container *ngFor="let course of courseList; let i = index">
+    <ng-container
+      *ngFor="let clazz of course.classes | classFilter : columns : (course.courseName + ' ' + course.courseNumber) : filterControl.value; let j = index"
+    >
+      <tr class="course-card" *ngIf="j === 0">
+        <td [attr.colspan]="columns.length + 1">
+          <div class="course-card-header">
+            <div
+              class="course-card-title"
+              [innerHTML]="course.courseName | formatCourseName : course.courseNumber"
+            ></div>
+            <div
+              class="about-course"
+              oTooltip='{{"About Course" | translate}}'
+              theme="dark"
+            >
+              <a [routerLink]="getCourseDetailsPageUrl(course.courseId)">
+                {{"About Course" | translate}}
+              </a>
+              &nbsp;<mat-icon>info</mat-icon>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="header-row" [id]="'header-row'+ i + j">
+        <td
+          *ngFor="let column of columns"
+          [ngClass]="columns.length <= 10 ? 'nowrap':''"
+          [class]="column.name"
+        >
+          {{column.title}}
+        </td>
+        <td></td>
+      </tr>
+      <tr class="content-row" [oHoverItemContent]="i + '' + j">
+        <td
+          [class]="column.name"
+          *ngFor="let column of columns"
+          [innerHTML]="clazz | formatClassInfo : column.name"
+          attr.data-title="{{column.title}}"
+        ></td>
+
+        <td class="add-cart-cell">
+          <mat-icon
+            *ngIf="clazz.allowToSelectClass"
+            class="lg-view"
+            [svgIcon]="getCartIcon(clazz.classId)"
+            [class]="getCartIcon(clazz.classId)"
+            [addCartItem]="clazz.classId"
+            [hasPassCode]="clazz.hasPassCode"
+            [minimumAge]="clazz.minimumAge"
+            [enrollAsWaiting]="clazz.enrollAsWaiting"
+            [oTooltip]="'Add to Cart' | translate"
+            theme="dark"
+          ></mat-icon>
+          <div
+            class="sm-view sm-status-message"
+            [innerHTML]="clazz.statusMessage"
+          ></div>
+          <div
+            class="button-row"
+            fxLayoutAlign="center"
+            *ngIf="clazz.allowToSelectClass"
+          >
+            <button
+              mat-stroked-button
+              class="sm-view"
+              [addCartItem]="clazz.classId"
+              [hasPassCode]="clazz.hasPassCode"
+              [minimumAge]="clazz.minimumAge"
+              [enrollAsWaiting]="clazz.enrollAsWaiting"
+              [class]="(j + i * course.classes.length) % 2 == 0 ? 'fill':''"
+            >
+              <mat-icon
+                [svgIcon]="getCartIcon(clazz.classId)"
+                [class]="getCartIcon(clazz.classId)"
+                class="svg left"
+              ></mat-icon>
+              {{"Select Class" | translate}}
+            </button>
+          </div>
+          <div *ngIf="clazz.statusMessage && !(mobileView$ | async)">
+            <br *ngFor="let br of countBreak(clazz.statusMessage)" /><span
+              *ngIf="!clazz.allowToSelectClass"
+              >&nbsp;</span
+            >
+          </div>
+          <div
+            class="lg-view status-message"
+            [innerHTML]="clazz.statusMessage"
+          ></div>
+        </td>
+      </tr>
+      <tr>
+        <td [attr.colspan]="columns.length + 1" class="row-space">
+          <div *ngIf="clazz.comments" class="class-comment">
+            <mat-icon>error_outline</mat-icon>
+            <span [innerHTML]="clazz.comments"></span>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </ng-container>
+
+  <tr class="course-card" *ngIf="programInstructions">
+    <td
+      [attr.colspan]="columns.length + 1"
+      [innerHTML]="programInstructions | cartHtml"
+    ></td>
+  </tr>
+
+  <ng-container *ngFor="let program of programs; let h = index">
+    <tr class="course-card" *ngIf="program.courses.length">
+      <td [attr.colspan]="columns.length + 1">
+        <div class="course-card-header" fxLayout="column">
+          <div
+            class="course-card-title"
+            [innerHTML]="program.programName"
+          ></div>
+          <div
+            *ngIf="program.programmeLevelCode"
+            class="course-card-title"
+            [innerHTML]="program.programmeLevelCode"
+          ></div>
+          <div
+            *ngIf="program.description"
+            [innerHTML]="program.description"
+          ></div>
+          <hr />
+        </div>
+      </td>
+    </tr>
+    <tr class="course-card" *ngIf="program.classGroupId">
+      <td [attr.colspan]="columns.length ">
+        <div class="course-card-header" fxLayout="column">
+          <div
+            class="course-card-title"
+            [innerHTML]="program.classGroupName"
+          ></div>
+        </div>
+      </td>
+      <td>
+        <div fxLayout="column" *ngIf="program.classGroupId">
+          <button mat-stroked-button [addAllCartItem]="program.courses">
+            &nbsp;&nbsp;{{"Select All" | translate}}
+          </button>
+        </div>
+      </td>
+    </tr>
+    <hr *ngIf="program.classGroupId" />
+    <ng-container *ngFor="let course of program.courses; let i = index">
+      <ng-container
+        *ngFor="let clazz of course.classes | classFilter : columns : (course.courseName + ' ' + course.courseNumber) : filterControl.value; let j = index"
+      >
+        <tr class="course-card" *ngIf="j === 0">
+          <td [attr.colspan]="columns.length + 1">
+            <div class="course-card-header">
+              <div
+                class="course-card-title"
+                [innerHTML]="course.courseName | formatCourseName : course.courseNumber"
+              ></div>
+              <div
+                class="about-course"
+                oTooltip='{{"About Course" | translate}}'
+                theme="dark"
+              >
+                <a [routerLink]="getCourseDetailsPageUrl(course.courseId)">
+                  {{"About Course" | translate}}
+                </a>
+                &nbsp;<mat-icon>info</mat-icon>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="header-row" [id]="'header-row'+ i + j">
+          <td
+            *ngFor="let column of columns"
+            [ngClass]="columns.length < 10 ? 'nowrap':''"
+            [class]="column.name"
+          >
+            {{column.title}}
+          </td>
+          <td></td>
+        </tr>
+        <tr class="content-row" [oHoverItemContent]="i + '' + j">
+          <td
+            [class]="column.name"
+            *ngFor="let column of columns"
+            [innerHTML]="clazz | formatClassInfo : column.name"
+            attr.data-title="{{column.title}}"
+          ></td>
+          <td class="add-cart-cell">
+            <mat-icon
+              *ngIf="clazz.allowToSelectClass"
+              class="lg-view"
+              [svgIcon]="getCartIcon(clazz.classId)"
+              [class]="getCartIcon(clazz.classId)"
+              [addCartItem]="clazz.classId"
+              [hasPassCode]="clazz.hasPassCode"
+              [minimumAge]="clazz.minimumAge"
+              [enrollAsWaiting]="clazz.enrollAsWaiting"
+              [oTooltip]="'Add to Cart' | translate"
+              theme="dark"
+            ></mat-icon>
+            <div
+              class="sm-view sm-status-message"
+              [innerHTML]="clazz.statusMessage"
+            ></div>
+            <div
+              class="button-row"
+              fxLayoutAlign="center"
+              *ngIf="clazz.allowToSelectClass"
+            >
+              <button
+                mat-stroked-button
+                class="sm-view"
+                [addCartItem]="clazz.classId"
+                [hasPassCode]="clazz.hasPassCode"
+                [minimumAge]="clazz.minimumAge"
+                [enrollAsWaiting]="clazz.enrollAsWaiting"
+                [class]="(j + i * course.classes.length) % 2 == 0 ? 'fill':''"
+              >
+                <mat-icon
+                  [svgIcon]="getCartIcon(clazz.classId)"
+                  [class]="getCartIcon(clazz.classId)"
+                  class="svg left"
+                ></mat-icon>
+                {{"Select Class" | translate}}
+              </button>
+            </div>
+            <div *ngIf="clazz.statusMessage">
+              <br *ngFor="let br of countBreak(clazz.statusMessage)" />
+              <span *ngIf="!clazz.allowToSelectClass">&nbsp;</span>
+            </div>
+            <div
+              class="lg-view status-message"
+              [innerHTML]="clazz.statusMessage"
+            ></div>
+          </td>
+        </tr>
+        <tr>
+          <td [attr.colspan]="columns.length + 1" class="row-space">
+            <div *ngIf="clazz.comments" class="class-comment">
+              <mat-icon>error_outline</mat-icon>
+              <span [innerHTML]="clazz.comments"></span>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</table>
